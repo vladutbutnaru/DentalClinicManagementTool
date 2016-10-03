@@ -1,0 +1,21 @@
+package ro.dcmt.data.beans;
+
+import java.io.Serializable;
+
+public class User implements Serializable {
+
+	/**
+	 * Generated version ID
+	 */
+	private static final long serialVersionUID = 1L;
+	
+	private String email;
+	private String firstName;
+	private String lastName;
+	private boolean isMedic;
+	private String phoneNumber;
+	private int numberOfLogins;
+	private String address;
+	
+	
+}

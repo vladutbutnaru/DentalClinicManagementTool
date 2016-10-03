@@ -1,0 +1,23 @@
+function checkAuth(emailAddress, password){
+	if(emailAddress!= undefined && emailAddress!="" && emailAddress.indexOf('@') > 0){
+		var params = {
+			    email: emailAddress
+			    password: password
+			};
+	
+	
+		 $.post("/MyMoney/CheckUserExistsServlet", $.param(params), function(responseText) {   // Execute Ajax GET request on URL of "someservlet" and execute the following function with Ajax response text...
+		        if(responseText=="true"){
+		        	document.getElementById("emailExistsError").style.display = "";
+		        	document.getElementById("finishButton").style.display="none";
+		        	document.getElementById("Email").style.color="red";
+		        }
+
+		        else{
+		        	document.getElementById("emailExistsError").style.display = "none";
+		        	document.getElementById("finishButton").style.display="";
+		        	document.getElementById("Email").style.color="";
+		        }
+		     });
+			}
+}

@@ -1,0 +1,13 @@
+package ro.dcmt.data.beans;
+
+import java.io.Serializable;
+
+public class User implements Serializable {
+
+	/**
+	 * Generated version ID
+	 */
+	private static final long serialVersionUID = 1L;
+	
+	
+}
