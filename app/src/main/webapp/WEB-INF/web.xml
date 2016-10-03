@@ -11,7 +11,7 @@
 		<servlet-name>MobileAuthEndpoint</servlet-name>
 		<display-name>MobileAuthEndpoint</display-name>
 		<description></description>
-		<servlet-class>ro.dcmt.web.MobileAuthEndpoint</servlet-class>
+		<servlet-class>ro.dcmt.mobile.MobileAuthEndpoint</servlet-class>
 	</servlet>
 	<servlet>
 		<servlet-name>WebAuthEndpoint</servlet-name>

@@ -9,7 +9,6 @@ INDEX VERSION 1.129+D:\DentistCabinetManagementTool\Git\DentalClinicManagementTo
 2313667782.index
 2742994705.index
 1824087116.index
-2528167643.index
 171951929.index
 3894517857.index
 2829487956.index
