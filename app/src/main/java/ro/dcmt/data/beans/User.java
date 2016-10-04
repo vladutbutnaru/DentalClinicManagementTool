@@ -1,6 +1,8 @@
 package ro.dcmt.data.beans;
 
+import java.io.File;
 import java.io.Serializable;
+import java.sql.Date;
 
 public class User implements Serializable {
 
@@ -18,6 +20,62 @@ public class User implements Serializable {
 	private int numberOfLogins;
 	private String address;
 	private String password;
+	private Date dateRegistered;
+	private String city;
+	private int idCabinet;
+	private String oraInceput;
+	private String oraSfarsit;
+	private File imagine;
+	
+	
+	
+	public File getImagine() {
+		return imagine;
+	}
+
+	public void setImagine(File imagine) {
+		this.imagine = imagine;
+	}
+
+	public Date getDateRegistered() {
+		return dateRegistered;
+	}
+
+	public void setDateRegistered(Date dateRegistered) {
+		this.dateRegistered = dateRegistered;
+	}
+
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+	public int getIdCabinet() {
+		return idCabinet;
+	}
+
+	public void setIdCabinet(int idCabinet) {
+		this.idCabinet = idCabinet;
+	}
+
+	public String getOraInceput() {
+		return oraInceput;
+	}
+
+	public void setOraInceput(String oraInceput) {
+		this.oraInceput = oraInceput;
+	}
+
+	public String getOraSfarsit() {
+		return oraSfarsit;
+	}
+
+	public void setOraSfarsit(String oraSfarsit) {
+		this.oraSfarsit = oraSfarsit;
+	}
 
 	public String getEmail() {
 		return email;

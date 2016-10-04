@@ -18,15 +18,14 @@ import java.util.ArrayList;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import ro.dcmt.data.beans.User;
+import ro.dcmt.data.beans.Cabinet;
 import ro.dcmt.data.connection.DBConnection;
 
-public class UserService implements DBEntityController {
-	private static Logger logger = LoggerFactory.getLogger(UserService.class);
+public class CabinetService implements DBEntityController {
+	private static Logger logger = LoggerFactory.getLogger(CabinetService.class);
 	private static Connection conn = (Connection) DBConnection.getConnection();
 	private static PreparedStatement stmt = null;
 	private static ResultSet rs = null;
-
 	public String getPath() throws UnsupportedEncodingException {
 		String path = this.getClass().getClassLoader().getResource("").getPath();
 		String fullPath = URLDecoder.decode(path, "UTF-8");
@@ -39,33 +38,30 @@ public class UserService implements DBEntityController {
 		reponsePath = fullPath + File.separatorChar;
 		return reponsePath;
 	}
-
 	public Object getById(int id) {
-		User u = new User();
+		Cabinet c = new Cabinet();
 		try {
 
-			stmt = conn.prepareStatement("SELECT * FROM users WHERE ID = ?");
+			stmt = conn.prepareStatement("SELECT * FROM cabinete WHERE ID = ?");
 			stmt.setInt(1, id);
 
 			rs = stmt.executeQuery();
 			if (rs.next()) {
-				logger.info("User Information Fetch: " + id);
-				u.setId(id);
-				u.setEmail(rs.getString(2));
-				u.setPassword(rs.getString(3));
-				u.setFirstName(rs.getString(4));
-				u.setLastName(rs.getString(5));
-				u.setDateRegistered(rs.getDate(6));
-				u.setCity(rs.getString(8));
-				u.setIdCabinet(rs.getInt(9));
-				u.setOraInceput(rs.getString(10));
-				u.setOraSfarsit(rs.getString(11));
-				u.setPhoneNumber(rs.getString(12));
-				Blob imageBlob = (rs.getBlob(13));
+				logger.info("Cabinet Information Fetch: " + id);
+				c.setId(id);
+				c.setNume(rs.getString(2));
+				c.setDescriere(rs.getString(3));
+				c.setLocationLat(rs.getDouble(4));
+				c.setLocationLong(rs.getDouble(5));
+				c.setOras(rs.getString(7));
+				c.setOperatii(rs.getString(8));
+				c.setPhoneNumber(rs.getString(9));
+			
+				Blob imageBlob = (rs.getBlob(6));
 				InputStream binaryStream = imageBlob.getBinaryStream(1, imageBlob.length());
 
 				
-				File f = new File(getPath() + "profile" + u.getId() + ".jpg");
+				File f = new File(getPath() + "cabinet" + c.getId() + ".jpg");
 				OutputStream out = new FileOutputStream(f);
 				byte[] buff = new byte[4096];
 				int len = 0;
@@ -73,9 +69,9 @@ public class UserService implements DBEntityController {
 				while ((len = binaryStream.read(buff)) != -1) {
 					out.write(buff, 0, len);
 				}
-				u.setImagine(f);
+				c.setImage(f);
 				out.close();
-				return u;
+				return c;
 
 			}
 
@@ -93,34 +89,34 @@ public class UserService implements DBEntityController {
 			e.printStackTrace();
 		}
 		return null;
+	
 	}
 
 	public ArrayList<Object> getAllByColumn(String column, String value) {
-
-		ArrayList<Object> list = new ArrayList<Object>();
+		ArrayList<Object> list= new ArrayList<Object>();
 		try {
 
-			stmt = conn.prepareStatement("SELECT * FROM users WHERE " + column + " = ?");
+			stmt = conn.prepareStatement("SELECT * FROM cabinete WHERE "+column+" = ?");
 			stmt.setString(1, value);
-		
+
 			rs = stmt.executeQuery();
-			while (rs.next()) {
-				User u = new User();
-				logger.info("User Information Fetch: " + value);
-				u.setId(rs.getInt(1));
-				u.setEmail(rs.getString(2));
-				u.setPassword(rs.getString(3));
-				u.setFirstName(rs.getString(4));
-				u.setLastName(rs.getString(5));
-				u.setDateRegistered(rs.getDate(6));
-				u.setCity(rs.getString(8));
-				u.setIdCabinet(rs.getInt(9));
-				u.setOraInceput(rs.getString(10));
-				u.setOraSfarsit(rs.getString(11));
-				u.setPhoneNumber(rs.getString(12));
-				Blob imageBlob = (rs.getBlob(13));
+			if (rs.next()) {
+				Cabinet c = new Cabinet();
+				logger.info("Cabinet Information Fetch: " + value);
+				c.setId(rs.getInt(1));
+				c.setNume(rs.getString(2));
+				c.setDescriere(rs.getString(3));
+				c.setLocationLat(rs.getDouble(4));
+				c.setLocationLong(rs.getDouble(5));
+				c.setOras(rs.getString(7));
+				c.setOperatii(rs.getString(8));
+				c.setPhoneNumber(rs.getString(9));
+			
+				Blob imageBlob = (rs.getBlob(6));
 				InputStream binaryStream = imageBlob.getBinaryStream(1, imageBlob.length());
-				File f = new File(getPath() + "profile" + u.getId() + ".jpg");
+
+				
+				File f = new File(getPath() + "cabinet" + c.getId() + ".jpg");
 				OutputStream out = new FileOutputStream(f);
 				byte[] buff = new byte[4096];
 				int len = 0;
@@ -128,9 +124,9 @@ public class UserService implements DBEntityController {
 				while ((len = binaryStream.read(buff)) != -1) {
 					out.write(buff, 0, len);
 				}
-				u.setImagine(f);
+				c.setImage(f);
 				out.close();
-				list.add(u);
+				list.add(c);
 
 			}
 
@@ -148,6 +144,7 @@ public class UserService implements DBEntityController {
 			e.printStackTrace();
 		}
 		return list;
+	
 	}
 
 	public void delete(int id) {
@@ -157,30 +154,6 @@ public class UserService implements DBEntityController {
 
 	public void update(int id) {
 		// TODO Auto-generated method stub
-
-	}
-
-	public static boolean checkAuth(User u) {
-		try {
-
-			stmt = conn.prepareStatement("SELECT * FROM users WHERE Email = ? AND Password = ?");
-			stmt.setString(1, u.getEmail());
-			stmt.setString(2, u.getPassword());
-			rs = stmt.executeQuery();
-			if (rs.next()) {
-				logger.info("User Login: " + u.getEmail());
-				return true;
-
-			}
-
-		} catch (SQLException ex) {
-			// handle any errors
-			System.out.println("SQLException: " + ex.getMessage());
-			System.out.println("SQLState: " + ex.getSQLState());
-			System.out.println("VendorError: " + ex.getErrorCode());
-			logger.error(ex.getMessage());
-		}
-		return false;
 
 	}
 

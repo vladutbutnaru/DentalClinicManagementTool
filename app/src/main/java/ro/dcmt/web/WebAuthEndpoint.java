@@ -1,11 +1,14 @@
 package ro.dcmt.web;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -46,7 +49,7 @@ public class WebAuthEndpoint extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		User u = new User();
-		JsonObject json = new JsonObject();
+	
 		u.setEmail(request.getParameter("email"));
 		u.setPassword(request.getParameter("password"));
 		if (UserService.checkAuth(u)) {
@@ -55,11 +58,13 @@ public class WebAuthEndpoint extends HttpServlet {
 			// setting cookie to expiry in 6 hours
 			loginCookie.setMaxAge(6 * 60 * 60);
 			response.addCookie(loginCookie);
+			
+		
 			response.sendRedirect("home.jsp");
 		} else {
 			logger.info("Web user failed authentication with: " + u.getEmail());
 			Cookie failedCookie = new Cookie("failed", "yes");
-			// setting cookie to expiry in 6 hours
+			// setting cookie to expiry in 5 seconds
 			failedCookie.setMaxAge(1 * 5);
 			response.addCookie(failedCookie);
 			response.sendRedirect("login.jsp");
