@@ -2,6 +2,7 @@ package ro.dcmt.data.beans;
 
 import java.io.Serializable;
 import java.sql.Date;
+import java.sql.Timestamp;
 
 public class Programare implements Serializable {
 
@@ -12,9 +13,10 @@ public class Programare implements Serializable {
 	private int id;
 	private int idDoctor;
 	private int idUser;
-	private Date data;
-	private int idOperatii;
+	private Timestamp data;
+	private String idOperatii;
 	private boolean aprobat;
+	private String canal;
 
 	public int getId() {
 		return id;
@@ -40,19 +42,19 @@ public class Programare implements Serializable {
 		this.idUser = idUser;
 	}
 
-	public Date getData() {
+	public Timestamp getData() {
 		return data;
 	}
 
-	public void setData(Date data) {
+	public void setData(Timestamp data) {
 		this.data = data;
 	}
 
-	public int getIdOperatii() {
+	public String getIdOperatii() {
 		return idOperatii;
 	}
 
-	public void setIdOperatii(int idOperatii) {
+	public void setIdOperatii(String idOperatii) {
 		this.idOperatii = idOperatii;
 	}
 
@@ -66,6 +68,14 @@ public class Programare implements Serializable {
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
+	}
+
+	public String getCanal() {
+		return canal;
+	}
+
+	public void setCanal(String canal) {
+		this.canal = canal;
 	}
 
 }

@@ -1,16 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<%@page import="ro.dcmt.data.controllers.UserService"%>
+<%@page import="ro.dcmt.data.beans.Cabinet"%>
+<%@page import="ro.dcmt.data.beans.User"%>
+<%@page import="ro.dcmt.data.beans.Programare"%>
+<%@ page import="ro.dcmt.data.beans.Pacient"%>
 <%@page import="ro.dcmt.data.controllers.CabinetService"%>
 <%@page import="ro.dcmt.data.controllers.ProgramariService"%>
-<%@page import="ro.dcmt.data.beans.User"%>
-<%@page import="ro.dcmt.data.beans.Cabinet"%>
+<%@page import="ro.dcmt.data.controllers.UserService"%>
+<%@page import="ro.dcmt.data.controllers.PacientService"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.util.Date"%>
+
 <%
 	String email = null;
 	User currentUser = new User();
 	Cabinet cabinet = new Cabinet();
-	ProgramariService ps = new ProgramariService();
+	UserService us = new UserService();
+	PacientService ps = new PacientService();
+	CabinetService cs = new CabinetService();
 	Cookie[] cookies = request.getCookies();
 	if (cookies != null) {
 		for (Cookie cookie : cookies) {
@@ -21,19 +29,14 @@
 	if (email == null)
 		response.sendRedirect("login.jsp");
 	else {
-		System.out.println("-----------------------------" + email);
-		UserService us = new UserService();
-		CabinetService cs = new CabinetService();
-		
+
 		currentUser = (User) us.getAllByColumn("email", email).get(0);
 		cabinet = (Cabinet) cs.getById(currentUser.getId());
-		
+
 	}
+	ArrayList<Programare> programariNoi = ProgramariService.getNewAppointmentsForDoctor(currentUser.getId());
+	ArrayList<Programare> programariViitoare = ProgramariService.getFutureAppointments(currentUser.getId());
 %>
-
-
-
-
 
 
 <!-- META SECTION -->
@@ -63,7 +66,7 @@
 				<li class="xn-logo"><a href="index.html">DCMT</a> <a href="#"
 					class="x-navigation-control"></a></li>
 				<li class="xn-profile"><a href="#" class="profile-mini"> <img
-						src="assets/images/users/avatar.jpg" alt="John Doe" />
+						src="<%=currentUser.getImagine().getName()%>" alt="<%=currentUser.getFirstName()%>" />
 				</a>
 					<div class="profile">
 						<div class="profile-image">
@@ -73,8 +76,10 @@
 						<div class="profile-data">
 							<div class="profile-data-name">
 								Dr.
-								<%=currentUser.getFirstName() + " " + currentUser.getLastName()%></div>
-							<div class="profile-data-title"><%=cabinet.getNume() %></div>
+								<%=currentUser.getFirstName() + " " + currentUser.getLastName()%>
+							</div>
+							<div class="profile-data-title"><%=cabinet.getNume()%>
+							</div>
 						</div>
 						<div class="profile-controls">
 							<a href="pages-profile.html" class="profile-control-left"><span
@@ -267,7 +272,7 @@
 				<!-- SEARCH -->
 				<li class="xn-search">
 					<form role="form">
-						<input type="text" name="search" placeholder="Search..." />
+						<input type="text" name="search" placeholder="Cauta pacienti..." />
 					</form>
 				</li>
 				<!-- END SEARCH -->
@@ -278,102 +283,47 @@
 				<!-- END SIGN OUT -->
 				<!-- MESSAGES -->
 				<li class="xn-icon-button pull-right"><a href="#"><span
-						class="fa fa-comments"></span></a>
-					<div class="informer informer-danger">4</div>
+						class="fa fa-calendar-check-o"></span></a>
+					<div class="informer informer-danger"><%=programariNoi.size()%></div>
 					<div
 						class="panel panel-primary animated zoomIn xn-drop-left xn-panel-dragging">
 						<div class="panel-heading">
 							<h3 class="panel-title">
-								<span class="fa fa-comments"></span> Messages
+								<span class="fa fa-calendar-check-o"></span> Programari noi
 							</h3>
 							<div class="pull-right">
-								<span class="label label-danger">4 new</span>
+								<span class="label label-danger"><%=programariNoi.size()%>
+									neaprobate</span>
 							</div>
 						</div>
 						<div class="panel-body list-group list-group-contacts scroll"
 							style="height: 200px;">
+
+							<%
+								Pacient pacientProgramare;
+								for (Programare p : programariNoi) {
+
+									pacientProgramare = (Pacient) ps.getById(p.getIdUser());
+							%>
 							<a href="#" class="list-group-item">
 								<div class="list-group-status status-online"></div> <img
-								src="assets/images/users/user2.jpg" class="pull-left"
-								alt="John Doe" /> <span class="contacts-title">John Doe</span>
-								<p>Praesent placerat tellus id augue condimentum</p>
-							</a> <a href="#" class="list-group-item">
-								<div class="list-group-status status-away"></div> <img
-								src="assets/images/users/user.jpg" class="pull-left"
-								alt="Dmitry Ivaniuk" /> <span class="contacts-title">Dmitry
-									Ivaniuk</span>
-								<p>Donec risus sapien, sagittis et magna quis</p>
-							</a> <a href="#" class="list-group-item">
-								<div class="list-group-status status-away"></div> <img
-								src="assets/images/users/user3.jpg" class="pull-left"
-								alt="Nadia Ali" /> <span class="contacts-title">Nadia
-									Ali</span>
-								<p>Mauris vel eros ut nunc rhoncus cursus sed</p>
-							</a> <a href="#" class="list-group-item">
-								<div class="list-group-status status-offline"></div> <img
-								src="assets/images/users/user6.jpg" class="pull-left"
-								alt="Darth Vader" /> <span class="contacts-title">Darth
-									Vader</span>
-								<p>I want my money back!</p>
+								src="<%=pacientProgramare.getImagine().getName()%>"
+								class="pull-left" alt="<%=pacientProgramare.getFirstName()%>" />
+								<span class="contacts-title"><%=pacientProgramare.getFirstName() + " " + pacientProgramare.getLastName()%>
+							</span>
+								<p><%=p.getIdOperatii()%></p>
 							</a>
-						</div>
+						
+						<%
+							}
+						%>
+</div>
 						<div class="panel-footer text-center">
-							<a href="pages-messages.html">Show all messages</a>
+							<a href="pages-messages.html">Vezi toate programarile</a>
 						</div>
 					</div></li>
 				<!-- END MESSAGES -->
-				<!-- TASKS -->
-				<li class="xn-icon-button pull-right"><a href="#"><span
-						class="fa fa-tasks"></span></a>
-					<div class="informer informer-warning">3</div>
-					<div
-						class="panel panel-primary animated zoomIn xn-drop-left xn-panel-dragging">
-						<div class="panel-heading">
-							<h3 class="panel-title">
-								<span class="fa fa-tasks"></span> Tasks
-							</h3>
-							<div class="pull-right">
-								<span class="label label-warning">3 active</span>
-							</div>
-						</div>
-						<div class="panel-body list-group scroll" style="height: 200px;">
-							<a class="list-group-item" href="#"> <strong>Phasellus
-									augue arcu, elementum</strong>
-								<div class="progress progress-small progress-striped active">
-									<div class="progress-bar progress-bar-danger"
-										role="progressbar" aria-valuenow="50" aria-valuemin="0"
-										aria-valuemax="100" style="width: 50%;">50%</div>
-								</div> <small class="text-muted">John Doe, 25 Sep 2014 / 50%</small>
-							</a> <a class="list-group-item" href="#"> <strong>Aenean
-									ac cursus</strong>
-								<div class="progress progress-small progress-striped active">
-									<div class="progress-bar progress-bar-warning"
-										role="progressbar" aria-valuenow="80" aria-valuemin="0"
-										aria-valuemax="100" style="width: 80%;">80%</div>
-								</div> <small class="text-muted">Dmitry Ivaniuk, 24 Sep 2014 /
-									80%</small>
-							</a> <a class="list-group-item" href="#"> <strong>Lorem
-									ipsum dolor</strong>
-								<div class="progress progress-small progress-striped active">
-									<div class="progress-bar progress-bar-success"
-										role="progressbar" aria-valuenow="95" aria-valuemin="0"
-										aria-valuemax="100" style="width: 95%;">95%</div>
-								</div> <small class="text-muted">John Doe, 23 Sep 2014 / 95%</small>
-							</a> <a class="list-group-item" href="#"> <strong>Cras
-									suscipit ac quam at tincidunt.</strong>
-								<div class="progress progress-small">
-									<div class="progress-bar" role="progressbar"
-										aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"
-										style="width: 100%;">100%</div>
-								</div> <small class="text-muted">John Doe, 21 Sep 2014 /</small><small
-								class="text-success"> Done</small>
-							</a>
-						</div>
-						<div class="panel-footer text-center">
-							<a href="pages-tasks.html">Show all tasks</a>
-						</div>
-					</div></li>
-				<!-- END TASKS -->
+				
 			</ul>
 			<!-- END X-NAVIGATION VERTICAL -->
 
@@ -395,19 +345,20 @@
 						<div class="widget widget-default widget-carousel">
 							<div class="owl-carousel" id="owl-example">
 								<div>
-									<div class="widget-title">Total pacienti</div>
-									<div class="widget-subtitle">04/10/2016 15:23</div>
-									<div class="widget-int"><%=ps.getCountofPacientsForDoctor(currentUser.getId()) %></div>
+									<div class="widget-title">Total programari</div>
+									<div class="widget-subtitle"><%=new Date().toString()%></div>
+									<div class="widget-int"><%=ProgramariService.getCountofPacientsForDoctor(currentUser.getId())%>
+									</div>
 								</div>
 								<div>
 									<div class="widget-title">Programari vitioare</div>
-									<div class="widget-subtitle">In aceasta luna</div>
-									<div class="widget-int">13</div>
+									<div class="widget-subtitle">Total programari viitoare</div>
+									<div class="widget-int"><%=programariViitoare.size()%></div>
 								</div>
 								<div>
 									<div class="widget-title">Pacienti noi</div>
 									<div class="widget-subtitle">In aceasta luna</div>
-									<div class="widget-int">4</div>
+									<div class="widget-int"><%=ProgramariService.getNumberOfNewPatients(currentUser.getId())%></div>
 								</div>
 							</div>
 
@@ -424,7 +375,7 @@
 								<span class="fa fa-envelope"></span>
 							</div>
 							<div class="widget-data">
-								<div class="widget-int num-count">20</div>
+								<div class="widget-int num-count"><%=programariNoi.size()%></div>
 								<div class="widget-title">Notificari</div>
 								<div class="widget-subtitle">In casuta dumneavoastra</div>
 							</div>
@@ -442,8 +393,8 @@
 								<span class="fa fa-user"></span>
 							</div>
 							<div class="widget-data">
-								<div class="widget-int num-count">62</div>
-								<div class="widget-title">Total pacienti din aplicatie</div>
+								<div class="widget-int num-count"><%=ProgramariService.getProgramariFromApp(currentUser.getId())%></div>
+								<div class="widget-title">Total programari din aplicatie</div>
 								<div class="widget-subtitle">Dentistul Meu Mobile App</div>
 							</div>
 
@@ -805,14 +756,13 @@
 					<span class="fa fa-sign-out"></span> Log <strong>Out</strong> ?
 				</div>
 				<div class="mb-content">
-					<p>Are you sure you want to log out?</p>
-					<p>Press No if youwant to continue work. Press Yes to logout
-						current user.</p>
+					<p>Esti sigur ca vrei sa te deloghezi??</p>
+					<p>Apasa DA daca vrei sa confirmi sau NU pentru a continua sesiunea de lucru.</p>
 				</div>
 				<div class="mb-footer">
 					<div class="pull-right">
-						<a href="pages-login.html" class="btn btn-success btn-lg">Yes</a>
-						<button class="btn btn-default btn-lg mb-control-close">No</button>
+						<a href="pages-login.html" class="btn btn-success btn-lg">Da</a>
+						<button class="btn btn-default btn-lg mb-control-close">Nu</button>
 					</div>
 				</div>
 			</div>

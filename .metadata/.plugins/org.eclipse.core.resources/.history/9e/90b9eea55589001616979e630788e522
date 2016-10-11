@@ -1,9 +1,0 @@
-package ro.dcmt.data.controllers;
-
-import java.util.ArrayList;
-
-public interface DBEntity {
-	public Object getById(int id);
-	public ArrayList<Object> getAllByColumn(String column, String value);
-	public Object delete(int id);
-}

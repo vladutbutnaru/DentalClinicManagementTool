@@ -1,5 +1,0 @@
-package ro.dcmt.data.connection;
-
-public class DBConnection {
-
-}

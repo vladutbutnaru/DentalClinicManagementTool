@@ -39,7 +39,22 @@ public class WebAuthEndpoint extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		
+		Cookie[] cookies = request.getCookies();
+		
+		if (cookies != null) {
+			for (Cookie cookie : cookies) {
+				if (cookie.getName().equals("user"))
+					
+					cookie.setMaxAge(0);
+					
+			}
+		}
+		for(Cookie c : cookies){
+			response.addCookie(c);
+			
+		}
+		response.sendRedirect("login.jsp");
 	}
 
 	/**
@@ -58,7 +73,7 @@ public class WebAuthEndpoint extends HttpServlet {
 			// setting cookie to expiry in 6 hours
 			loginCookie.setMaxAge(6 * 60 * 60);
 			response.addCookie(loginCookie);
-			
+		
 		
 			response.sendRedirect("home.jsp");
 		} else {

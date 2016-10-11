@@ -4,11 +4,14 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import ro.dcmt.data.beans.Programare;
 import ro.dcmt.data.connection.DBConnection;
 
 public class ProgramariService implements DBEntityController {
@@ -37,7 +40,7 @@ public class ProgramariService implements DBEntityController {
 
 	}
 
-	public int getCountofPacientsForDoctor(int id) {
+	public static int getCountofPacientsForDoctor(int id) {
 		int number = 0;
 		try {
 
@@ -57,4 +60,159 @@ public class ProgramariService implements DBEntityController {
 		return number;
 
 	}
+	public static ArrayList<Programare> getNewAppointmentsForDoctor(int idDoctor){
+		ArrayList<Programare> programari = new ArrayList<Programare>();
+        try {
+
+            stmt = conn.prepareStatement("SELECT * FROM programari WHERE IDDoctor = ? AND Aprobat = 0");
+            stmt.setInt(1, idDoctor);
+
+            rs = stmt.executeQuery();
+            logger.info("getNewAppointmentsForDoctor: " + idDoctor);
+           while(rs.next()) {
+               Programare p = new Programare();
+               p.setId(rs.getInt(1));
+               p.setIdDoctor(rs.getInt(2));
+               p.setIdUser(rs.getInt(3));
+               p.setData(rs.getTimestamp(4));
+               p.setIdOperatii(rs.getString(5));
+               p.setAprobat(rs.getInt(6)==1);
+               p.setCanal(rs.getString(7));
+               programari.add(p);
+           }
+        } catch (SQLException ex) {
+            // handle any errors
+            System.out.println("SQLException: " + ex.getMessage());
+            System.out.println("SQLState: " + ex.getSQLState());
+            System.out.println("VendorError: " + ex.getErrorCode());
+            logger.error(ex.getMessage());
+        }
+        return programari;
+
+	}
+	
+	public static ArrayList<Programare> getFutureAppointments(int idDoctor){
+		ArrayList<Programare> programari = new ArrayList<Programare>();
+        try {
+			Date date = new Date();
+			Timestamp timestamp = new Timestamp(date.getTime());
+			
+            stmt = conn.prepareStatement("SELECT * FROM programari WHERE Data > ?");
+            stmt.setTimestamp(1, timestamp);
+
+            rs = stmt.executeQuery();
+            logger.info("getFutureAppointments: " + idDoctor);
+           while(rs.next()) {
+               Programare p = new Programare();
+               p.setId(rs.getInt(1));
+               p.setIdDoctor(rs.getInt(2));
+               p.setIdUser(rs.getInt(3));
+               p.setData(rs.getTimestamp(4));
+               p.setIdOperatii(rs.getString(5));
+               p.setAprobat(rs.getInt(6)==1);
+               p.setCanal(rs.getString(7));
+               programari.add(p);
+           }
+        } catch (SQLException ex) {
+            // handle any errors
+            System.out.println("SQLException: " + ex.getMessage());
+            System.out.println("SQLState: " + ex.getSQLState());
+            System.out.println("VendorError: " + ex.getErrorCode());
+            logger.error(ex.getMessage());
+        }
+        return programari;
+
+	}
+	
+	@SuppressWarnings("deprecation")
+	public static int getNumberOfNewPatients(int idDoctor){
+		int newPatients = 0;
+		ArrayList<Programare> programariVechi = new ArrayList<Programare>();
+	
+		try {
+			Date date = new Date();
+			date.setDate(1);			
+			
+			Timestamp timestamp = new Timestamp(date.getTime());
+			
+            stmt = conn.prepareStatement("SELECT * FROM programari WHERE Data < ?");
+            stmt.setTimestamp(1, timestamp);
+
+            rs = stmt.executeQuery();
+            logger.info("getNumberOfNewPatients: " + idDoctor);
+           while(rs.next()) {             
+             Programare p = new Programare();
+               p.setIdUser(rs.getInt(3));
+               programariVechi.add(p);
+             
+           }
+        } catch (SQLException ex) {
+            // handle any errors
+            System.out.println("SQLException: " + ex.getMessage());
+            System.out.println("SQLState: " + ex.getSQLState());
+            System.out.println("VendorError: " + ex.getErrorCode());
+            logger.error(ex.getMessage());
+        }
+		
+		try {
+			Date date = new Date();
+			date.setDate(1);			
+			
+			Timestamp timestamp = new Timestamp(date.getTime());
+			
+            stmt = conn.prepareStatement("SELECT * FROM programari WHERE Data > ?");
+            stmt.setTimestamp(1, timestamp);
+
+            rs = stmt.executeQuery();
+            logger.info("getNumberOfNewPatients: " + idDoctor);
+           while(rs.next()) {             
+        	   for(Programare pVeche : programariVechi){
+        		   if(pVeche.getIdUser() ==rs.getInt(3)){
+        			   break;
+        			   
+        		   }
+        		  newPatients++;
+           
+        	   }
+             
+             
+           }
+        } catch (SQLException ex) {
+            // handle any errors
+            System.out.println("SQLException: " + ex.getMessage());
+            System.out.println("SQLState: " + ex.getSQLState());
+            System.out.println("VendorError: " + ex.getErrorCode());
+            logger.error(ex.getMessage());
+        }
+		
+
+		
+		
+		return newPatients;
+	}
+	public static int getProgramariFromApp(int idDoctor){
+		int number = 0;
+		try {
+			
+			
+            stmt = conn.prepareStatement("SELECT * FROM programari WHERE Canal = 'Mobile'");
+           
+
+            rs = stmt.executeQuery();
+            logger.info("getProgramariFromApp: " + idDoctor);
+           while(rs.next()) {             
+            number++;
+             
+           }
+        } catch (SQLException ex) {
+            // handle any errors
+            System.out.println("SQLException: " + ex.getMessage());
+            System.out.println("SQLState: " + ex.getSQLState());
+            System.out.println("VendorError: " + ex.getErrorCode());
+            logger.error(ex.getMessage());
+        }
+		
+		return number;
+	}
+	
 }

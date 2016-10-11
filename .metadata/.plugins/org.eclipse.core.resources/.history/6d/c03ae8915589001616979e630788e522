@@ -1,6 +1,0 @@
-package ro.dcmt.data.controllers;
-
-public interface DBEntity {
-	public Object getById(int id);
-	public ArrayList<Object> getAllByColumn(String column, String value);
-}
