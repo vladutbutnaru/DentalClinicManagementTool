@@ -82,8 +82,8 @@
 							</div>
 						</div>
 						<div class="profile-controls">
-							<a href="pages-profile.html" class="profile-control-left"><span
-								class="fa fa-info"></span></a> <a href="pages-messages.html"
+							<a href="javascript:void(0);" onclick="bootstro.start('.bootstro');" class="profile-control-left"><span
+								class="fa fa-info"></span></a> <a href="bootstro.start('.bootstro');" 
 								class="profile-control-right"><span class="fa fa-envelope"></span></a>
 						</div>
 					</div></li>
@@ -98,62 +98,8 @@
 								class="fa fa-users"></span> Clienti</a></li>
 						<li><a href="pages-profile.html"><span class="fa fa-user"></span>
 								Facturi</a></li>
-						<li><a href="pages-address-book.html"><span
-								class="fa fa-users"></span> Address Book</a></li>
-						<li class="xn-openable"><a href="#"><span
-								class="fa fa-clock-o"></span> Timeline</a>
-							<ul>
-								<li><a href="pages-timeline.html"><span
-										class="fa fa-align-center"></span> Default</a></li>
-								<li><a href="pages-timeline-simple.html"><span
-										class="fa fa-align-justify"></span> Full Width</a></li>
-							</ul></li>
-						<li class="xn-openable"><a href="#"><span
-								class="fa fa-envelope"></span> Mailbox</a>
-							<ul>
-								<li><a href="pages-mailbox-inbox.html"><span
-										class="fa fa-inbox"></span> Inbox</a></li>
-								<li><a href="pages-mailbox-message.html"><span
-										class="fa fa-file-text"></span> Message</a></li>
-								<li><a href="pages-mailbox-compose.html"><span
-										class="fa fa-pencil"></span> Compose</a></li>
-							</ul></li>
-						<li><a href="pages-messages.html"><span
-								class="fa fa-comments"></span> Messages</a></li>
-						<li><a href="pages-calendar.html"><span
-								class="fa fa-calendar"></span> Calendar</a></li>
-						<li><a href="pages-tasks.html"><span class="fa fa-edit"></span>
-								Tasks</a></li>
-						<li><a href="pages-content-table.html"><span
-								class="fa fa-columns"></span> Content Table</a></li>
-						<li><a href="pages-faq.html"><span
-								class="fa fa-question-circle"></span> FAQ</a></li>
-						<li><a href="pages-search.html"><span
-								class="fa fa-search"></span> Search</a></li>
-						<li class="xn-openable"><a href="#"><span
-								class="fa fa-file"></span> Blog</a>
-
-							<ul>
-								<li><a href="pages-blog-list.html"><span
-										class="fa fa-copy"></span> List of Posts</a></li>
-								<li><a href="pages-blog-post.html"><span
-										class="fa fa-file-o"></span>Single Post</a></li>
-							</ul></li>
-						<li class="xn-openable"><a href="#"><span
-								class="fa fa-sign-in"></span> Login</a>
-							<ul>
-								<li><a href="pages-login.html">App Login</a></li>
-								<li><a href="pages-login-website.html">Website Login</a></li>
-								<li><a href="pages-login-website-light.html"> Website
-										Login Light</a></li>
-							</ul></li>
-						<li class="xn-openable"><a href="#"><span
-								class="fa fa-warning"></span> Error Pages</a>
-							<ul>
-								<li><a href="pages-error-404.html">Error 404 Sample 1</a></li>
-								<li><a href="pages-error-404-2.html">Error 404 Sample 2</a></li>
-								<li><a href="pages-error-500.html"> Error 500</a></li>
-							</ul></li>
+						
+						
 					</ul></li>
 				<li class="xn-openable"><a href="#"><span
 						class="fa fa-file-text-o"></span> <span class="xn-text">Cabinet</span></a>
@@ -282,7 +228,7 @@
 						class="fa fa-sign-out"></span></a></li>
 				<!-- END SIGN OUT -->
 				<!-- MESSAGES -->
-				<li class="xn-icon-button pull-right"><a href="#"><span
+				<li class="xn-icon-button pull-right bootstro" data-bootstro-title="Programari neaprobate" data-bootstro-placement="bottom" data-bootstro-content="Aici veti gasi programarile nou create si neaprobate."  data-bootstro-step="5"><a href="#"><span
 						class="fa fa-calendar-check-o"></span></a>
 					<div class="informer informer-danger"><%=programariNoi.size()%></div>
 					<div
@@ -305,7 +251,7 @@
 
 									pacientProgramare = (Pacient) ps.getById(p.getIdUser());
 							%>
-							<a href="#" class="list-group-item">
+							<a href="pacient.jsp/id=<%=pacientProgramare.getId()%>" class="list-group-item">
 								<div class="list-group-status status-online"></div> <img
 								src="<%=pacientProgramare.getImagine().getName()%>"
 								class="pull-left" alt="<%=pacientProgramare.getFirstName()%>" />
@@ -342,7 +288,8 @@
 					<div class="col-md-3">
 
 						<!-- START WIDGET SLIDER -->
-						<div class="widget widget-default widget-carousel">
+						
+						<div class="widget widget-default widget-carousel bootstro"  data-bootstro-title="Widgetul 'Statistici'" data-bootstro-placement="bottom" data-bootstro-content="In acest widget puteti vizualiza numarul total de programari, programarile viitoare si numarul de pacienti noi."  data-bootstro-step="1">
 							<div class="owl-carousel" id="owl-example">
 								<div>
 									<div class="widget-title">Total programari</div>
@@ -362,6 +309,7 @@
 								</div>
 							</div>
 
+				
 						</div>
 						<!-- END WIDGET SLIDER -->
 
@@ -369,8 +317,8 @@
 					<div class="col-md-3">
 
 						<!-- START WIDGET MESSAGES -->
-						<div class="widget widget-default widget-item-icon"
-							onclick="location.href='pages-messages.html';">
+						<div class="widget widget-default widget-item-icon bootstro" data-bootstro-title="Widgetul 'Notificari'" data-bootstro-placement="bottom" data-bootstro-content="In acest widget puteti vizualiza numarul de notificari noi pe care le-ati primit."  data-bootstro-step="2"
+							>
 							<div class="widget-item-left">
 								<span class="fa fa-envelope"></span>
 							</div>
@@ -387,8 +335,8 @@
 					<div class="col-md-3">
 
 						<!-- START WIDGET REGISTRED -->
-						<div class="widget widget-default widget-item-icon"
-							onclick="location.href='pages-address-book.html';">
+						<div class="widget widget-default widget-item-icon bootstro" data-bootstro-title="Widgetul 'Programari din aplicatie'" data-bootstro-placement="bottom" data-bootstro-content="In acest widget puteti vizualiza numarul total de programari create din aplicatie mobila <b>Dentistul Meu</b>."  data-bootstro-step="3"
+							>
 							<div class="widget-item-left">
 								<span class="fa fa-user"></span>
 							</div>
@@ -405,7 +353,7 @@
 					<div class="col-md-3">
 
 						<!-- START WIDGET CLOCK -->
-						<div class="widget widget-danger widget-padding-sm">
+						<div class="widget widget-danger widget-padding-sm bootstro" data-bootstro-title="Widgetul 'Plantificator'" data-bootstro-placement="bottom" data-bootstro-content="In acest widget, folosind butoanele de mai sus, puteti stabili programari viitoare."  data-bootstro-step="4">
 							<div class="widget-big-int plugin-clock">00:00</div>
 							<div class="widget-subtitle plugin-date">Se incarca...</div>
 
@@ -806,6 +754,8 @@
 	<script type="text/javascript" src="js/plugins/moment.min.js"></script>
 	<script type="text/javascript"
 		src="js/plugins/daterangepicker/daterangepicker.js"></script>
+		    <script type="text/javascript" src="js/plugins/tour/bootstrap-tour.min.js"></script>        
+        <script type="text/javascript" src="js/plugins/tour/bootstro.min.js"></script>
 	<!-- END THIS PAGE PLUGINS-->
 
 	<!-- START TEMPLATE -->
