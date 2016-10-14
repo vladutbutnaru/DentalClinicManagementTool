@@ -390,8 +390,7 @@
 
 							<div class="widget-buttons widget-c3">
 								<div class="col">
-									<a href="#" data-toggle="modal"
-										data-target="#modal_programare_noua"><span
+									<a href="programare-noua.jsp"><span
 										class="fa fa-clock-o"></span></a>
 								</div>
 								<div class="col">
