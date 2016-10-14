@@ -1,2 +1,2 @@
-commit_dialog_history_messages=<?xml version\="1.0" encoding\="UTF-8"?>\r\n<messages>\r\n<message>Added pactienti,programari,cabinet,home functionality + image read</message>\r\n<message>Refactoring</message>\r\n<message>Initial commit</message>\r\n</messages>
+commit_dialog_history_messages=<?xml version\="1.0" encoding\="UTF-8"?>\r\n<messages>\r\n<message>Added functionality on dashboard</message>\r\n<message>Added pactienti,programari,cabinet,home functionality + image read</message>\r\n<message>Refactoring</message>\r\n<message>Initial commit</message>\r\n</messages>
 eclipse.preferences.version=1

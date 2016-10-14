@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+<form action="Exercise2Servlet" method="GET">
+<input type="submit" value="Exercitiul 1"/>
+</form>
+</body>
+</html>

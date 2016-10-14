@@ -1,0 +1,21 @@
+package ro.dcmt.data.beans;
+
+import java.io.Serializable;
+import java.sql.Timestamp;
+
+public class Feedback implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2151408540781210301L;
+
+	private int id;
+	private int idUser;
+	private int idCabinet;
+	private int idPacient;
+	private int rating;
+	private String comentariu;
+	private Timestamp data;
+	
+}

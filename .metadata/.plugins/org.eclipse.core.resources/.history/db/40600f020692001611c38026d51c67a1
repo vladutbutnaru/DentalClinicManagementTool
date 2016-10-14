@@ -1,0 +1,17 @@
+package ro.dcmt.data.controllers;
+
+import java.util.ArrayList;
+
+import ro.dcmt.data.beans.Operatie;
+
+public class OperatieService {
+
+	public ArrayList<Operatie> getOperatiiForCabinet(int idCabinet){
+		ArrayList<Operatie> operatii = new ArrayList<Operatie>();
+		
+		
+		
+		
+	}
+	
+}

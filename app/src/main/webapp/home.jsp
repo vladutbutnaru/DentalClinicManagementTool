@@ -20,22 +20,32 @@
 	PacientService ps = new PacientService();
 	CabinetService cs = new CabinetService();
 	Cookie[] cookies = request.getCookies();
+	ArrayList<Programare> programariNoi;
+	ArrayList<Programare> programariViitoare;
 	if (cookies != null) {
 		for (Cookie cookie : cookies) {
 			if (cookie.getName().equals("user"))
 				email = cookie.getValue();
 		}
-	}
-	if (email == null)
+	} else {
+
 		response.sendRedirect("login.jsp");
-	else {
+		return;
+
+	}
+	if (email == null) {
+
+		response.sendRedirect("login.jsp");
+		return;
+
+	} else {
 
 		currentUser = (User) us.getAllByColumn("email", email).get(0);
 		cabinet = (Cabinet) cs.getById(currentUser.getId());
 
 	}
-	ArrayList<Programare> programariNoi = ProgramariService.getNewAppointmentsForDoctor(currentUser.getId());
-	ArrayList<Programare> programariViitoare = ProgramariService.getFutureAppointments(currentUser.getId());
+	programariNoi = ProgramariService.getNewAppointmentsForDoctor(currentUser.getId());
+	programariViitoare = ProgramariService.getFutureAppointments(currentUser.getId());
 %>
 
 
@@ -66,7 +76,8 @@
 				<li class="xn-logo"><a href="index.html">DCMT</a> <a href="#"
 					class="x-navigation-control"></a></li>
 				<li class="xn-profile"><a href="#" class="profile-mini"> <img
-						src="<%=currentUser.getImagine().getName()%>" alt="<%=currentUser.getFirstName()%>" />
+						src="<%=currentUser.getImagine().getName()%>"
+						alt="<%=currentUser.getFirstName()%>" />
 				</a>
 					<div class="profile">
 						<div class="profile-image">
@@ -82,24 +93,25 @@
 							</div>
 						</div>
 						<div class="profile-controls">
-							<a href="javascript:void(0);" onclick="bootstro.start('.bootstro');" class="profile-control-left"><span
-								class="fa fa-info"></span></a> <a href="bootstro.start('.bootstro');" 
+							<a href="javascript:void(0);"
+								onclick="bootstro.start('.bootstro');"
+								class="profile-control-left"><span class="fa fa-info"></span></a>
+							<a href="bootstro.start('.bootstro');"
 								class="profile-control-right"><span class="fa fa-envelope"></span></a>
 						</div>
 					</div></li>
 				<li class="xn-title">Navigatie</li>
-				<li class="active"><a href="index.html"><span
-						class="fa fa-desktop"></span> <span class="xn-text">Privire
-							generala</span></a></li>
+				<li class="active"><a href="#"><span class="fa fa-desktop"></span>
+						<span class="xn-text">Privire generala</span></a></li>
 				<li class="xn-openable"><a href="#"><span
-						class="fa fa-files-o"></span> <span class="xn-text">Finante</span></a>
+						class="fa fa-files-o"></span> <span class="xn-text">Pacienti</span></a>
 					<ul>
-						<li><a href="pages-gallery.html"><span
-								class="fa fa-users"></span> Clienti</a></li>
-						<li><a href="pages-profile.html"><span class="fa fa-user"></span>
-								Facturi</a></li>
-						
-						
+						<li><a href="pacienti.jsp"><span class="fa fa-users"></span>
+								Lista Pacienti </a></li>
+						<li><a href="pages-profile.html"><span
+								class="fa fa-file-text-o"></span> Facturi</a></li>
+
+
 					</ul></li>
 				<li class="xn-openable"><a href="#"><span
 						class="fa fa-file-text-o"></span> <span class="xn-text">Cabinet</span></a>
@@ -228,7 +240,11 @@
 						class="fa fa-sign-out"></span></a></li>
 				<!-- END SIGN OUT -->
 				<!-- MESSAGES -->
-				<li class="xn-icon-button pull-right bootstro" data-bootstro-title="Programari neaprobate" data-bootstro-placement="bottom" data-bootstro-content="Aici veti gasi programarile nou create si neaprobate."  data-bootstro-step="5"><a href="#"><span
+				<li class="xn-icon-button pull-right bootstro"
+					data-bootstro-title="Programari neaprobate"
+					data-bootstro-placement="bottom"
+					data-bootstro-content="Aici veti gasi programarile nou create si neaprobate."
+					data-bootstro-step="5"><a href="#"><span
 						class="fa fa-calendar-check-o"></span></a>
 					<div class="informer informer-danger"><%=programariNoi.size()%></div>
 					<div
@@ -251,7 +267,8 @@
 
 									pacientProgramare = (Pacient) ps.getById(p.getIdUser());
 							%>
-							<a href="pacient.jsp/id=<%=pacientProgramare.getId()%>" class="list-group-item">
+							<a href="pacient.jsp?id=<%=pacientProgramare.getId()%>"
+								class="list-group-item">
 								<div class="list-group-status status-online"></div> <img
 								src="<%=pacientProgramare.getImagine().getName()%>"
 								class="pull-left" alt="<%=pacientProgramare.getFirstName()%>" />
@@ -259,17 +276,17 @@
 							</span>
 								<p><%=p.getIdOperatii()%></p>
 							</a>
-						
-						<%
-							}
-						%>
-</div>
+
+							<%
+								}
+							%>
+						</div>
 						<div class="panel-footer text-center">
 							<a href="pages-messages.html">Vezi toate programarile</a>
 						</div>
 					</div></li>
 				<!-- END MESSAGES -->
-				
+
 			</ul>
 			<!-- END X-NAVIGATION VERTICAL -->
 
@@ -288,13 +305,17 @@
 					<div class="col-md-3">
 
 						<!-- START WIDGET SLIDER -->
-						
-						<div class="widget widget-default widget-carousel bootstro"  data-bootstro-title="Widgetul 'Statistici'" data-bootstro-placement="bottom" data-bootstro-content="In acest widget puteti vizualiza numarul total de programari, programarile viitoare si numarul de pacienti noi."  data-bootstro-step="1">
+
+						<div class="widget widget-default widget-carousel bootstro"
+							data-bootstro-title="Widgetul 'Statistici'"
+							data-bootstro-placement="bottom"
+							data-bootstro-content="In acest widget puteti vizualiza numarul total de programari, programarile viitoare si numarul de pacienti noi."
+							data-bootstro-step="1">
 							<div class="owl-carousel" id="owl-example">
 								<div>
 									<div class="widget-title">Total programari</div>
 									<div class="widget-subtitle"><%=new Date().toString()%></div>
-									<div class="widget-int"><%=ProgramariService.getCountofPacientsForDoctor(currentUser.getId())%>
+									<div class="widget-int"><%=ProgramariService.getCountofAppointmentsForDoctor(currentUser.getId())%>
 									</div>
 								</div>
 								<div>
@@ -309,7 +330,7 @@
 								</div>
 							</div>
 
-				
+
 						</div>
 						<!-- END WIDGET SLIDER -->
 
@@ -317,8 +338,11 @@
 					<div class="col-md-3">
 
 						<!-- START WIDGET MESSAGES -->
-						<div class="widget widget-default widget-item-icon bootstro" data-bootstro-title="Widgetul 'Notificari'" data-bootstro-placement="bottom" data-bootstro-content="In acest widget puteti vizualiza numarul de notificari noi pe care le-ati primit."  data-bootstro-step="2"
-							>
+						<div class="widget widget-default widget-item-icon bootstro"
+							data-bootstro-title="Widgetul 'Notificari'"
+							data-bootstro-placement="bottom"
+							data-bootstro-content="In acest widget puteti vizualiza numarul de notificari noi pe care le-ati primit."
+							data-bootstro-step="2">
 							<div class="widget-item-left">
 								<span class="fa fa-envelope"></span>
 							</div>
@@ -335,8 +359,11 @@
 					<div class="col-md-3">
 
 						<!-- START WIDGET REGISTRED -->
-						<div class="widget widget-default widget-item-icon bootstro" data-bootstro-title="Widgetul 'Programari din aplicatie'" data-bootstro-placement="bottom" data-bootstro-content="In acest widget puteti vizualiza numarul total de programari create din aplicatie mobila <b>Dentistul Meu</b>."  data-bootstro-step="3"
-							>
+						<div class="widget widget-default widget-item-icon bootstro"
+							data-bootstro-title="Widgetul 'Programari din aplicatie'"
+							data-bootstro-placement="bottom"
+							data-bootstro-content="In acest widget puteti vizualiza numarul total de programari create din aplicatie mobila <b>Dentistul Meu</b>."
+							data-bootstro-step="3">
 							<div class="widget-item-left">
 								<span class="fa fa-user"></span>
 							</div>
@@ -353,13 +380,19 @@
 					<div class="col-md-3">
 
 						<!-- START WIDGET CLOCK -->
-						<div class="widget widget-danger widget-padding-sm bootstro" data-bootstro-title="Widgetul 'Plantificator'" data-bootstro-placement="bottom" data-bootstro-content="In acest widget, folosind butoanele de mai sus, puteti stabili programari viitoare."  data-bootstro-step="4">
+						<div class="widget widget-danger widget-padding-sm bootstro"
+							data-bootstro-title="Widgetul 'Plantificator'"
+							data-bootstro-placement="bottom"
+							data-bootstro-content="In acest widget, folosind butoanele de mai sus, puteti stabili programari viitoare."
+							data-bootstro-step="4">
 							<div class="widget-big-int plugin-clock">00:00</div>
 							<div class="widget-subtitle plugin-date">Se incarca...</div>
 
 							<div class="widget-buttons widget-c3">
 								<div class="col">
-									<a href="#"><span class="fa fa-clock-o"></span></a>
+									<a href="#" data-toggle="modal"
+										data-target="#modal_programare_noua"><span
+										class="fa fa-clock-o"></span></a>
 								</div>
 								<div class="col">
 									<a href="#"><span class="fa fa-bell"></span></a>
@@ -694,7 +727,74 @@
 		<!-- END PAGE CONTENT -->
 	</div>
 	<!-- END PAGE CONTAINER -->
+	<!--  MODALS -->
+	<div class="modal" id="modal_programare_noua" tabindex="-1"
+		role="dialog" aria-labelledby="defModalHead" aria-hidden="true"
+		style="display: none;">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">
+						<span aria-hidden="true">×</span><span class="sr-only">Inchide</span>
+					</button>
+					<h4 class="modal-title" id="defModalHead">Adauga programare
+						noua</h4>
+				</div>
+				<div class="modal-body">
 
+					<div class="col-md-12">
+						<div class="input-group">
+							<input type="text" class="form-control"
+								placeholder="Nume Pacient (eg. Ion Petreanu)"> <span
+								class="input-group-btn">
+								<button class="btn btn-default" type="button">Cauta in
+									lista de pacienti!</button>
+							</span>
+						</div>
+					</div>
+					<br /> <br />
+
+					<div class="form-group">
+						<div class="col-md-5">
+							<div class="input-group">
+								<input type="text" class="form-control" value="01-01-2016"
+									id="dp-4" data-date="01-01-2016" data-date-format="dd-mm-yyyy"
+									data-date-viewmode="months"> <span
+									class="input-group-addon add-on"><span
+									class="glyphicon glyphicon-calendar"></span></span>
+							</div>
+						</div>
+					</div>
+
+					<br /> <br />
+					<div class="form-group">
+						<div class="col-md-5">
+							<div class="input-group bootstrap-timepicker">
+								<input type="text" class="form-control timepicker"> <span
+									class="input-group-addon"><span
+									class="glyphicon glyphicon-time"></span></span>
+							</div>
+						</div>
+					</div>
+					<br /> <br />
+
+
+
+
+
+
+
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-success" data-dismiss="modal">Salveaza</button>
+					<button type="button" class="btn btn-default" data-dismiss="modal">Inchide</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<!--  END MODALS -->
 	<!-- MESSAGE BOX-->
 	<div class="message-box animated fadeIn" data-sound="alert"
 		id="mb-signout">
@@ -704,12 +804,13 @@
 					<span class="fa fa-sign-out"></span> Log <strong>Out</strong> ?
 				</div>
 				<div class="mb-content">
-					<p>Esti sigur ca vrei sa te deloghezi??</p>
-					<p>Apasa DA daca vrei sa confirmi sau NU pentru a continua sesiunea de lucru.</p>
+					<p>Esti sigur ca vrei sa te deloghezi?</p>
+					<p>Apasa DA daca vrei sa confirmi sau NU pentru a continua
+						sesiunea de lucru.</p>
 				</div>
 				<div class="mb-footer">
 					<div class="pull-right">
-						<a href="pages-login.html" class="btn btn-success btn-lg">Da</a>
+						<a href="logout.jsp" class="btn btn-success btn-lg">Da</a>
 						<button class="btn btn-default btn-lg mb-control-close">Nu</button>
 					</div>
 				</div>
@@ -754,13 +855,17 @@
 	<script type="text/javascript" src="js/plugins/moment.min.js"></script>
 	<script type="text/javascript"
 		src="js/plugins/daterangepicker/daterangepicker.js"></script>
-		    <script type="text/javascript" src="js/plugins/tour/bootstrap-tour.min.js"></script>        
-        <script type="text/javascript" src="js/plugins/tour/bootstro.min.js"></script>
+	<script type="text/javascript"
+		src="js/plugins/tour/bootstrap-tour.min.js"></script>
+	<script type="text/javascript" src="js/plugins/tour/bootstro.min.js"></script>
 	<!-- END THIS PAGE PLUGINS-->
-
+	<script type="text/javascript"
+		src="js/plugins/tagsinput/jquery.tagsinput.min.js"></script>
 	<!-- START TEMPLATE -->
-	<script type="text/javascript" src="js/settings.js"></script>
-
+	<script type="text/javascript"
+		src="js/plugins/bootstrap/bootstrap-select.js"></script>
+	<script type="text/javascript"
+		src="js/plugins/bootstrap/bootstrap-timepicker.min.js"></script>
 	<script type="text/javascript" src="js/plugins.js"></script>
 	<script type="text/javascript" src="js/actions.js"></script>
 

@@ -19,6 +19,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import ro.dcmt.data.beans.Pacient;
+import ro.dcmt.data.beans.Programare;
 import ro.dcmt.data.connection.DBConnection;
 
 public class PacientService implements DBEntityController{
@@ -55,8 +56,10 @@ public class PacientService implements DBEntityController{
                 p.setPassword(rs.getString(7));
                 p.setFirstName(rs.getString(2));
                 p.setLastName(rs.getString(3));
+             
                // u.setDateRegistered(rs.getDate(6));
                 p.setCity(rs.getString(5));
+                p.setPhoneNumber(rs.getString(10));
 
                 Blob imageBlob = (rs.getBlob(9));
                 InputStream binaryStream = imageBlob.getBinaryStream(1, imageBlob.length());
@@ -102,4 +105,84 @@ public class PacientService implements DBEntityController{
     public void update(int id) {
 
     }
+    
+    public ArrayList<Pacient> getPacientiForDoctor(int doctorID){
+    	ArrayList<Programare> programari = ProgramariService.getAllAppointmentsForDoctor(doctorID);
+    	ArrayList<Pacient> pacienti = new ArrayList<Pacient>();
+    	boolean ok = true;
+    	for(Programare p : programari){
+    		ok=true;
+    		Pacient pacient = (Pacient) getById(p.getIdUser());
+    		for(Pacient p1 : pacienti){
+    			if(p1.getId()==pacient.getId())
+    				ok=false;
+    			
+    			
+    		}
+    		if(ok)
+    			pacienti.add(pacient);
+    	
+    	}
+		return pacienti;
+    	    	
+    }
+    public Pacient getPacientByFirstAndLastName(String fistName, String lastName){
+    	  Pacient p = new Pacient();
+          try {
+
+              stmt = conn.prepareStatement("SELECT * FROM pacienti WHERE FirstName = ? AND LastName = ?");
+              stmt.setString(1, fistName);
+              stmt.setString(2, lastName);
+
+              rs = stmt.executeQuery();
+              if (rs.next()) {
+                  logger.info("Patient Information Fetch: " + fistName);
+                  p.setId(rs.getInt(1));
+                  p.setEmail(rs.getString(6));
+                  p.setPassword(rs.getString(7));
+                  p.setFirstName(rs.getString(2));
+                  p.setLastName(rs.getString(3));
+               
+                 // u.setDateRegistered(rs.getDate(6));
+                  p.setCity(rs.getString(5));
+                  p.setPhoneNumber(rs.getString(10));
+
+                  Blob imageBlob = (rs.getBlob(9));
+                  InputStream binaryStream = imageBlob.getBinaryStream(1, imageBlob.length());
+
+
+                  File f = new File(getPath() + "pacient" + p.getId() + ".jpg");
+                  OutputStream out = new FileOutputStream(f);
+                  byte[] buff = new byte[4096];
+                  int len = 0;
+
+                  while ((len = binaryStream.read(buff)) != -1) {
+                      out.write(buff, 0, len);
+                  }
+                  p.setImagine(f);
+                  out.close();
+                  return p;
+
+              }
+
+          } catch (SQLException ex) {
+              // handle any errors
+              System.out.println("SQLException: " + ex.getMessage());
+              System.out.println("SQLState: " + ex.getSQLState());
+              System.out.println("VendorError: " + ex.getErrorCode());
+              logger.error(ex.getMessage());
+          } catch (FileNotFoundException e) {
+              logger.error(e.getMessage());
+              e.printStackTrace();
+          } catch (IOException e) {
+              logger.error(e.getMessage());
+              e.printStackTrace();
+          }
+          return null;
+    	
+    	
+    	
+    }
+    
+    
 }

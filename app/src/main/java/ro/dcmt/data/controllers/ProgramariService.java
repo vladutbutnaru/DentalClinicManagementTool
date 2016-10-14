@@ -12,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import ro.dcmt.data.beans.Programare;
+import ro.dcmt.data.beans.User;
 import ro.dcmt.data.connection.DBConnection;
 
 public class ProgramariService implements DBEntityController {
@@ -19,6 +20,7 @@ public class ProgramariService implements DBEntityController {
 	private static Connection conn = (Connection) DBConnection.getConnection();
 	private static PreparedStatement stmt = null;
 	private static ResultSet rs = null;
+	private UserService us = new UserService();
 
 	public Object getById(int id) {
 		// TODO Auto-generated method stub
@@ -44,12 +46,12 @@ public class ProgramariService implements DBEntityController {
 		int number = 0;
 		try {
 
-			stmt = conn.prepareStatement("SELECT COUNT(*) AS total FROM programari WHERE IDDoctor = ?");
+			stmt = conn.prepareStatement("SELECT COUNT(DISTINCT IDUser) AS total FROM programari WHERE IDDoctor = ? AND Respins = 0");
 			stmt.setInt(1, id);
 
 			rs = stmt.executeQuery();
 			rs.next();
-			number=rs.getInt("total");
+			number = rs.getInt("total");
 		} catch (SQLException ex) {
 			// handle any errors
 			System.out.println("SQLException: " + ex.getMessage());
@@ -60,159 +62,319 @@ public class ProgramariService implements DBEntityController {
 		return number;
 
 	}
-	public static ArrayList<Programare> getNewAppointmentsForDoctor(int idDoctor){
-		ArrayList<Programare> programari = new ArrayList<Programare>();
-        try {
-
-            stmt = conn.prepareStatement("SELECT * FROM programari WHERE IDDoctor = ? AND Aprobat = 0");
-            stmt.setInt(1, idDoctor);
-
-            rs = stmt.executeQuery();
-            logger.info("getNewAppointmentsForDoctor: " + idDoctor);
-           while(rs.next()) {
-               Programare p = new Programare();
-               p.setId(rs.getInt(1));
-               p.setIdDoctor(rs.getInt(2));
-               p.setIdUser(rs.getInt(3));
-               p.setData(rs.getTimestamp(4));
-               p.setIdOperatii(rs.getString(5));
-               p.setAprobat(rs.getInt(6)==1);
-               p.setCanal(rs.getString(7));
-               programari.add(p);
-           }
-        } catch (SQLException ex) {
-            // handle any errors
-            System.out.println("SQLException: " + ex.getMessage());
-            System.out.println("SQLState: " + ex.getSQLState());
-            System.out.println("VendorError: " + ex.getErrorCode());
-            logger.error(ex.getMessage());
-        }
-        return programari;
-
-	}
 	
-	public static ArrayList<Programare> getFutureAppointments(int idDoctor){
-		ArrayList<Programare> programari = new ArrayList<Programare>();
-        try {
-			Date date = new Date();
-			Timestamp timestamp = new Timestamp(date.getTime());
-			
-            stmt = conn.prepareStatement("SELECT * FROM programari WHERE Data > ?");
-            stmt.setTimestamp(1, timestamp);
-
-            rs = stmt.executeQuery();
-            logger.info("getFutureAppointments: " + idDoctor);
-           while(rs.next()) {
-               Programare p = new Programare();
-               p.setId(rs.getInt(1));
-               p.setIdDoctor(rs.getInt(2));
-               p.setIdUser(rs.getInt(3));
-               p.setData(rs.getTimestamp(4));
-               p.setIdOperatii(rs.getString(5));
-               p.setAprobat(rs.getInt(6)==1);
-               p.setCanal(rs.getString(7));
-               programari.add(p);
-           }
-        } catch (SQLException ex) {
-            // handle any errors
-            System.out.println("SQLException: " + ex.getMessage());
-            System.out.println("SQLState: " + ex.getSQLState());
-            System.out.println("VendorError: " + ex.getErrorCode());
-            logger.error(ex.getMessage());
-        }
-        return programari;
-
-	}
-	
-	@SuppressWarnings("deprecation")
-	public static int getNumberOfNewPatients(int idDoctor){
-		int newPatients = 0;
-		ArrayList<Programare> programariVechi = new ArrayList<Programare>();
-	
-		try {
-			Date date = new Date();
-			date.setDate(1);			
-			
-			Timestamp timestamp = new Timestamp(date.getTime());
-			
-            stmt = conn.prepareStatement("SELECT * FROM programari WHERE Data < ?");
-            stmt.setTimestamp(1, timestamp);
-
-            rs = stmt.executeQuery();
-            logger.info("getNumberOfNewPatients: " + idDoctor);
-           while(rs.next()) {             
-             Programare p = new Programare();
-               p.setIdUser(rs.getInt(3));
-               programariVechi.add(p);
-             
-           }
-        } catch (SQLException ex) {
-            // handle any errors
-            System.out.println("SQLException: " + ex.getMessage());
-            System.out.println("SQLState: " + ex.getSQLState());
-            System.out.println("VendorError: " + ex.getErrorCode());
-            logger.error(ex.getMessage());
-        }
-		
-		try {
-			Date date = new Date();
-			date.setDate(1);			
-			
-			Timestamp timestamp = new Timestamp(date.getTime());
-			
-            stmt = conn.prepareStatement("SELECT * FROM programari WHERE Data > ?");
-            stmt.setTimestamp(1, timestamp);
-
-            rs = stmt.executeQuery();
-            logger.info("getNumberOfNewPatients: " + idDoctor);
-           while(rs.next()) {             
-        	   for(Programare pVeche : programariVechi){
-        		   if(pVeche.getIdUser() ==rs.getInt(3)){
-        			   break;
-        			   
-        		   }
-        		  newPatients++;
-           
-        	   }
-             
-             
-           }
-        } catch (SQLException ex) {
-            // handle any errors
-            System.out.println("SQLException: " + ex.getMessage());
-            System.out.println("SQLState: " + ex.getSQLState());
-            System.out.println("VendorError: " + ex.getErrorCode());
-            logger.error(ex.getMessage());
-        }
-		
-
-		
-		
-		return newPatients;
-	}
-	public static int getProgramariFromApp(int idDoctor){
+	public static int getCountofAppointmentsForDoctor(int id) {
 		int number = 0;
 		try {
-			
-			
-            stmt = conn.prepareStatement("SELECT * FROM programari WHERE Canal = 'Mobile'");
-           
 
-            rs = stmt.executeQuery();
-            logger.info("getProgramariFromApp: " + idDoctor);
-           while(rs.next()) {             
-            number++;
-             
-           }
-        } catch (SQLException ex) {
-            // handle any errors
-            System.out.println("SQLException: " + ex.getMessage());
-            System.out.println("SQLState: " + ex.getSQLState());
-            System.out.println("VendorError: " + ex.getErrorCode());
-            logger.error(ex.getMessage());
-        }
-		
+			stmt = conn.prepareStatement("SELECT COUNT(*) AS total FROM programari WHERE IDDoctor = ? AND Respins = 0");
+			stmt.setInt(1, id);
+
+			rs = stmt.executeQuery();
+			rs.next();
+			number = rs.getInt("total");
+		} catch (SQLException ex) {
+			// handle any errors
+			System.out.println("SQLException: " + ex.getMessage());
+			System.out.println("SQLState: " + ex.getSQLState());
+			System.out.println("VendorError: " + ex.getErrorCode());
+			logger.error(ex.getMessage());
+		}
 		return number;
+
 	}
 	
+	
+	
+
+	public static ArrayList<Programare> getNewAppointmentsForDoctor(int idDoctor) {
+		ArrayList<Programare> programari = new ArrayList<Programare>();
+		try {
+
+			stmt = conn.prepareStatement("SELECT * FROM programari WHERE IDDoctor = ? AND Aprobat = 0 AND Respins = 0");
+			stmt.setInt(1, idDoctor);
+
+			rs = stmt.executeQuery();
+			logger.info("getNewAppointmentsForDoctor: " + idDoctor);
+			while (rs.next()) {
+				Programare p = new Programare();
+				p.setId(rs.getInt(1));
+				p.setIdDoctor(rs.getInt(2));
+				p.setIdUser(rs.getInt(3));
+				p.setData(rs.getTimestamp(4));
+				p.setIdOperatii(rs.getString(5));
+				p.setAprobat(rs.getInt(6) == 1);
+				p.setCanal(rs.getString(7));
+				p.setComentariu(rs.getString(8));
+				p.setRespins(rs.getInt(9)==1);
+				programari.add(p);
+			}
+		} catch (SQLException ex) {
+			// handle any errors
+			System.out.println("SQLException: " + ex.getMessage());
+			System.out.println("SQLState: " + ex.getSQLState());
+			System.out.println("VendorError: " + ex.getErrorCode());
+			logger.error(ex.getMessage());
+		}
+		return programari;
+
+	}
+
+	public static ArrayList<Programare> getFutureAppointments(int idDoctor) {
+		ArrayList<Programare> programari = new ArrayList<Programare>();
+		try {
+			Date date = new Date();
+			Timestamp timestamp = new Timestamp(date.getTime());
+
+			stmt = conn.prepareStatement("SELECT * FROM programari WHERE Data > ? AND Respins = 0");
+			stmt.setTimestamp(1, timestamp);
+
+			rs = stmt.executeQuery();
+			logger.info("getFutureAppointments: " + idDoctor);
+			while (rs.next()) {
+				Programare p = new Programare();
+				p.setId(rs.getInt(1));
+				p.setIdDoctor(rs.getInt(2));
+				p.setIdUser(rs.getInt(3));
+				p.setData(rs.getTimestamp(4));
+				p.setIdOperatii(rs.getString(5));
+				p.setAprobat(rs.getInt(6) == 1);
+				p.setCanal(rs.getString(7));
+
+				p.setComentariu(rs.getString(8));
+				p.setRespins(rs.getInt(9)==1);
+				programari.add(p);
+			}
+		} catch (SQLException ex) {
+			// handle any errors
+			System.out.println("SQLException: " + ex.getMessage());
+			System.out.println("SQLState: " + ex.getSQLState());
+			System.out.println("VendorError: " + ex.getErrorCode());
+			logger.error(ex.getMessage());
+		}
+		return programari;
+
+	}
+
+	@SuppressWarnings("deprecation")
+	public static int getNumberOfNewPatients(int idDoctor) {
+		int newPatients = 0;
+		ArrayList<Programare> programariVechi = new ArrayList<Programare>();
+
+		try {
+			Date date = new Date();
+			date.setDate(1);
+
+			Timestamp timestamp = new Timestamp(date.getTime());
+
+			stmt = conn.prepareStatement("SELECT * FROM programari WHERE Data < ?");
+			stmt.setTimestamp(1, timestamp);
+
+			rs = stmt.executeQuery();
+			logger.info("getNumberOfNewPatients: " + idDoctor);
+			while (rs.next()) {
+				Programare p = new Programare();
+				p.setIdUser(rs.getInt(3));
+				programariVechi.add(p);
+
+			}
+		} catch (SQLException ex) {
+			// handle any errors
+			System.out.println("SQLException: " + ex.getMessage());
+			System.out.println("SQLState: " + ex.getSQLState());
+			System.out.println("VendorError: " + ex.getErrorCode());
+			logger.error(ex.getMessage());
+		}
+
+		try {
+			Date date = new Date();
+			date.setDate(1);
+
+			Timestamp timestamp = new Timestamp(date.getTime());
+
+			stmt = conn.prepareStatement("SELECT * FROM programari WHERE Data > ?");
+			stmt.setTimestamp(1, timestamp);
+
+			rs = stmt.executeQuery();
+			logger.info("getNumberOfNewPatients: " + idDoctor);
+			while (rs.next()) {
+				for (Programare pVeche : programariVechi) {
+					if (pVeche.getIdUser() == rs.getInt(3)) {
+						break;
+
+					}
+					newPatients++;
+
+				}
+
+			}
+		} catch (SQLException ex) {
+			// handle any errors
+			System.out.println("SQLException: " + ex.getMessage());
+			System.out.println("SQLState: " + ex.getSQLState());
+			System.out.println("VendorError: " + ex.getErrorCode());
+			logger.error(ex.getMessage());
+		}
+
+		return newPatients;
+	}
+
+	public static int getProgramariFromApp(int idDoctor) {
+		int number = 0;
+		try {
+
+			stmt = conn.prepareStatement("SELECT * FROM programari WHERE Canal = 'Mobile'");
+
+			rs = stmt.executeQuery();
+			logger.info("getProgramariFromApp: " + idDoctor);
+			while (rs.next()) {
+				number++;
+
+			}
+		} catch (SQLException ex) {
+			// handle any errors
+			System.out.println("SQLException: " + ex.getMessage());
+			System.out.println("SQLState: " + ex.getSQLState());
+			System.out.println("VendorError: " + ex.getErrorCode());
+			logger.error(ex.getMessage());
+		}
+
+		return number;
+	}
+
+	public static ArrayList<Programare> getAppointmentsForPatient(int idPatient) {
+		ArrayList<Programare> programari = new ArrayList<Programare>();
+		try {
+
+			stmt = conn.prepareStatement("SELECT * FROM programari WHERE IDUser = ? AND Respins = 0 AND Aprobat=1");
+			stmt.setInt(1, idPatient);
+
+			rs = stmt.executeQuery();
+			logger.info("getAppointmentsForPatient: " + idPatient);
+			while (rs.next()) {
+				Programare p = new Programare();
+				p.setId(rs.getInt(1));
+				p.setIdDoctor(rs.getInt(2));
+				p.setIdUser(rs.getInt(3));
+				p.setData(rs.getTimestamp(4));
+				p.setIdOperatii(rs.getString(5));
+				p.setAprobat(rs.getInt(6) == 1);
+				p.setCanal(rs.getString(7));
+
+				p.setComentariu(rs.getString(8));
+				p.setRespins(rs.getInt(9)==1);
+				programari.add(p);
+			}
+		} catch (SQLException ex) {
+			// handle any errors
+			System.out.println("SQLException: " + ex.getMessage());
+			System.out.println("SQLState: " + ex.getSQLState());
+			System.out.println("VendorError: " + ex.getErrorCode());
+			logger.error(ex.getMessage());
+		}
+		return programari;
+
+	}
+
+	public ArrayList<User> getDoctorsForPatient(int idPatient) {
+		ArrayList<User> doctors = new ArrayList<User>();
+		try {
+
+			stmt = conn.prepareStatement("SELECT DISTINCT(IDDoctor) FROM programari WHERE IDUser = ?");
+			stmt.setInt(1, idPatient);
+
+			rs = stmt.executeQuery();
+			logger.info("getDoctorsForPatient: " + idPatient);
+			while (rs.next()) {
+				User doctor = (User) us.getById(rs.getInt(1));
+				doctors.add(doctor);
+
+			}
+		} catch (SQLException ex) {
+			// handle any errors
+			System.out.println("SQLException: " + ex.getMessage());
+			System.out.println("SQLState: " + ex.getSQLState());
+			System.out.println("VendorError: " + ex.getErrorCode());
+			logger.error(ex.getMessage());
+		}
+		return doctors;
+
+	}
+	
+	public static void approveAppointment(int idProgramare){
+		
+		try {
+
+			stmt = conn.prepareStatement("UPDATE programari SET Aprobat = 1 WHERE ID = ?");
+			stmt.setInt(1, idProgramare);
+
+			 stmt.executeUpdate();
+			logger.info("approveAppointment: " + idProgramare);
+			
+		} catch (SQLException ex) {
+			// handle any errors
+			System.out.println("SQLException: " + ex.getMessage());
+			System.out.println("SQLState: " + ex.getSQLState());
+			System.out.println("VendorError: " + ex.getErrorCode());
+			logger.error(ex.getMessage());
+		}
+		
+	}
+	
+public static void rejectAppointment(int idProgramare){
+		
+		try {
+
+			stmt = conn.prepareStatement("UPDATE programari SET Respins = 1 WHERE ID = ?");
+			stmt.setInt(1, idProgramare);
+
+			 stmt.executeUpdate();
+			logger.info("approveAppointment: " + idProgramare);
+			
+		} catch (SQLException ex) {
+			// handle any errors
+			System.out.println("SQLException: " + ex.getMessage());
+			System.out.println("SQLState: " + ex.getSQLState());
+			System.out.println("VendorError: " + ex.getErrorCode());
+			logger.error(ex.getMessage());
+		}
+		
+	}
+
+public static ArrayList<Programare> getAllAppointmentsForDoctor(int idDoctor) {
+	ArrayList<Programare> programari = new ArrayList<Programare>();
+	try {
+
+		stmt = conn.prepareStatement("SELECT * FROM programari WHERE IDDoctor = ? AND Aprobat = 1");
+		stmt.setInt(1, idDoctor);
+
+		rs = stmt.executeQuery();
+		logger.info("getAllAppointmentsForDoctor: " + idDoctor);
+		while (rs.next()) {
+			Programare p = new Programare();
+			p.setId(rs.getInt(1));
+			p.setIdDoctor(rs.getInt(2));
+			p.setIdUser(rs.getInt(3));
+			p.setData(rs.getTimestamp(4));
+			p.setIdOperatii(rs.getString(5));
+			p.setAprobat(rs.getInt(6) == 1);
+			p.setCanal(rs.getString(7));
+			p.setComentariu(rs.getString(8));
+			p.setRespins(rs.getInt(9)==1);
+			programari.add(p);
+		}
+	} catch (SQLException ex) {
+		// handle any errors
+		System.out.println("SQLException: " + ex.getMessage());
+		System.out.println("SQLState: " + ex.getSQLState());
+		System.out.println("VendorError: " + ex.getErrorCode());
+		logger.error(ex.getMessage());
+	}
+	return programari;
+
+}
+
+
+
+
 }

@@ -1,0 +1,25 @@
+package ro.dcmt.data.controllers;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import ro.dcmt.data.beans.Operatie;
+import ro.dcmt.data.connection.DBConnection;
+
+public class OperatieService {
+	private static Logger logger = LoggerFactory.getLogger(PacientService.class);
+	private static Connection conn = (Connection) DBConnection.getConnection();
+	private static PreparedStatement stmt = null;
+	private static ResultSet rs = null;
+
+	public ArrayList<Operatie> getOperatiiForCabinet(int idCabinet) {
+		ArrayList<Operatie> operatii = new ArrayList<Operatie>();
+
+	}
+
+}

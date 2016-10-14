@@ -1,2 +1,8 @@
 1476108851346	Delete element
 1476190214561	Encapsulate field 'canal'
+1476258244471	Delete element
+1476260640631	Encapsulate field 'comentariu'
+1476262042674	Encapsulate field 'idProgramare'
+1476263577821	Encapsulate field 'phoneNumber'
+1476265589264	Encapsulate field 'respins'
+1476267590423	Rename type 'FeedbackController'

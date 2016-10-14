@@ -41,12 +41,12 @@ public class MobileAuthEndpoint extends HttpServlet {
 	
 		u.setEmail(request.getParameter("email"));
 		u.setPassword(request.getParameter("password"));
-		if (UserService.checkAuth(u)) {
-			logger.info("Web user logged in: " + u.getEmail());
+		if (UserService.checkAuthMobile(u)) {
+			logger.info("Mobile user logged in: " + u.getEmail());
 		
 			response.getWriter().append("OK");
 		} else {
-			logger.info("Web user failed authentication with: " + u.getEmail());
+			logger.info("Mobile user failed authentication with: " + u.getEmail());
 			
 			response.getWriter().append("NOK");
 		}

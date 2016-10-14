@@ -1,0 +1,5 @@
+package ro.dcmt.data.controllers;
+
+public class FeedbackService implements DBEntityController {
+
+}

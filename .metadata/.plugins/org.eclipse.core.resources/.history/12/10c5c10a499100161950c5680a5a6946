@@ -1,0 +1,47 @@
+package laborator.servlets;
+
+import java.io.IOException;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+/**
+ * Servlet implementation class Exercise11Servlet
+ */
+@WebServlet("/Exercise11Servlet")
+public class Exercise11Servlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+       
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public Exercise11Servlet() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		String engine = request.getParameter("engine");
+		if(engine.equals("G"))
+			response.sendRedirect("http://www.google.ro/search?num=20&client=opera&hs=8fN&q="+request.getParameter("key")+"&oq="+request.getParameter("key"));
+		if(engine.equals("Y"))
+			response.sendRedirect("https://ro.search.yahoo.com/search;_ylt=A9mSs2zFiv9XUZEA1poaigx.;_ylc=X1MDMjExNDc1MTAwMgRfcgMyBGZyAwRncHJpZANKeC5tUUQzWFNPYU93TVdFcVU0M2ZBBG5fcnNsdAMwBG5fc3VnZwMxMARvcmlnaW4Dcm8uc2VhcmNoLnlhaG9vLmNvbQRwb3MDMARwcXN0cgMEcHFzdHJsAwRxc3RybAM0BHF1ZXJ5A3Rlc3QEdF9zdG1wAzE0NzYzNjUyMDc-?p="+request.getParameter("key")+"&fr=sfp&fr2=sb-top-ro.search&iscqry=");
+		if(engine.equals("B"))
+			response.sendRedirect("https://www.bing.com/search?q=test&go=Submit&qs=n&form=QBLH&pq="+request.getParameter("key")+"&sc=8-4&sp=-1&sk=&cvid=F8AC7F2A432C4E649F9EAFEC8A4036E2");
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		doGet(request, response);
+	}
+
+}

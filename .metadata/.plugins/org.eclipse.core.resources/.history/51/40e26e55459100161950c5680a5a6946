@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Exercitii laborator</title>
+</head>
+<body>
+<form action="Exercise2Servlet" method="POST">
+<input type="submit" value="Exercitiul 2"/>
+</form>
+<br/>
+<form action="Exercise4Servlet" method="POST">
+<input type="submit" value="Exercitiul 4"/>
+</form>
+</body>
+</html>

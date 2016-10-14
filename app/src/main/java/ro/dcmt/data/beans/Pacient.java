@@ -18,6 +18,15 @@ public class Pacient implements Serializable {
 	private String password;
 	private int numOfLogins;
 	private File imagine;
+	private String phoneNumber;
+
+	
+
+	
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
 
 	public File getImagine() {
 		return imagine;
@@ -89,6 +98,14 @@ public class Pacient implements Serializable {
 
 	public void setNumOfLogins(int numOfLogins) {
 		this.numOfLogins = numOfLogins;
+	}
+
+	public String getPhoneNumber() {
+		return phoneNumber;
+	}
+
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
 	}
 
 }

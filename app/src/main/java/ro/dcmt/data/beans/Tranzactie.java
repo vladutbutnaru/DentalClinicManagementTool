@@ -14,6 +14,7 @@ public class Tranzactie implements Serializable {
 	private Date data;
 	private double pret;
 	private int idOperatie;
+	private int idProgramare;
 
 	public int getId() {
 		return id;
@@ -65,6 +66,14 @@ public class Tranzactie implements Serializable {
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
+	}
+
+	public int getIdProgramare() {
+		return idProgramare;
+	}
+
+	public void setIdProgramare(int idProgramare) {
+		this.idProgramare = idProgramare;
 	}
 
 }

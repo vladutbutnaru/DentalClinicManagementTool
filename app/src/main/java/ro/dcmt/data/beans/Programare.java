@@ -1,7 +1,7 @@
 package ro.dcmt.data.beans;
 
 import java.io.Serializable;
-import java.sql.Date;
+
 import java.sql.Timestamp;
 
 public class Programare implements Serializable {
@@ -16,7 +16,9 @@ public class Programare implements Serializable {
 	private Timestamp data;
 	private String idOperatii;
 	private boolean aprobat;
+	private String comentariu;
 	private String canal;
+	private boolean respins;
 
 	public int getId() {
 		return id;
@@ -76,6 +78,22 @@ public class Programare implements Serializable {
 
 	public void setCanal(String canal) {
 		this.canal = canal;
+	}
+
+	public String getComentariu() {
+		return comentariu;
+	}
+
+	public void setComentariu(String comentariu) {
+		this.comentariu = comentariu;
+	}
+
+	public boolean isRespins() {
+		return respins;
+	}
+
+	public void setRespins(boolean respins) {
+		this.respins = respins;
 	}
 
 }

@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Exercitii laborator</title>
+</head>
+<body>
+<form action="Exercise2Servlet" method="POST">
+<input type="submit" value="Exercitiul 1"/>
+</form>
+</body>
+</html>

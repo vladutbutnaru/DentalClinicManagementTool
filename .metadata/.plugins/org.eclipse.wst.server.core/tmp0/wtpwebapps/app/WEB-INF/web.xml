@@ -19,6 +19,30 @@
 		<description></description>
 		<servlet-class>ro.dcmt.web.WebAuthEndpoint</servlet-class>
 	</servlet>
+	<servlet>
+		<servlet-name>ApproveAppointmentServlet</servlet-name>
+		<display-name>ApproveAppointmentServlet</display-name>
+		<description></description>
+		<servlet-class>ro.dcmt.web.ApproveAppointmentServlet</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>RejectAppointmentServlet</servlet-name>
+		<display-name>RejectAppointmentServlet</display-name>
+		<description></description>
+		<servlet-class>ro.dcmt.web.RejectAppointmentServlet</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>GetCabinetsNearbyEndpoint</servlet-name>
+		<display-name>GetCabinetsNearbyEndpoint</display-name>
+		<description></description>
+		<servlet-class>ro.dcmt.mobile.GetCabinetsNearbyEndpoint</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>GetPacientByNameServlet</servlet-name>
+		<display-name>GetPacientByNameServlet</display-name>
+		<description></description>
+		<servlet-class>ro.dcmt.web.GetPacientByNameServlet</servlet-class>
+	</servlet>
 	<servlet-mapping>
 		<servlet-name>MobileAuthEndpoint</servlet-name>
 		<url-pattern>/MobileAuthEndpoint</url-pattern>
@@ -26,6 +50,22 @@
 	<servlet-mapping>
 		<servlet-name>WebAuthEndpoint</servlet-name>
 		<url-pattern>/WebAuthEndpoint</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>ApproveAppointmentServlet</servlet-name>
+		<url-pattern>/ApproveAppointmentServlet</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>RejectAppointmentServlet</servlet-name>
+		<url-pattern>/RejectAppointmentServlet</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>GetCabinetsNearbyEndpoint</servlet-name>
+		<url-pattern>/GetCabinetsNearbyEndpoint</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>GetPacientByNameServlet</servlet-name>
+		<url-pattern>/GetPacientByNameServlet</url-pattern>
 	</servlet-mapping>
 
 	<welcome-file-list>

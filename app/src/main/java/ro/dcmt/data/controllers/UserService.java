@@ -163,7 +163,7 @@ public class UserService implements DBEntityController {
 	public static boolean checkAuth(User u) {
 		try {
 
-			stmt = conn.prepareStatement("SELECT * FROM users WHERE Email = ? AND Password = ?");
+			stmt = conn.prepareStatement("SELECT * FROM users WHERE email = ? AND password = ?");
 			stmt.setString(1, u.getEmail());
 			stmt.setString(2, u.getPassword());
 			rs = stmt.executeQuery();
@@ -182,6 +182,29 @@ public class UserService implements DBEntityController {
 		}
 		return false;
 
+	}
+	
+	public static boolean checkAuthMobile(User u){
+		try {
+
+			stmt = conn.prepareStatement("SELECT * FROM pacienti WHERE Email = ? AND Password = ?");
+			stmt.setString(1, u.getEmail());
+			stmt.setString(2, u.getPassword());
+			rs = stmt.executeQuery();
+			if (rs.next()) {
+				logger.info("User Login: " + u.getEmail());
+				return true;
+
+			}
+
+		} catch (SQLException ex) {
+			// handle any errors
+			System.out.println("SQLException: " + ex.getMessage());
+			System.out.println("SQLState: " + ex.getSQLState());
+			System.out.println("VendorError: " + ex.getErrorCode());
+			logger.error(ex.getMessage());
+		}
+		return false;
 	}
 
 }
