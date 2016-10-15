@@ -346,7 +346,8 @@
 											<div class="input-group">
 												<span class="input-group-addon"><span
 													class="fa fa-calendar"></span></span> <input type="text"
-													class="form-control datepicker" id = "dataProgramare" value="2016-11-01">
+													class="form-control datepicker" id="dataProgramare"
+													value="2016-11-01">
 											</div>
 											<span class="help-block">Click pe casuta pentru a
 												afisa calendarul</span>
@@ -358,24 +359,27 @@
 											programarii</label>
 										<div class="col-md-6 col-xs-12">
 											<div class="input-group bootstrap-timepicker">
-												<input type="text" id = "timpProgramare" class="form-control timepicker24">
-												<span class="input-group-addon"><span
+												<input type="text" id="timpProgramare"
+													class="form-control timepicker24"> <span
+													class="input-group-addon"><span
 													class="glyphicon glyphicon-time"></span></span>
 											</div>
 											<span class="help-block">Click pe casuta pentru a
 												afisa ceasul </span>
 										</div>
 									</div>
-									<input type="hidden" value="<%=currentUser.getId() %>" id="doctorID"/>
+									<input type="hidden" value="<%=currentUser.getId()%>"
+										id="doctorID" />
 									<div class="form-group">
 										<label class="col-md-3 col-xs-12 control-label">Operatii</label>
 										<div class="col-md-6 col-xs-12">
 
-											<select multiple id="operatiiProgramare" class="form-control select">
+											<select multiple id="operatiiProgramare"
+												class="form-control select">
 												<%
 													for (Operatie o : operatiiCabinet) {
 												%>
-												<option><%=o.getTitlu()%></option>
+												<option value="<%=o.getId()%>"><%=o.getTitlu()%></option>
 												<%
 													}
 												%>
@@ -385,20 +389,29 @@
 									</div>
 								</div>
 
-
+								<div class="form-group">
+									<label class="col-md-3 col-xs-12 control-label">Comentariul
+										programarii</label>
+									<div class="col-md-6 col-xs-12">
+										<textarea class="form-control" rows="5" id = "comentariuProgramare"></textarea>
+										<span class="help-block">Adauga comentarii pentru aceasta programare</span>
+									</div>
+								</div>
 
 								<div class="form-group">
 									<label class="col-md-3 col-xs-12 control-label">Notificari
 										pacient</label>
 									<div class="col-md-6 col-xs-12">
 										<label class="check"> <input type="checkbox"
-											class="icheckbox" checked="checked" id="notificationMobile" /> Dentistul Meu Mobile
-											App
+											class="icheckbox" checked="checked" id="notificationMobile" />
+											Dentistul Meu Mobile App
 										</label> <label class="check" id="phoneNumber"> <input
-											type="checkbox" class="icheckbox" checked="checked" id="notificationSMS"  /> SMS
+											type="checkbox" class="icheckbox" checked="checked"
+											id="notificationSMS" /> SMS
 
 										</label> <label class="check" id="pacientEmail"> <input
-											type="checkbox" class="icheckbox" checked="checked"  id="notificationEmail" /> Email
+											type="checkbox" class="icheckbox" checked="checked"
+											id="notificationEmail" /> Email
 
 										</label> <span class="help-block">Selectati tipurile de
 											notificari pentru pacient</span>
@@ -406,14 +419,15 @@
 								</div>
 
 							</div>
-							</form>
-							<div class="panel-footer">
-								<button class="btn btn-default">Sterge campurile</button>
-								<button class="btn btn-primary pull-right" onClick="javascript:createAppointment()">Salveaza
-									programarea</button>
-							</div>
+						</form>
+						<div class="panel-footer">
+							<button class="btn btn-default">Sterge campurile</button>
+							<button class="btn btn-primary pull-right"
+								onClick="javascript:createAppointment()">Salveaza
+								programarea</button>
+						</div>
 					</div>
-					
+
 				</div>
 			</div>
 

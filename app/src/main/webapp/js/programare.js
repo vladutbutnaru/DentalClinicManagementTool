@@ -23,11 +23,17 @@ var numePacient = document.getElementById("numePacient").value;
 var dataProgramare = document.getElementById("dataProgramare").value;
 var oraProgramare = document.getElementById("timpProgramare").value;
 var doctorID = document.getElementById("doctorID").value;
+var comentariuProgramare = document.getElementById("comentariuProgramare").value;
 var values = $('#operatiiProgramare').val();
+var operatii = [];
+for(let i = 0; i<values.length;i++){
+	operatii.push(values[i]);
+	
+}
 
-var notificationSMS;
-var notificationEmail;
-var notificationMobile;
+var notificationSMS = 0;
+var notificationEmail = 0;
+var notificationMobile = 0;
 if(document.getElementById("notificationSMS").checked)
 notificationSMS=1;
 if(document.getElementById("notificationEmail").checked)
@@ -40,11 +46,12 @@ $.get("AddAppointmentServlet",
     numePacient : numePacient,
     dataProgramare : dataProgramare,
     oraProgramare : oraProgramare,
-    values : values,
+    values : operatii,
     notificationSMS : notificationSMS,
     notificationEmail : notificationEmail,
     notificationMobile : notificationMobile,
-    doctorID : doctorID
+    doctorID : doctorID,
+    comentariuProgramare: comentariuProgramare
 
 }
 , function( data ) {

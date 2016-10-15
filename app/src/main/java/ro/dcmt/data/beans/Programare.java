@@ -19,6 +19,33 @@ public class Programare implements Serializable {
 	private String comentariu;
 	private String canal;
 	private boolean respins;
+	private boolean notificationSMS;
+	private boolean notificationMobile;
+	private boolean notificationEmail;
+
+	public boolean isNotificationSMS() {
+		return notificationSMS;
+	}
+
+	public void setNotificationSMS(boolean notificationSMS) {
+		this.notificationSMS = notificationSMS;
+	}
+
+	public boolean isNotificationMobile() {
+		return notificationMobile;
+	}
+
+	public void setNotificationMobile(boolean notificationMobile) {
+		this.notificationMobile = notificationMobile;
+	}
+
+	public boolean isNotificationEmail() {
+		return notificationEmail;
+	}
+
+	public void setNotificationEmail(boolean notificationEmail) {
+		this.notificationEmail = notificationEmail;
+	}
 
 	public int getId() {
 		return id;

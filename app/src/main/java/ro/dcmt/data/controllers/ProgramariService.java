@@ -42,11 +42,66 @@ public class ProgramariService implements DBEntityController {
 
 	}
 
+	public static void insertAppointment(Programare p) {
+
+		try {
+
+			stmt = conn.prepareStatement(
+					"INSERT INTO programari(IDDoctor,IDUser,Data,IDOperatii,Aprobat,Canal,Comentariu,Respins,"
+							+ "Notification_SMS,Notification_Mobile,Notification_Email)"
+							+ " VALUES (?,?,?,?,?,?,?,?,?,?,?)");
+			stmt.setInt(1, p.getIdDoctor());
+			stmt.setInt(2, p.getIdUser());
+			stmt.setTimestamp(3, p.getData());
+			stmt.setString(4, p.getIdOperatii());
+			if (p.isAprobat())
+				stmt.setInt(5, 1);
+			else
+				stmt.setInt(5, 0);
+			
+			stmt.setString(6, p.getCanal());
+			
+			stmt.setString(7, p.getComentariu());
+			
+			if (p.isRespins())
+				stmt.setInt(8, 1);
+			else
+				stmt.setInt(8, 0);
+			
+			if (p.isNotificationSMS())
+				stmt.setInt(9, 1);
+			else
+				stmt.setInt(9, 0);
+			
+			if (p.isNotificationMobile())
+				stmt.setInt(10, 1);
+			else
+				stmt.setInt(10, 0);
+			
+			if (p.isNotificationEmail())
+				stmt.setInt(11, 1);
+			else
+				stmt.setInt(11, 0);
+
+			stmt.executeUpdate();
+			logger.info("insertAppointment: " + p.getCanal());
+
+		} catch (SQLException ex) {
+			// handle any errors
+			System.out.println("SQLException: " + ex.getMessage());
+			System.out.println("SQLState: " + ex.getSQLState());
+			System.out.println("VendorError: " + ex.getErrorCode());
+			logger.error(ex.getMessage());
+		}
+
+	}
+
 	public static int getCountofPacientsForDoctor(int id) {
 		int number = 0;
 		try {
 
-			stmt = conn.prepareStatement("SELECT COUNT(DISTINCT IDUser) AS total FROM programari WHERE IDDoctor = ? AND Respins = 0");
+			stmt = conn.prepareStatement(
+					"SELECT COUNT(DISTINCT IDUser) AS total FROM programari WHERE IDDoctor = ? AND Respins = 0");
 			stmt.setInt(1, id);
 
 			rs = stmt.executeQuery();
@@ -62,7 +117,7 @@ public class ProgramariService implements DBEntityController {
 		return number;
 
 	}
-	
+
 	public static int getCountofAppointmentsForDoctor(int id) {
 		int number = 0;
 		try {
@@ -83,9 +138,6 @@ public class ProgramariService implements DBEntityController {
 		return number;
 
 	}
-	
-	
-	
 
 	public static ArrayList<Programare> getNewAppointmentsForDoctor(int idDoctor) {
 		ArrayList<Programare> programari = new ArrayList<Programare>();
@@ -106,7 +158,10 @@ public class ProgramariService implements DBEntityController {
 				p.setAprobat(rs.getInt(6) == 1);
 				p.setCanal(rs.getString(7));
 				p.setComentariu(rs.getString(8));
-				p.setRespins(rs.getInt(9)==1);
+				p.setRespins(rs.getInt(9) == 1);
+				p.setNotificationSMS(rs.getInt(10) == 1);
+				p.setNotificationMobile(rs.getInt(11) == 1);
+				p.setNotificationEmail(rs.getInt(12) == 1);
 				programari.add(p);
 			}
 		} catch (SQLException ex) {
@@ -142,7 +197,10 @@ public class ProgramariService implements DBEntityController {
 				p.setCanal(rs.getString(7));
 
 				p.setComentariu(rs.getString(8));
-				p.setRespins(rs.getInt(9)==1);
+				p.setRespins(rs.getInt(9) == 1);
+				p.setNotificationSMS(rs.getInt(10) == 1);
+				p.setNotificationMobile(rs.getInt(11) == 1);
+				p.setNotificationEmail(rs.getInt(12) == 1);
 				programari.add(p);
 			}
 		} catch (SQLException ex) {
@@ -262,7 +320,10 @@ public class ProgramariService implements DBEntityController {
 				p.setCanal(rs.getString(7));
 
 				p.setComentariu(rs.getString(8));
-				p.setRespins(rs.getInt(9)==1);
+				p.setRespins(rs.getInt(9) == 1);
+				p.setNotificationSMS(rs.getInt(10) == 1);
+				p.setNotificationMobile(rs.getInt(11) == 1);
+				p.setNotificationEmail(rs.getInt(12) == 1);
 				programari.add(p);
 			}
 		} catch (SQLException ex) {
@@ -300,17 +361,17 @@ public class ProgramariService implements DBEntityController {
 		return doctors;
 
 	}
-	
-	public static void approveAppointment(int idProgramare){
-		
+
+	public static void approveAppointment(int idProgramare) {
+
 		try {
 
 			stmt = conn.prepareStatement("UPDATE programari SET Aprobat = 1 WHERE ID = ?");
 			stmt.setInt(1, idProgramare);
 
-			 stmt.executeUpdate();
+			stmt.executeUpdate();
 			logger.info("approveAppointment: " + idProgramare);
-			
+
 		} catch (SQLException ex) {
 			// handle any errors
 			System.out.println("SQLException: " + ex.getMessage());
@@ -318,19 +379,19 @@ public class ProgramariService implements DBEntityController {
 			System.out.println("VendorError: " + ex.getErrorCode());
 			logger.error(ex.getMessage());
 		}
-		
+
 	}
-	
-public static void rejectAppointment(int idProgramare){
-		
+
+	public static void rejectAppointment(int idProgramare) {
+
 		try {
 
 			stmt = conn.prepareStatement("UPDATE programari SET Respins = 1 WHERE ID = ?");
 			stmt.setInt(1, idProgramare);
 
-			 stmt.executeUpdate();
+			stmt.executeUpdate();
 			logger.info("approveAppointment: " + idProgramare);
-			
+
 		} catch (SQLException ex) {
 			// handle any errors
 			System.out.println("SQLException: " + ex.getMessage());
@@ -338,43 +399,43 @@ public static void rejectAppointment(int idProgramare){
 			System.out.println("VendorError: " + ex.getErrorCode());
 			logger.error(ex.getMessage());
 		}
-		
+
 	}
 
-public static ArrayList<Programare> getAllAppointmentsForDoctor(int idDoctor) {
-	ArrayList<Programare> programari = new ArrayList<Programare>();
-	try {
+	public static ArrayList<Programare> getAllAppointmentsForDoctor(int idDoctor) {
+		ArrayList<Programare> programari = new ArrayList<Programare>();
+		try {
 
-		stmt = conn.prepareStatement("SELECT * FROM programari WHERE IDDoctor = ? AND Aprobat = 1");
-		stmt.setInt(1, idDoctor);
+			stmt = conn.prepareStatement("SELECT * FROM programari WHERE IDDoctor = ? AND Aprobat = 1");
+			stmt.setInt(1, idDoctor);
 
-		rs = stmt.executeQuery();
-		logger.info("getAllAppointmentsForDoctor: " + idDoctor);
-		while (rs.next()) {
-			Programare p = new Programare();
-			p.setId(rs.getInt(1));
-			p.setIdDoctor(rs.getInt(2));
-			p.setIdUser(rs.getInt(3));
-			p.setData(rs.getTimestamp(4));
-			p.setIdOperatii(rs.getString(5));
-			p.setAprobat(rs.getInt(6) == 1);
-			p.setCanal(rs.getString(7));
-			p.setComentariu(rs.getString(8));
-			p.setRespins(rs.getInt(9)==1);
-			programari.add(p);
+			rs = stmt.executeQuery();
+			logger.info("getAllAppointmentsForDoctor: " + idDoctor);
+			while (rs.next()) {
+				Programare p = new Programare();
+				p.setId(rs.getInt(1));
+				p.setIdDoctor(rs.getInt(2));
+				p.setIdUser(rs.getInt(3));
+				p.setData(rs.getTimestamp(4));
+				p.setIdOperatii(rs.getString(5));
+				p.setAprobat(rs.getInt(6) == 1);
+				p.setCanal(rs.getString(7));
+				p.setComentariu(rs.getString(8));
+				p.setRespins(rs.getInt(9) == 1);
+				p.setNotificationSMS(rs.getInt(10) == 1);
+				p.setNotificationMobile(rs.getInt(11) == 1);
+				p.setNotificationEmail(rs.getInt(12) == 1);
+				programari.add(p);
+			}
+		} catch (SQLException ex) {
+			// handle any errors
+			System.out.println("SQLException: " + ex.getMessage());
+			System.out.println("SQLState: " + ex.getSQLState());
+			System.out.println("VendorError: " + ex.getErrorCode());
+			logger.error(ex.getMessage());
 		}
-	} catch (SQLException ex) {
-		// handle any errors
-		System.out.println("SQLException: " + ex.getMessage());
-		System.out.println("SQLState: " + ex.getSQLState());
-		System.out.println("VendorError: " + ex.getErrorCode());
-		logger.error(ex.getMessage());
+		return programari;
+
 	}
-	return programari;
-
-}
-
-
-
 
 }
