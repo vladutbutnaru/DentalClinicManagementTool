@@ -23,8 +23,38 @@ public class ProgramariService implements DBEntityController {
 	private UserService us = new UserService();
 
 	public Object getById(int id) {
-		// TODO Auto-generated method stub
-		return null;
+		Programare  p = new Programare();
+		try {
+
+			stmt = conn.prepareStatement("SELECT * FROM programari WHERE ID = ?");
+			stmt.setInt(1, id);
+
+			rs = stmt.executeQuery();
+			logger.info("getById: " + id);
+			while (rs.next()) {
+				
+				p.setId(rs.getInt(1));
+				p.setIdDoctor(rs.getInt(2));
+				p.setIdUser(rs.getInt(3));
+				p.setData(rs.getTimestamp(4));
+				p.setIdOperatii(rs.getString(5));
+				p.setAprobat(rs.getInt(6) == 1);
+				p.setCanal(rs.getString(7));
+				p.setComentariu(rs.getString(8));
+				p.setRespins(rs.getInt(9) == 1);
+				p.setNotificationSMS(rs.getInt(10) == 1);
+				p.setNotificationMobile(rs.getInt(11) == 1);
+				p.setNotificationEmail(rs.getInt(12) == 1);
+			
+			}
+		} catch (SQLException ex) {
+			// handle any errors
+			System.out.println("SQLException: " + ex.getMessage());
+			System.out.println("SQLState: " + ex.getSQLState());
+			System.out.println("VendorError: " + ex.getErrorCode());
+			logger.error(ex.getMessage());
+		}
+		return p;
 	}
 
 	public ArrayList<Object> getAllByColumn(String column, String value) {

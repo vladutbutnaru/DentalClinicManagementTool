@@ -38,12 +38,14 @@ public class GetPacientByNameServlet extends HttpServlet {
 			String numePacient = request.getParameter("name");
 			String firstName = numePacient.split(" ")[0];
 			String lastName = numePacient.split(" ")[1];
+
 			PacientService ps = new PacientService();
 			Pacient p = ps.getPacientByFirstAndLastName(firstName, lastName);
 			if (p != null) {
 				response.getWriter().append(p.getPhoneNumber() + "," + p.getEmail());
 			}
 		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 

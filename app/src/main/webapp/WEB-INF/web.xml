@@ -5,8 +5,6 @@
 <web-app>
 	<display-name>DCMT Web and Mobile endpoint app</display-name>
 
-
-
 	<servlet>
 		<servlet-name>MobileAuthEndpoint</servlet-name>
 		<display-name>MobileAuthEndpoint</display-name>
@@ -49,6 +47,24 @@
 		<description></description>
 		<servlet-class>ro.dcmt.web.AddAppointmentServlet</servlet-class>
 	</servlet>
+	<servlet>
+		<servlet-name>AddPatientServlet</servlet-name>
+		<display-name>AddPatientServlet</display-name>
+		<description></description>
+		<servlet-class>ro.dcmt.web.AddPatientServlet</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>CalendarJsonServlet</servlet-name>
+		<display-name>CalendarJsonServlet</display-name>
+		<description></description>
+		<servlet-class>ro.dcmt.web.CalendarJsonServlet</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>GetAppointmentInfo</servlet-name>
+		<display-name>GetAppointmentInfo</display-name>
+		<description></description>
+		<servlet-class>ro.dcmt.web.GetAppointmentInfo</servlet-class>
+	</servlet>
 	<servlet-mapping>
 		<servlet-name>MobileAuthEndpoint</servlet-name>
 		<url-pattern>/MobileAuthEndpoint</url-pattern>
@@ -77,9 +93,43 @@
 		<servlet-name>AddAppointmentServlet</servlet-name>
 		<url-pattern>/AddAppointmentServlet</url-pattern>
 	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>AddPatientServlet</servlet-name>
+		<url-pattern>/AddPatientServlet</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>CalendarJsonServlet</servlet-name>
+		<url-pattern>/CalendarJsonServlet</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>GetAppointmentInfo</servlet-name>
+		<url-pattern>/GetAppointmentInfo</url-pattern>
+	</servlet-mapping>
 
 	<welcome-file-list>
 		<welcome-file>login.jsp</welcome-file>
 
 	</welcome-file-list>
+	
+	<error-page>
+		<!-- Forbidden directory listing -->
+		<error-code>403</error-code>
+		<location>/pages-error-500.html</location>
+	</error-page>
+	<error-page>
+		<!-- Missing resource -->
+		<error-code>404</error-code>
+		<location>/pages-error-404-2.html</location>
+	</error-page>
+	<error-page>
+		<!-- Uncaught exception -->
+		<error-code>500</error-code>
+		<location>/pages-error-500.html</location>
+	</error-page>
+	<error-page>
+		<!-- Unsupported servlet method -->
+		<error-code>503</error-code>
+		<location>/pages-error-500.html</location>
+	</error-page>
+
 </web-app>

@@ -491,81 +491,68 @@ $(function() {
             
             if($("#calendar").length > 0){
                 
-                function prepare_external_list(){
-                    
-                    $('#external-events .external-event').each(function() {
-                            var eventObject = {title: $.trim($(this).text())};
-
-                            $(this).data('eventObject', eventObject);
-                            $(this).draggable({
-                                    zIndex: 999,
-                                    revert: true,
-                                    revertDuration: 0
-                            });
-                    });                    
-                    
-                }
-                
-                
+         
                 var date = new Date();
                 var d = date.getDate();
                 var m = date.getMonth();
                 var y = date.getFullYear();
 
-                prepare_external_list();
+               
+                
+              var showAppointmentInfo = function(param){
+            	  console.log(param);
+            	  console.log( param.split(")")[0].split("(")[1]);
+            	  $.get("GetAppointmentInfo",
+            			  {
+            		  appointmentID : param.split(")")[0].split("(")[1]
+            			    
+
+            			  }
+            			  , function( data ) {
+            				  document.getElementById("numePacient").value= data.split(";")[0];
+            				  document.getElementById("dataProgramare").value= data.split(";")[1];
+            				  document.getElementById("timpProgramare").value= data.split(";")[2];
+            				  document.getElementById("comentariuProgramare").value= data.split(";")[3];
+            				  document.getElementById("operatiiProgramare").value = data.split(";")[4];
+
+
+
+
+            			  });
+            	  
+            	  $("#modalVeziProgramare").modal();
+            	  
+              }
 
                 var calendar = $('#calendar').fullCalendar({
+                	
+                	
+                
+                	allDayDefault: false,
+                
                     header: {
                         left: 'prev,next today',
                         center: 'title',
                         right: 'month,agendaWeek,agendaDay'
                     },
-                    editable: true,
-                    eventSources: {url: "assets/ajax_fullcalendar.php"},
-                    droppable: true,
-                    selectable: true,
-                    selectHelper: true,
-                    select: function(start, end, allDay) {
-                        var title = prompt('Event Title:');
-                        if (title) {
-                            calendar.fullCalendar('renderEvent',
-                            {
-                                title: title,
-                                start: start,
-                                end: end,
-                                allDay: allDay
-                            },
-                            true
-                            );
-                        }
-                        calendar.fullCalendar('unselect');
-                    },
-                    drop: function(date, allDay) {
+                    editable: false,
+                    eventSources: {url: "CalendarJsonServlet?doctorID="+document.getElementById("doctorID").value},
+                    timeFormat: 'H:mm', // uppercase H for 24-hour clock
+                  
+                    eventClick: function(calEvent, jsEvent, view) {
 
-                        var originalEventObject = $(this).data('eventObject');
+                       showAppointmentInfo(calEvent.title);
+                      
 
-                        var copiedEventObject = $.extend({}, originalEventObject);
-
-                        copiedEventObject.start = date;
-                        copiedEventObject.allDay = allDay;
-
-                        $('#calendar').fullCalendar('renderEvent', copiedEventObject, true);
-
-
-                        if ($('#drop-remove').is(':checked')) {
-                            $(this).remove();
-                        }
+        
 
                     }
+                   
+                  
+               
                 });
                 
-                $("#new-event").on("click",function(){
-                    var et = $("#new-event-text").val();
-                    if(et != ''){
-                        $("#external-events").prepend('<a class="list-group-item external-event">'+et+'</a>');
-                        prepare_external_list();
-                    }
-                });
+            
                 
             }            
         }

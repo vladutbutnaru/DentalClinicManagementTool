@@ -54,5 +54,44 @@ public class OperatieService {
 	}
 		return operatii;
 	}
+	
+	
+	public ArrayList<Operatie> getOperatiiForAppointment(String idOperatii) {
+		ArrayList<Operatie> operatii = new ArrayList<Operatie>();
+		
+			
+		String[] operatiiID = idOperatii.split(",");
+	
+		for(String id : operatiiID){
+			if(id!=null && !id.equals(""))
+		try {
+		
+			stmt = conn.prepareStatement("SELECT * FROM operatii WHERE ID = ?");
+			stmt.setInt(1, Integer.parseInt(id));
+
+			rs = stmt.executeQuery();
+			logger.info("getOperatiiForAppointment: " + idOperatii);
+			while (rs.next()) {
+			Operatie o = new Operatie();
+				o.setId(rs.getInt(1));
+				o.setTitlu(rs.getString(2));
+				o.setDescriere(rs.getString(3));
+			
+				o.setPret(rs.getDouble(5));
+				operatii.add(o);
+			}
+
+		} catch (SQLException ex) {
+			// handle any errors
+			System.out.println("SQLException: " + ex.getMessage());
+			System.out.println("SQLState: " + ex.getSQLState());
+			System.out.println("VendorError: " + ex.getErrorCode());
+			logger.error(ex.getMessage());
+		
+	}
+		
+		}
+		return operatii;
+	}
 
 }

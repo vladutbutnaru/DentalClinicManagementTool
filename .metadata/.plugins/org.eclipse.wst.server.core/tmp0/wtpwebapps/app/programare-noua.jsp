@@ -104,15 +104,17 @@
 						</div>
 					</div></li>
 				<li class="xn-title">Navigatie</li>
-				<li class="active"><a href="#"><span class="fa fa-desktop"></span>
+				<li><a href="home.jsp"><span class="fa fa-desktop"></span>
 						<span class="xn-text">Privire generala</span></a></li>
-				<li class="xn-openable"><a href="#"><span
+				<li class="xn-openable active"><a href="#"><span
 						class="fa fa-files-o"></span> <span class="xn-text">Pacienti</span></a>
 					<ul>
 						<li><a href="pacienti.jsp"><span class="fa fa-users"></span>
 								Lista Pacienti </a></li>
-						<li><a href="pages-profile.html"><span
-								class="fa fa-file-text-o"></span> Facturi</a></li>
+						<li class="active"><a href="programare-noua.jsp"><span
+								class="fa fa-check-circle"></span> Programare noua</a></li>
+						<li><a href="calendar-programari.jsp"><span
+								class="fa fa-calendar"></span> Agenda programari</a></li>
 
 
 					</ul></li>
@@ -124,96 +126,7 @@
 						<li><a href="layout-nav-toggled.html">Furnizori</a></li>
 						<li><a href="layout-nav-top.html">Plati utilitare</a></li>
 					</ul></li>
-				<li class="xn-title">Components</li>
-				<li class="xn-openable"><a href="#"><span
-						class="fa fa-cogs"></span> <span class="xn-text">UI Kits</span></a>
-					<ul>
-						<li><a href="ui-widgets.html"><span class="fa fa-heart"></span>
-								Widgets</a></li>
-						<li><a href="ui-elements.html"><span class="fa fa-cogs"></span>
-								Elements</a></li>
-						<li><a href="ui-buttons.html"><span
-								class="fa fa-square-o"></span> Buttons</a></li>
-						<li><a href="ui-panels.html"><span
-								class="fa fa-pencil-square-o"></span> Panels</a></li>
-						<li><a href="ui-icons.html"><span class="fa fa-magic"></span>
-								Icons</a>
-							<div class="informer informer-warning">+679</div></li>
-						<li><a href="ui-typography.html"><span
-								class="fa fa-pencil"></span> Typography</a></li>
-						<li><a href="ui-portlet.html"><span class="fa fa-th"></span>
-								Portlet</a></li>
-						<li><a href="ui-sliders.html"><span
-								class="fa fa-arrows-h"></span> Sliders</a></li>
-						<li><a href="ui-alerts-popups.html"><span
-								class="fa fa-warning"></span> Alerts & Popups</a></li>
-						<li><a href="ui-lists.html"><span class="fa fa-list-ul"></span>
-								Lists</a></li>
-						<li><a href="ui-tour.html"><span class="fa fa-random"></span>
-								Tour</a></li>
-					</ul></li>
-				<li class="xn-openable"><a href="#"><span
-						class="fa fa-pencil"></span> <span class="xn-text">Forms</span></a>
-					<ul>
-						<li><a href="form-layouts-two-column.html"><span
-								class="fa fa-tasks"></span> Form Layouts</a>
-							<div class="informer informer-danger">New</div>
-							<ul>
-								<li><a href="form-layouts-one-column.html"><span
-										class="fa fa-align-justify"></span> One Column</a></li>
-								<li><a href="form-layouts-two-column.html"><span
-										class="fa fa-th-large"></span> Two Column</a></li>
-								<li><a href="form-layouts-tabbed.html"><span
-										class="fa fa-table"></span> Tabbed</a></li>
-								<li><a href="form-layouts-separated.html"><span
-										class="fa fa-th-list"></span> Separated Rows</a></li>
-							</ul></li>
-						<li><a href="form-elements.html"><span
-								class="fa fa-file-text-o"></span> Elements</a></li>
-						<li><a href="form-validation.html"><span
-								class="fa fa-list-alt"></span> Validation</a></li>
-						<li><a href="form-wizards.html"><span
-								class="fa fa-arrow-right"></span> Wizards</a></li>
-						<li><a href="form-editors.html"><span
-								class="fa fa-text-width"></span> WYSIWYG Editors</a></li>
-						<li><a href="form-file-handling.html"><span
-								class="fa fa-floppy-o"></span> File Handling</a></li>
-					</ul></li>
-				<li class="xn-openable"><a href="tables.html"><span
-						class="fa fa-table"></span> <span class="xn-text">Tables</span></a>
-					<ul>
-						<li><a href="table-basic.html"><span
-								class="fa fa-align-justify"></span> Basic</a></li>
-						<li><a href="table-datatables.html"><span
-								class="fa fa-sort-alpha-desc"></span> Data Tables</a></li>
-						<li><a href="table-export.html"><span
-								class="fa fa-download"></span> Export Tables</a></li>
-					</ul></li>
-				<li class="xn-openable"><a href="#"><span
-						class="fa fa-bar-chart-o"></span> <span class="xn-text">Charts</span></a>
-					<ul>
-						<li><a href="charts-morris.html"><span class="xn-text">Morris</span></a></li>
-						<li><a href="charts-nvd3.html"><span class="xn-text">NVD3</span></a></li>
-						<li><a href="charts-rickshaw.html"><span class="xn-text">Rickshaw</span></a></li>
-						<li><a href="charts-other.html"><span class="xn-text">Other</span></a></li>
-					</ul></li>
-				<li><a href="maps.html"><span class="fa fa-map-marker"></span>
-						<span class="xn-text">Maps</span></a></li>
-				<li class="xn-openable"><a href="#"><span
-						class="fa fa-sitemap"></span> <span class="xn-text">Navigation
-							Levels</span></a>
-					<ul>
-						<li class="xn-openable"><a href="#">Second Level</a>
-							<ul>
-								<li class="xn-openable"><a href="#">Third Level</a>
-									<ul>
-										<li class="xn-openable"><a href="#">Fourth Level</a>
-											<ul>
-												<li><a href="#">Fifth Level</a></li>
-											</ul></li>
-									</ul></li>
-							</ul></li>
-					</ul></li>
+				
 
 			</ul>
 			<!-- END X-NAVIGATION -->
@@ -322,8 +235,8 @@
 								<div class="panel-body">
 
 									<div class="form-group">
-										<label class="col-md-3 col-xs-12 control-label">Nume
-											Pacient </label>
+										<label class="col-md-3 col-xs-12 control-label">Nume Complet
+											Pacient ("Prenume Nume")</label>
 										<div class="col-md-6 col-xs-12">
 											<div class="input-group">
 												<input type="text" id="numePacient" class="form-control"
@@ -331,6 +244,9 @@
 													class="input-group-btn">
 													<button class="btn btn-default" type="button"
 														onClick="javascript:searchPacient()">Cauta
+														pacient</button>
+													<button class="btn btn-default" type="button"
+														data-toggle="modal" data-target="#modalAdaugaPacient">Adauga
 														pacient</button>
 												</span>
 											</div>
@@ -346,7 +262,8 @@
 											<div class="input-group">
 												<span class="input-group-addon"><span
 													class="fa fa-calendar"></span></span> <input type="text"
-													class="form-control datepicker" value="2016-11-01">
+													class="form-control datepicker" id="dataProgramare"
+													value="2016-11-01">
 											</div>
 											<span class="help-block">Click pe casuta pentru a
 												afisa calendarul</span>
@@ -358,24 +275,27 @@
 											programarii</label>
 										<div class="col-md-6 col-xs-12">
 											<div class="input-group bootstrap-timepicker">
-												<input type="text" class="form-control timepicker24">
-												<span class="input-group-addon"><span
+												<input type="text" id="timpProgramare"
+													class="form-control timepicker24"> <span
+													class="input-group-addon"><span
 													class="glyphicon glyphicon-time"></span></span>
 											</div>
 											<span class="help-block">Click pe casuta pentru a
 												afisa ceasul </span>
 										</div>
 									</div>
-
+									<input type="hidden" value="<%=currentUser.getId()%>"
+										id="doctorID" />
 									<div class="form-group">
 										<label class="col-md-3 col-xs-12 control-label">Operatii</label>
 										<div class="col-md-6 col-xs-12">
 
-											<select multiple class="form-control select">
+											<select multiple id="operatiiProgramare"
+												class="form-control select">
 												<%
 													for (Operatie o : operatiiCabinet) {
 												%>
-												<option><%=o.getTitlu()%></option>
+												<option value="<%=o.getId()%>"><%=o.getTitlu()%></option>
 												<%
 													}
 												%>
@@ -385,20 +305,31 @@
 									</div>
 								</div>
 
-
+								<div class="form-group">
+									<label class="col-md-3 col-xs-12 control-label">Comentariul
+										programarii</label>
+									<div class="col-md-6 col-xs-12">
+										<textarea class="form-control" rows="5"
+											id="comentariuProgramare"></textarea>
+										<span class="help-block">Adauga comentarii pentru
+											aceasta programare</span>
+									</div>
+								</div>
 
 								<div class="form-group">
 									<label class="col-md-3 col-xs-12 control-label">Notificari
 										pacient</label>
 									<div class="col-md-6 col-xs-12">
 										<label class="check"> <input type="checkbox"
-											class="icheckbox" checked="checked" /> Dentistul Meu Mobile
-											App
+											class="icheckbox" checked="checked" id="notificationMobile" />
+											Dentistul Meu Mobile App
 										</label> <label class="check" id="phoneNumber"> <input
-											type="checkbox" class="icheckbox" checked="checked" /> SMS
+											type="checkbox" class="icheckbox" checked="checked"
+											id="notificationSMS" /> SMS
 
 										</label> <label class="check" id="pacientEmail"> <input
-											type="checkbox" class="icheckbox" checked="checked" /> Email
+											type="checkbox" class="icheckbox" checked="checked"
+											id="notificationEmail" /> Email
 
 										</label> <span class="help-block">Selectati tipurile de
 											notificari pentru pacient</span>
@@ -406,13 +337,14 @@
 								</div>
 
 							</div>
-							<div class="panel-footer">
-								<button class="btn btn-default">Sterge campurile</button>
-								<button class="btn btn-primary pull-right">Salveaza
-									programarea</button>
-							</div>
+						</form>
+						<div class="panel-footer">
+							<button class="btn btn-default">Sterge campurile</button>
+							<button class="btn btn-primary pull-right"
+								onClick="javascript:createAppointment()">Salveaza
+								programarea</button>
+						</div>
 					</div>
-					</form>
 
 				</div>
 			</div>
@@ -433,20 +365,79 @@
 					<span class="fa fa-sign-out"></span> Log <strong>Out</strong> ?
 				</div>
 				<div class="mb-content">
-					<p>Are you sure you want to log out?</p>
-					<p>Press No if youwant to continue work. Press Yes to logout
-						current user.</p>
+					<p>Esti sigur ca vrei sa te deloghezi?</p>
+					<p>Apasa DA daca vrei sa confirmi sau NU pentru a continua
+						sesiunea de lucru.</p>
 				</div>
 				<div class="mb-footer">
 					<div class="pull-right">
-						<a href="pages-login.html" class="btn btn-success btn-lg">Yes</a>
-						<button class="btn btn-default btn-lg mb-control-close">No</button>
+						<a href="logout.jsp" class="btn btn-success btn-lg">Da</a>
+						<button class="btn btn-default btn-lg mb-control-close">Nu</button>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 	<!-- END MESSAGE BOX-->
+
+
+	<!--  MODAL ADD PATIENT -->
+	<div class="modal" id="modalAdaugaPacient" tabindex="-1" role="dialog"
+		aria-labelledby="defModalHead" aria-hidden="true"
+		style="display: none;">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-body">
+					<h3>Modal without head</h3>
+					<form class="form-horizontal" role="form">
+						<div class="form-group">
+							<label class="col-md-2 control-label">Prenume</label>
+							<div class="col-md-10">
+								<input type="text" class="form-control" placeholder="Ion" id="prenumePacientModal">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-2 control-label">Nume de familie</label>
+							<div class="col-md-10">
+								<input type="text" class="form-control" placeholder="Popescu" id="numePacientModal">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-2 control-label">Oras</label>
+							<div class="col-md-10">
+								<input type="text" class="form-control" placeholder="Bucuresti" id="orasPacient">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-2 control-label">Email</label>
+							<div class="col-md-10">
+								<input type="text" class="form-control"
+									placeholder="ion.popescu@gmail.com" id="emailPacient">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-2 control-label">Numar de telefon</label>
+							<div class="col-md-10">
+								<input type="text" class="form-control"
+									placeholder="0722 222 222" id="numarTelefonPacient">
+							</div>
+						</div>
+
+
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Inchide</button>
+					<button type="button" class="btn btn-default"
+						onClick="javascript:addPatient();">Salveaza pacient</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+	<!-- END MODAL ADD PATIENT -->
 
 	<!-- START PRELOADS -->
 	<audio id="audio-alert" src="audio/alert.mp3" preload="auto"></audio>
