@@ -1,0 +1,105 @@
+<!DOCTYPE web-app PUBLIC
+ "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+ "http://java.sun.com/dtd/web-app_2_3.dtd" >
+
+<web-app>
+	<display-name>DCMT Web and Mobile endpoint app</display-name>
+
+
+
+	<servlet>
+		<servlet-name>MobileAuthEndpoint</servlet-name>
+		<display-name>MobileAuthEndpoint</display-name>
+		<description></description>
+		<servlet-class>ro.dcmt.mobile.MobileAuthEndpoint</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>WebAuthEndpoint</servlet-name>
+		<display-name>WebAuthEndpoint</display-name>
+		<description></description>
+		<servlet-class>ro.dcmt.web.WebAuthEndpoint</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>ApproveAppointmentServlet</servlet-name>
+		<display-name>ApproveAppointmentServlet</display-name>
+		<description></description>
+		<servlet-class>ro.dcmt.web.ApproveAppointmentServlet</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>RejectAppointmentServlet</servlet-name>
+		<display-name>RejectAppointmentServlet</display-name>
+		<description></description>
+		<servlet-class>ro.dcmt.web.RejectAppointmentServlet</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>GetCabinetsNearbyEndpoint</servlet-name>
+		<display-name>GetCabinetsNearbyEndpoint</display-name>
+		<description></description>
+		<servlet-class>ro.dcmt.mobile.GetCabinetsNearbyEndpoint</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>GetPacientByNameServlet</servlet-name>
+		<display-name>GetPacientByNameServlet</display-name>
+		<description></description>
+		<servlet-class>ro.dcmt.web.GetPacientByNameServlet</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>AddAppointmentServlet</servlet-name>
+		<display-name>AddAppointmentServlet</display-name>
+		<description></description>
+		<servlet-class>ro.dcmt.web.AddAppointmentServlet</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>AddPatientServlet</servlet-name>
+		<display-name>AddPatientServlet</display-name>
+		<description></description>
+		<servlet-class>ro.dcmt.web.AddPatientServlet</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>CalendarJsonServlet</servlet-name>
+		<display-name>CalendarJsonServlet</display-name>
+		<description></description>
+		<servlet-class>ro.dcmt.web.CalendarJsonServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>MobileAuthEndpoint</servlet-name>
+		<url-pattern>/MobileAuthEndpoint</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>WebAuthEndpoint</servlet-name>
+		<url-pattern>/WebAuthEndpoint</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>ApproveAppointmentServlet</servlet-name>
+		<url-pattern>/ApproveAppointmentServlet</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>RejectAppointmentServlet</servlet-name>
+		<url-pattern>/RejectAppointmentServlet</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>GetCabinetsNearbyEndpoint</servlet-name>
+		<url-pattern>/GetCabinetsNearbyEndpoint</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>GetPacientByNameServlet</servlet-name>
+		<url-pattern>/GetPacientByNameServlet</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>AddAppointmentServlet</servlet-name>
+		<url-pattern>/AddAppointmentServlet</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>AddPatientServlet</servlet-name>
+		<url-pattern>/AddPatientServlet</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>CalendarJsonServlet</servlet-name>
+		<url-pattern>/CalendarJsonServlet</url-pattern>
+	</servlet-mapping>
+
+	<welcome-file-list>
+		<welcome-file>login.jsp</welcome-file>
+
+	</welcome-file-list>
+</web-app>

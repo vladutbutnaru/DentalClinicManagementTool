@@ -1,0 +1,74 @@
+package ro.dcmt.web;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import com.google.gson.Gson;
+
+import ro.dcmt.data.beans.CalendarFEEntry;
+import ro.dcmt.data.beans.Pacient;
+import ro.dcmt.data.beans.Programare;
+import ro.dcmt.data.controllers.PacientService;
+import ro.dcmt.data.controllers.ProgramariService;
+
+/**
+ * Servlet implementation class CalendarJsonServlet
+ */
+public class CalendarJsonServlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+       
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public CalendarJsonServlet() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		 response.setContentType("application/json");
+		 response.setCharacterEncoding("UTF-8");
+		 PrintWriter out = response.getWriter();
+		
+		 ArrayList<Programare> programari = ProgramariService.getAllAppointmentsForDoctor(Integer.parseInt(request.getParameter("doctorID")));
+		 PacientService ps = new PacientService();
+	
+		 for(Programare p : programari){
+			 Pacient pacientProgramare = (Pacient) ps.getById(p.getIdUser());
+			 CalendarFEEntry event = new CalendarFEEntry();
+			 event.setId(p.getId());
+			 event.setColor("blue");
+			 event.setDescription(p.getComentariu());
+			 event.setTitle("Programare pentru " + pacientProgramare.getFirstName() + " " + pacientProgramare.getLastName());
+			 event.setStart(p.getData().getYear() + "-" + p.getData().getMonth() + "-" + p.getData().getDate() + " " + p.getData().getHours() + ":" + p.getData().getMinutes() + ":00");
+			 event.setEnd(p.getData().getYear() + "-" + p.getData().getMonth() + "-" + p.getData().getDate() + " " + p.getData().getHours()+2 + ":" + p.getData().getMinutes() + ":00");
+			 
+		 }
+		 
+		 
+		 out.write(new Gson().toJson(l));
+		
+		
+		
+		
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		doGet(request, response);
+	}
+
+}

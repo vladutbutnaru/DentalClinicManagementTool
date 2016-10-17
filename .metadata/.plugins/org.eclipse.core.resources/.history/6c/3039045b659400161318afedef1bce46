@@ -1,0 +1,55 @@
+package ro.dcmt.web;
+
+import java.io.IOException;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import ro.dcmt.data.beans.Pacient;
+import ro.dcmt.data.beans.Programare;
+import ro.dcmt.data.controllers.PacientService;
+import ro.dcmt.data.controllers.ProgramariService;
+
+/**
+ * Servlet implementation class GetAppointmentInfo
+ */
+public class GetAppointmentInfo extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+       
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public GetAppointmentInfo() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		int id = Integer.parseInt("appointmentID");
+		String returnText = "";
+		ProgramariService ps = new ProgramariService();
+		PacientService pacientService = new PacientService();
+		
+		Programare p = (Programare) ps.getById(id);
+		Pacient pacient = (Pacient) pacientService.getById(p.getIdUser());
+			
+			
+			
+		
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		doGet(request, response);
+	}
+
+}

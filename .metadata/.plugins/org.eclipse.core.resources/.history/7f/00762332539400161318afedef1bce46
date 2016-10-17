@@ -1,0 +1,13 @@
+package ro.dcmt.data.beans;
+
+public class CalendarFEEntry {
+	public int id;
+	public String title;
+	public String start;
+	public String end;
+	public String color;
+	public String description;
+	public String pacientName;
+	
+
+}

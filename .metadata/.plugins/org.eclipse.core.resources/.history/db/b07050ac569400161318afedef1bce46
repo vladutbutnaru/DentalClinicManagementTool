@@ -1,0 +1,8 @@
+$(document).ready(function() {
+        $('#calendar').fullCalendar({
+            theme: false,
+            editable: false,
+            events: "CalendarJsonServlet?doctorID="+document.getElementById("doctorID").value
+        });
+ 
+    });

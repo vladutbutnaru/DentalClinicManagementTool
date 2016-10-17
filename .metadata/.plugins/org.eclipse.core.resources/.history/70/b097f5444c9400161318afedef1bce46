@@ -1,0 +1,21 @@
+package ro.dcmt.utils;
+
+import java.util.*;
+import javax.mail.*;
+import javax.mail.internet.*;
+
+
+public class HTMLMailSender {
+
+	public static void sendMail(String to) {
+		final String username = "vlad2me@gmail.com";
+		final String password = "Hackthisone1!";
+
+		Properties props = new Properties();
+		props.put("mail.smtp.auth", "true");
+		props.put("mail.smtp.starttls.enable", "true");
+		props.put("mail.smtp.host", "smtp.gmail.com");
+		props.put("mail.smtp.port", "587");
+
+	}
+}

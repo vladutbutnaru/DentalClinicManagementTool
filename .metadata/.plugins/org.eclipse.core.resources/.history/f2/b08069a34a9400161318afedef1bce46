@@ -1,0 +1,61 @@
+package ro.dcmt.web;
+
+import java.io.IOException;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import ro.dcmt.data.beans.Pacient;
+import ro.dcmt.data.controllers.PacientService;
+
+/**
+ * Servlet implementation class GetPacientByNameServlet
+ */
+
+public class GetPacientByNameServlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+
+	/**
+	 * @see HttpServlet#HttpServlet()
+	 */
+	public GetPacientByNameServlet() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		
+		try {
+			String numePacient = request.getParameter("name");
+			String firstName = numePacient.split(" ")[0];
+			String lastName = numePacient.split(" ")[1];
+
+			PacientService ps = new PacientService();
+			Pacient p = ps.getPacientByFirstAndLastName(firstName, lastName);
+			if (p != null) {
+				response.getWriter().append(p.getPhoneNumber() + "," + p.getEmail());
+			}
+		} catch (Exception e) {
+		}
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		doGet(request, response);
+	}
+
+}
