@@ -173,7 +173,7 @@ public class ProgramariService implements DBEntityController {
 		ArrayList<Programare> programari = new ArrayList<Programare>();
 		try {
 
-			stmt = conn.prepareStatement("SELECT * FROM programari WHERE IDDoctor = ? AND Aprobat = 0 AND Respins = 0");
+			stmt = conn.prepareStatement("SELECT * FROM programari WHERE IDDoctor = ? AND Aprobat = 0 AND Respins = 0 ORDER BY Data DESC");
 			stmt.setInt(1, idDoctor);
 
 			rs = stmt.executeQuery();
@@ -311,7 +311,7 @@ public class ProgramariService implements DBEntityController {
 		int number = 0;
 		try {
 
-			stmt = conn.prepareStatement("SELECT * FROM programari WHERE Canal = 'Mobile'");
+			stmt = conn.prepareStatement("SELECT * FROM programari WHERE Canal = 'Mobile' ORDER BY Data DESC");
 
 			rs = stmt.executeQuery();
 			logger.info("getProgramariFromApp: " + idDoctor);
@@ -334,7 +334,7 @@ public class ProgramariService implements DBEntityController {
 		ArrayList<Programare> programari = new ArrayList<Programare>();
 		try {
 
-			stmt = conn.prepareStatement("SELECT * FROM programari WHERE IDUser = ? AND Respins = 0 AND Aprobat=1");
+			stmt = conn.prepareStatement("SELECT * FROM programari WHERE IDUser = ? AND Respins = 0 AND Aprobat=1 ORDER BY Data DESC");
 			stmt.setInt(1, idPatient);
 
 			rs = stmt.executeQuery();
