@@ -1,0 +1,11 @@
+package ro.dcmt.data.beans;
+
+import java.sql.Timestamp;
+
+public class Invoice {
+private int id;
+private int programareID;
+private Timestamp data;
+private double price;
+
+}

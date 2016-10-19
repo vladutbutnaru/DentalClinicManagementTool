@@ -48,7 +48,7 @@ public class GetAppointmentInfo extends HttpServlet {
 		String oraProgramare = p.getData().getHours() + ":" + p.getData().getMinutes() + ":" + p.getData().getSeconds();
 		OperatieService os = new OperatieService();
 		ArrayList<Operatie> operatiiProgramare = os.getOperatiiForAppointment(p.getIdOperatii());
-		returnText = pacient.getFirstName() + " " + pacient.getLastName() + ";" + dataProgramare + ";" + oraProgramare
+		returnText = id + ";" +pacient.getFirstName() + " " + pacient.getLastName() + ";" + dataProgramare + ";" + oraProgramare
 				+ ";" + p.getComentariu() + ";";
 
 		for (Operatie o : operatiiProgramare) {

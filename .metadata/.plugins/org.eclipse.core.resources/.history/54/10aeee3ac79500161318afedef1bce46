@@ -1,0 +1,6 @@
+package ro.dcmt.data.beans;
+
+public class InventarProgramare {
+private int ID;
+
+}

@@ -4,11 +4,15 @@
 <%@page import="ro.dcmt.data.beans.Cabinet"%>
 <%@page import="ro.dcmt.data.beans.User"%>
 <%@page import="ro.dcmt.data.beans.Programare"%>
+<%@page import="ro.dcmt.data.beans.Operatie"%>
 <%@ page import="ro.dcmt.data.beans.Pacient"%>
+<%@ page import="ro.dcmt.data.beans.Produs"%>
 <%@page import="ro.dcmt.data.controllers.CabinetService"%>
 <%@page import="ro.dcmt.data.controllers.ProgramariService"%>
 <%@page import="ro.dcmt.data.controllers.UserService"%>
 <%@page import="ro.dcmt.data.controllers.PacientService"%>
+<%@page import="ro.dcmt.data.controllers.OperatieService"%>
+<%@page import="ro.dcmt.data.controllers.InventarService"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.Date"%>
 
@@ -21,6 +25,7 @@
 	CabinetService cs = new CabinetService();
 	Cookie[] cookies = request.getCookies();
 	ArrayList<Programare> programariNoi;
+	OperatieService os = new OperatieService();
 	ArrayList<Programare> programariViitoare;
 	if (cookies != null) {
 		for (Cookie cookie : cookies) {
@@ -46,6 +51,8 @@
 	}
 	programariNoi = ProgramariService.getNewAppointmentsForDoctor(currentUser.getId());
 	programariViitoare = ProgramariService.getFutureAppointments(currentUser.getId());
+	ArrayList<Produs> produseInventar = InventarService.getInventarForDoctor(currentUser.getId());
+	ArrayList<Operatie> operatii;
 %>
 
 
@@ -118,10 +125,16 @@
 				<li class="xn-openable"><a href="#"><span
 						class="fa fa-file-text-o"></span> <span class="xn-text">Cabinet</span></a>
 					<ul>
-						<li><a href="layout-nav-top.html">Agenda programari</a></li>
-						<li><a href="layout-boxed.html">Stoc produse</a></li>
-						<li><a href="layout-nav-toggled.html">Furnizori</a></li>
-						<li><a href="layout-nav-top.html">Plati utilitare</a></li>
+						<li><a href="invoices.jsp"><span class="fa fa-book"></span>Facturi</a></li>
+						<li><a href="layout-boxed.html"> <span
+								class="fa fa-tasks"></span>Stoc produse
+						</a></li>
+						<li><a href="layout-nav-toggled.html"> <span
+								class="fa fa-truck"></span>Furnizori
+						</a></li>
+						<li><a href="layout-nav-top.html"> <span
+								class="fa fa-money"></span>Plati utilitare
+						</a></li>
 					</ul></li>
 
 
@@ -179,6 +192,7 @@
 								for (Programare p : programariNoi) {
 
 									pacientProgramare = (Pacient) ps.getById(p.getIdUser());
+									operatii = os.getOperatiiForAppointment(p.getIdOperatii());
 							%>
 							<a href="pacient.jsp?id=<%=pacientProgramare.getId()%>"
 								class="list-group-item">
@@ -187,7 +201,13 @@
 								class="pull-left" alt="<%=pacientProgramare.getFirstName()%>" />
 								<span class="contacts-title"><%=pacientProgramare.getFirstName() + " " + pacientProgramare.getLastName()%>
 							</span>
-								<p><%=p.getIdOperatii()%></p>
+							
+								<p>
+								<%for(Operatie o : operatii){ %>
+								<%=o.getTitlu() + ", "%>
+								<%} %>
+								<%=p.getData() %>
+								</p>
 							</a>
 
 							<%
@@ -309,7 +329,8 @@
 									<a href="#"><span class="fa fa-bell"></span></a>
 								</div>
 								<div class="col">
-									<a href="calendar-programari.jsp"><span class="fa fa-calendar"></span></a>
+									<a href="calendar-programari.jsp"><span
+										class="fa fa-calendar"></span></a>
 								</div>
 							</div>
 						</div>
@@ -409,7 +430,7 @@
 						<div class="panel panel-default">
 							<div class="panel-heading">
 								<div class="panel-title-box">
-									<h3>Operatiuni</h3>
+									<h3>Stocuri</h3>
 									<span>Privire generala</span>
 								</div>
 								<ul class="panel-controls" style="margin-top: 2px;">
@@ -432,95 +453,94 @@
 									<table class="table table-bordered table-striped">
 										<thead>
 											<tr>
-												<th width="50%">Operatiuni</th>
-												<th width="20%">Stadiu</th>
-												<th width="30%">Numar</th>
+												<th width="50%">Produs</th>
+												<th width="20%">Stare</th>
+												<th width="30%">Cantitate</th>
 											</tr>
 										</thead>
 										<tbody>
+											<%
+												int nr = 0;
+												for (Produs produs : produseInventar) {
+													if (nr < 6) {
+											%>
 											<tr>
-												<td><strong>Implanturi</strong></td>
-												<td><span class="label label-danger">Cerere mare</span></td>
+												<td><strong><%=produs.getNumeProdus()%></strong></td>
+												<%
+													if (produs.getCantitateProdus() <= 0) {
+												%>
+												<td><span class="label label-danger">Stoc zero!</span></td>
+												<%
+													} else {
+												%>
+												<%
+													if ((produs.getCantitateProdus() / produs.getMaxValue()) * 100 < 70
+																		&& (((produs.getCantitateProdus() / produs.getMaxValue()) * 100) >= 35)) {
+												%>
+												<td><span class="label label-warning">Stoc mediu</span></td>
+												<%
+													}
+												%>
+												<%
+													if ((produs.getCantitateProdus() / produs.getMaxValue()) * 100 < 35) {
+												%>
+												<td><span class="label label-danger">Stoc mic</span></td>
+												<%
+													}
+												%>
+												<%
+													if ((produs.getCantitateProdus() / produs.getMaxValue()) * 100 >= 70) {
+												%>
+												<td><span class="label label-success">Stoc
+														suficient</span></td>
+												<%
+													}
+															}
+												%>
 												<td>
+													<%
+														if (produs.getCantitateProdus() > 0) {
+													%>
 													<div
 														class="progress progress-small progress-striped active">
+
+														<div class="progress-bar progress-bar-success"
+															role="progressbar"
+															aria-valuenow="<%=produs.getCantitateProdus()%>"
+															aria-valuemin="0"
+															aria-valuemax="<%=produs.getMaxValue()%>"
+															style="width:  <%=(produs.getCantitateProdus() / produs.getMaxValue()) * 100%>%;"><%=produs.getCantitateProdus()%></div>
+													</div> <%
+ 	} else {
+ %>
+													<div
+														class="progress progress-small progress-striped active">
+
 														<div class="progress-bar progress-bar-danger"
-															role="progressbar" aria-valuenow="50" aria-valuemin="0"
-															aria-valuemax="100" style="width: 85%;">85%</div>
-													</div>
+															role="progressbar"
+															aria-valuenow="<%=produs.getCantitateProdus()%>"
+															aria-valuemin="0"
+															aria-valuemax="<%=produs.getMaxValue()%>"
+															style="width: 1%;"><%=produs.getCantitateProdus()%></div>
+													</div> <%
+ 	}
+ %>
 												</td>
 											</tr>
-											<tr>
-												<td><strong>Detartraj</strong></td>
-												<td><span class="label label-warning">Cerere
-														medie</span></td>
-												<td>
-													<div
-														class="progress progress-small progress-striped active">
-														<div class="progress-bar progress-bar-warning"
-															role="progressbar" aria-valuenow="50" aria-valuemin="0"
-															aria-valuemax="100" style="width: 40%;">40%</div>
-													</div>
-												</td>
-											</tr>
-											<tr>
-												<td><strong>Tratamente</strong></td>
-												<td><span class="label label-warning">Cerere
-														medie</span></td>
-												<td>
-													<div
-														class="progress progress-small progress-striped active">
-														<div class="progress-bar progress-bar-warning"
-															role="progressbar" aria-valuenow="50" aria-valuemin="0"
-															aria-valuemax="100" style="width: 72%;">72%</div>
-													</div>
-												</td>
-											</tr>
-											<tr>
-												<td><strong>Extractii</strong></td>
-												<td><span class="label label-success">Cerere
-														buna</span></td>
-												<td>
-													<div
-														class="progress progress-small progress-striped active">
-														<div class="progress-bar progress-bar-success"
-															role="progressbar" aria-valuenow="50" aria-valuemin="0"
-															aria-valuemax="100" style="width: 100%;">100%</div>
-													</div>
-												</td>
-											</tr>
-											<tr>
-												<td><strong>Ortodontie</strong></td>
-												<td><span class="label label-success">Cerere
-														buna</span></td>
-												<td>
-													<div
-														class="progress progress-small progress-striped active">
-														<div class="progress-bar progress-bar-success"
-															role="progressbar" aria-valuenow="50" aria-valuemin="0"
-															aria-valuemax="100" style="width: 100%;">100%</div>
-													</div>
-												</td>
-											</tr>
-											<tr>
-												<td><strong>Protetica</strong></td>
-												<td><span class="label label-success">Cerere
-														buna</span></td>
-												<td>
-													<div
-														class="progress progress-small progress-striped active">
-														<div class="progress-bar progress-bar-success"
-															role="progressbar" aria-valuenow="50" aria-valuemin="0"
-															aria-valuemax="100" style="width: 100%;">100%</div>
-													</div>
-												</td>
-											</tr>
+											<%
+												}
+													nr++;
+												}
+											%>
+
+
 										</tbody>
 									</table>
 								</div>
 
 							</div>
 						</div>
+						<input type="hidden" id="doctorID" value="<%=currentUser.getId() %>"/>
 						<!-- END PROJECTS BLOCK -->
 
 					</div>
@@ -781,6 +801,20 @@
 	<script type="text/javascript" src="js/actions.js"></script>
 
 	<script type="text/javascript" src="js/demo_dashboard.js"></script>
+	<!--Start of Tawk.to Script-->
+	<script type="text/javascript">
+		var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
+		(function() {
+			var s1 = document.createElement("script"), s0 = document
+					.getElementsByTagName("script")[0];
+			s1.async = true;
+			s1.src = 'https://embed.tawk.to/58075974cfdf421cf96b5639/default';
+			s1.charset = 'UTF-8';
+			s1.setAttribute('crossorigin', '*');
+			s0.parentNode.insertBefore(s1, s0);
+		})();
+	</script>
+	<!--End of Tawk.to Script-->
 	<!-- END TEMPLATE -->
 	<!-- END SCRIPTS -->
 </body>

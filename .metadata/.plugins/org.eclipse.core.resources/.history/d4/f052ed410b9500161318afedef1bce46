@@ -1,0 +1,12 @@
+package ro.dcmt.data.beans;
+
+public class Produs {
+private int ID;
+private String numeProdus;
+private String UM;
+private double cantitateProdus;
+private int idCabinet;
+private int idDoctor;
+
+
+}

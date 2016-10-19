@@ -1,0 +1,130 @@
+package Controllere;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import Entitati.Produse;
+import Entitati.DBConnection;
+
+public class ProduseController {
+	PreparedStatement ps = null;
+	DBConnection conn = new DBConnection();
+	Connection con = conn.getConnection();
+	Statement st;
+	
+	public static ArrayList<String> getCategory() {
+		ArrayList<String> list = new ArrayList<String>();
+		String sql = "select distinct Category from produse";
+		System.out.println(sql);
+		ResultSet rs = executeFetchQuery(sql);
+		try {
+			while (rs.next()) {
+				list.add(rs.getString("Category"));
+			}
+		} catch (Exception e) {
+			System.err.println(e.getMessage());
+		}
+
+		return list;
+		
+	}
+
+	public static ArrayList<Produse> getProductsbyName(String name) {
+
+		ArrayList<Produse> list = new ArrayList<Produse>();
+		String sql = "select ID, Website, Category, Name, Price,Description, link, ProductImage from produse WHERE Name like '%"
+				+ name + "%'";
+		System.out.println(sql);
+		ResultSet rs = executeFetchQuery(sql);
+		try {
+			while (rs.next()) {
+				Produse p = new Produse();
+				p.setWebsite(rs.getString("Website"));
+				p.setCategory(rs.getString("Category"));
+				p.setName(rs.getString("Name"));
+				p.setPrice(rs.getString("Price"));
+				p.setDescription(rs.getString("Description"));
+				p.setLink(rs.getString("link"));
+				p.setProductImage(rs.getString("ProductImage"));
+
+			}
+		} catch (Exception e) {
+			System.err.println(e.getMessage());
+		}
+
+		return list;
+
+	}
+
+	public static ArrayList<Produse> getTopProducts() {
+
+		ArrayList<Produse> list = new ArrayList<Produse>();
+		String sql = "select ID, Website, Category, Name, Price,Description, link, ProductImage from produse ORDER BY Price ASC LIMIT 0,10";
+		ResultSet rs = executeFetchQuery(sql);
+		try {
+			while (rs.next()) {
+				Produse p = new Produse();
+				p.setWebsite(rs.getString("Website"));
+				p.setCategory(rs.getString("Category"));
+				p.setName(rs.getString("Name"));
+				p.setPrice(rs.getString("Price"));
+				p.setDescription(rs.getString("Description"));
+				p.setLink(rs.getString("link"));
+				p.setProductImage(rs.getString("ProductImage"));
+				list.add(p);
+
+			}
+		} catch (Exception e) {
+			System.err.println(e.getMessage());
+		}
+
+		return list;
+
+	}
+
+	public static ArrayList<Produse> getAllProducts() {
+
+		ArrayList<Produse> list = new ArrayList<Produse>();
+		String sql = "select ID, Website, Category, Name, Price,Description, link, ProductImage from produse ORDER BY Price ASC LIMIT 0,6";
+		ResultSet rs = executeFetchQuery(sql);
+		try {
+			while (rs.next()) {
+				Produse p = new Produse();
+				p.setWebsite(rs.getString("Website"));
+				p.setCategory(rs.getString("Category"));
+				p.setName(rs.getString("Name"));
+				p.setPrice(rs.getString("Price"));
+				p.setDescription(rs.getString("Description"));
+				p.setLink(rs.getString("link"));
+				p.setProductImage(rs.getString("ProductImage"));
+				list.add(p);
+
+			}
+		} catch (Exception e) {
+			System.err.println(e.getMessage());
+		}
+
+		return list;
+
+	}
+
+	public static ResultSet executeFetchQuery(String sql) {
+		ResultSet rs = null;
+		try {
+			DBConnection conn = new DBConnection();
+			Connection con = conn.getConnection();
+			rs = con.createStatement().executeQuery(sql);
+
+		} catch (Exception e) {
+			System.err.println(e.getMessage());
+		}
+		return rs;
+	}
+}

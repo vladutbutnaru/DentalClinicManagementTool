@@ -65,6 +65,19 @@
 		<description></description>
 		<servlet-class>ro.dcmt.web.GetAppointmentInfo</servlet-class>
 	</servlet>
+	
+	<servlet>
+		<servlet-name>EndAppointmentServlet</servlet-name>
+		<display-name>EndAppointmentServlet</display-name>
+		<description></description>
+		<servlet-class>ro.dcmt.web.EndAppointmentServlet</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>GetSalesDashboardChartServlet</servlet-name>
+		<display-name>GetSalesDashboardChartServlet</display-name>
+		<description></description>
+		<servlet-class>ro.dcmt.web.GetSalesDashboardChartServlet</servlet-class>
+	</servlet>
 	<servlet-mapping>
 		<servlet-name>MobileAuthEndpoint</servlet-name>
 		<url-pattern>/MobileAuthEndpoint</url-pattern>
@@ -104,6 +117,15 @@
 	<servlet-mapping>
 		<servlet-name>GetAppointmentInfo</servlet-name>
 		<url-pattern>/GetAppointmentInfo</url-pattern>
+	</servlet-mapping>
+	
+	<servlet-mapping>
+		<servlet-name>EndAppointmentServlet</servlet-name>
+		<url-pattern>/EndAppointmentServlet</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>GetSalesDashboardChartServlet</servlet-name>
+		<url-pattern>/GetSalesDashboardChartServlet</url-pattern>
 	</servlet-mapping>
 
 	<welcome-file-list>

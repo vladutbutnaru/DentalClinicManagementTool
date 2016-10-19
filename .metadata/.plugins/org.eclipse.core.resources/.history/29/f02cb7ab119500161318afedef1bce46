@@ -1,0 +1,5 @@
+function addProdus(idProdus){
+	document.getElementById("operatie1").append()
+	
+	
+}

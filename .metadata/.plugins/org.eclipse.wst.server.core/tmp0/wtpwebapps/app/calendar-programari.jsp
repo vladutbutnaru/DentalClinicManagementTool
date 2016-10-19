@@ -4,14 +4,9 @@
 <html lang="en">
 <head>
 
-<%@page import="ro.dcmt.data.beans.Cabinet"%>
-<%@page import="ro.dcmt.data.beans.User"%>
-<%@page import="ro.dcmt.data.beans.Programare"%>
-<%@page import="ro.dcmt.data.beans.Pacient"%>
-<%@page import="ro.dcmt.data.controllers.CabinetService"%>
-<%@page import="ro.dcmt.data.controllers.ProgramariService"%>
-<%@page import="ro.dcmt.data.controllers.UserService"%>
-<%@page import="ro.dcmt.data.controllers.PacientService"%>
+<%@page import="ro.dcmt.data.beans.*"%>
+
+<%@page import="ro.dcmt.data.controllers.*"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.Date"%>
 
@@ -21,6 +16,7 @@
 	Cabinet cabinet = new Cabinet();
 	UserService us = new UserService();
 	PacientService ps = new PacientService();
+	OperatieService os = new OperatieService();
 	ProgramariService progs = new ProgramariService();
 	CabinetService cs = new CabinetService();
 	Cookie[] cookies = request.getCookies();
@@ -39,6 +35,7 @@
 		cabinet = (Cabinet) cs.getById(currentUser.getId());
 
 	}
+	ArrayList<Operatie> operatii;
 	ArrayList<Programare> programariNoi = ProgramariService.getNewAppointmentsForDoctor(currentUser.getId());
 	ArrayList<Programare> programariViitoare = ProgramariService.getFutureAppointments(currentUser.getId());
 %>
@@ -178,6 +175,7 @@
 								for (Programare p : programariNoi) {
 
 									pacientProgramare = (Pacient) ps.getById(p.getIdUser());
+									operatii = os.getOperatiiForAppointment(p.getIdOperatii());
 							%>
 							<a href="pacient.jsp?id=<%=pacientProgramare.getId()%>"
 								class="list-group-item">
@@ -186,7 +184,13 @@
 								class="pull-left" alt="<%=pacientProgramare.getFirstName()%>" />
 								<span class="contacts-title"><%=pacientProgramare.getFirstName() + " " + pacientProgramare.getLastName()%>
 							</span>
-								<p><%=p.getIdOperatii()%></p>
+							
+								<p>
+								<%for(Operatie o : operatii){ %>
+								<%=o.getTitlu() + ", "%>
+								<%} %>
+								<%=p.getData() %>
+								</p>
 							</a>
 
 							<%
@@ -376,7 +380,8 @@
 				</form>
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-default" data-dismiss="modal">Inchide</button>
+				<button type="button" class="btn btn-success" id="finishAppointmentButton">Finalizeaza programarea</button>
+				<button type="button" class="btn btn-danger" data-dismiss="modal">Inchide</button>
 
 			</div>
 		</div>
@@ -432,7 +437,20 @@
 	<script type="text/javascript" src="js/plugins.js"></script>
 	<script type="text/javascript" src="js/actions.js"></script>
 	<!-- END TEMPLATE -->
-
+<!--Start of Tawk.to Script-->
+	<script type="text/javascript">
+		var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
+		(function() {
+			var s1 = document.createElement("script"), s0 = document
+					.getElementsByTagName("script")[0];
+			s1.async = true;
+			s1.src = 'https://embed.tawk.to/58075974cfdf421cf96b5639/default';
+			s1.charset = 'UTF-8';
+			s1.setAttribute('crossorigin', '*');
+			s0.parentNode.insertBefore(s1, s0);
+		})();
+	</script>
+	<!--End of Tawk.to Script-->
 	<!-- END SCRIPTS -->
 </body>
 </html>

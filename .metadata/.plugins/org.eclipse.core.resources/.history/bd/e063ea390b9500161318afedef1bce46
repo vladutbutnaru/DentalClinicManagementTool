@@ -1,0 +1,5 @@
+package ro.dcmt.data.beans;
+
+public class Produs {
+
+}

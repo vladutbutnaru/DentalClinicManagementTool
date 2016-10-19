@@ -1,0 +1,6 @@
+function adaugaCantitati(idOperatie){
+	
+	var allOptions =document.getElementsById("productOption");
+	console.log(allOptions[0].value);
+	console.log(allOptions[0].selected);
+}

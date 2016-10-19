@@ -1,0 +1,9 @@
+function endAppointment(idOperatie, idMedic){
+	
+	var allOptions =document.getElementsByClassName("filter-option pull-left");
+	console.log(allOptions[idOperatie].innerHTML);
+	if(operatii!=undefiened && operatii !=null){
+	var operatii = allOptions[idOperatie].innerHTML.split(",");
+	
+	}
+}

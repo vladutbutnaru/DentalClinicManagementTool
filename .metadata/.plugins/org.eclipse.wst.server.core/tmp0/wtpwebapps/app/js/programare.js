@@ -42,7 +42,7 @@ if(document.getElementById("notificationSMS").checked)
 notificationSMS=1;
 if(document.getElementById("notificationEmail").checked)
 notificationEmail=1;
-if(document.getElementById("notificationMobile"))
+if(document.getElementById("notificationMobile").checked)
 notificationMobile=1;
 
 $.get("AddAppointmentServlet",

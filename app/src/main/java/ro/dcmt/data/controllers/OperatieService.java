@@ -63,7 +63,8 @@ public class OperatieService {
 		String[] operatiiID = idOperatii.split(",");
 	
 		for(String id : operatiiID){
-			if(id!=null && !id.equals(""))
+			System.out.println(id);
+			if(id!=null && !id.equals("")){
 		try {
 		
 			stmt = conn.prepareStatement("SELECT * FROM operatii WHERE ID = ?");
@@ -89,6 +90,7 @@ public class OperatieService {
 			logger.error(ex.getMessage());
 		
 	}
+		}
 		
 		}
 		return operatii;

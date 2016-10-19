@@ -1,0 +1,298 @@
+body {
+background-color: #ffffff;
+font-family: 'Merriweather', 'Helvetica Neue', Arial, sans-serif;
+}
+
+/* center search */
+
+   .global-search {
+    text-align:center;
+    padding:10px;
+  }
+   .global-search * {
+    display:inline-block;
+    margin-bottom:0;
+  }
+
+   .global-search .form-control {
+      width:800px;
+      height: 50px;
+      font-size: 40px;
+  }
+
+   .global-search a {
+    display:block;
+    padding-top:10px;
+  }
+
+
+
+@media (min-width:400px){
+   .global-search {
+    padding: 20px 0;
+    text-align:center;
+    }
+
+   .global-search .form-control {
+    width:300px;
+   }
+
+}
+/*custom nav*/
+.navbar {
+	background-color: #E7E7E7;
+	border-color: #E7E7E7;
+}
+.navbar-header a { 
+    background-color: #f23c3c;
+    color:#000000  !important;
+    
+}
+
+.nav li a {
+    text-decoration:none;
+    font-size:1.3em;
+    color:#000000;
+}
+.nav li:hover {
+    background-color:#f23c3c;
+    
+}
+
+.navbar .nav>li>a  {
+  color:#000000;
+}
+.colormenu {
+	padding-top: 10px;
+}
+
+.colormenu ul {
+	list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    text-decoration: none;
+}
+.colormenu li {
+	background-color: #f23c3c;
+    float: left;
+}
+
+.colormenu li a{
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 15px 59.8px;
+    text-decoration: none;
+}
+.colormenu li:hover {
+    background-color: #e1dc74;
+}
+
+.colormenu2 li {
+	
+	font-size:80%;
+	background-color: #f23c3c;
+   
+}
+.colormenu2 li a{
+	color: white;
+    display: block;
+    text-align: center;
+    padding: 15px 59.8px;
+    text-decoration: none;
+    width: 100%;
+}
+.colormenu2 li a:hover {
+    background-color: #e1dc74;
+}
+
+.inlinemenu {
+	padding-top: 10px;
+}
+
+.inlinemenu ul {
+	list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #f23c3c;
+}
+
+.inlinemenu li {
+    float: left;
+}
+
+.inlinemenu li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 15px 59.8px;
+    text-decoration: none;
+}
+
+.inlinemenu li a:hover {
+    background-color: #e1dc74;
+}
+.inlinemenu th:hover {
+    background-color: #e1dc74;
+}
+/*custom content*/
+.nopadding {
+	position: relative;
+	padding-left : 0;
+	padding-right : 0;
+}
+
+.widthCol {
+	width: 140px;
+}
+
+table {
+  border-collapse: separate;
+  border-spacing: 0 5px;
+}
+
+thead th {
+  background-color: #006DCC;
+  color: white;
+}
+
+tbody td {
+  background-color: #EEEEEE;
+}
+
+tr td:first-child,
+tr th:first-child {
+  border-top-left-radius: 6px;
+  border-bottom-left-radius: 6px;
+}
+
+tr td:last-child,
+tr th:last-child {
+  border-top-right-radius: 6px;
+  border-bottom-right-radius: 6px;
+}
+.container-fluid {
+	
+	text-align: justify;
+	
+}
+
+
+#myCarousel img{
+	position: relative;
+	margin-top: 50px;
+  	width: 100%;
+  	max-height: 300px !important;
+  	
+}
+
+.navbar-left {
+	position: relative;
+	margin-top: 10px;
+}
+
+
+a:hover,
+a:focus {
+  color: #eb3812;
+}
+
+.productpadding {
+	padding: 20px;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: 'Open Sans', 'Helvetica Neue', Arial, sans-serif;
+}
+p {
+  font-size: 16px;
+  line-height: 1.5;
+  margin-bottom: 20px;
+}
+
+section {
+  padding: 100px 0;
+}
+hr {
+  border-color: #F05F40;
+  border-width: 3px;
+  max-width: 50px;
+}
+/* responsive text queries */
+@media screen and (max-width: 992px) {
+  p,.btn,input,div,span,h4 {
+    font-size: 95%;
+  }
+  h1 {
+    font-size: 24px;  
+  }
+  h2 {
+    font-size: 22px;  
+  }
+  h3 {
+    font-size: 18px;  
+  }
+}
+
+@media screen and (max-width: 768px) {
+  p,.btn,input,div,span,h4 {
+    font-size: 95%;
+  }
+  h1 {
+    font-size: 20px;  
+  }
+  h2 {
+    font-size: 18px;  
+  }
+  h3 {
+    font-size: 16px;  
+  }
+}
+
+#success_message{ 
+	display: none;
+}
+
+.picture {
+	position: relative;
+	margin-top: 50px;
+  	width: 100%;
+  	max-height: 300px !important;
+}
+.contactText {
+	position: relative;
+
+}
+.contactText h1{
+	position: absolute;
+	font-family: "Droid Serif", "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-style: italic;
+	font-size: 50px;
+	left: 33%;
+	text-align: left;
+	top: 30%;
+
+}
+
+
+/* responsive text queries */
+@media screen and (max-width: 992px) {
+
+ .contactText h1 {
+    font-size: 24px;  
+  }
+}
+
+@media screen and (max-width: 768px) {
+
+ .contactText h1 {
+    font-size: 20px;  
+  }
+}

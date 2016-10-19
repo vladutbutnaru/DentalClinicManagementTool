@@ -1,0 +1,5 @@
+function adaugaCantitati(idOperatie){
+	console.log(document.getElementById("produseOperatie".idOperatie).value);
+	
+	
+}

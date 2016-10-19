@@ -1,0 +1,7 @@
+function adaugaCantitati(idOperatie){
+	
+	var allOptions =document.getElementsByClassName("filter-option pull-left");
+	console.log(allOptions[idOperatie].innerHTML);
+	
+	
+}

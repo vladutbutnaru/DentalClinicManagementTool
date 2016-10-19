@@ -496,7 +496,7 @@ $(function() {
                 var d = date.getDate();
                 var m = date.getMonth();
                 var y = date.getFullYear();
-
+                var programareID;
                
                 
               var showAppointmentInfo = function(param){
@@ -509,12 +509,19 @@ $(function() {
 
             			  }
             			  , function( data ) {
-            				  document.getElementById("numePacient").value= data.split(";")[0];
-            				  document.getElementById("dataProgramare").value= data.split(";")[1];
-            				  document.getElementById("timpProgramare").value= data.split(";")[2];
-            				  document.getElementById("comentariuProgramare").value= data.split(";")[3];
-            				  document.getElementById("operatiiProgramare").value = data.split(";")[4];
-
+            				  programareID = data.split(";")[0];
+            				  localStorage.setItem('idProgramare', programareID);
+            				  document.getElementById("numePacient").value= data.split(";")[1];
+            				  document.getElementById("dataProgramare").value= data.split(";")[2];
+            				  document.getElementById("timpProgramare").value= data.split(";")[3];
+            				  document.getElementById("comentariuProgramare").value= data.split(";")[4];
+            				  document.getElementById("operatiiProgramare").value = data.split(";")[5];
+            				  document.getElementById("finishAppointmentButton").onclick=function(e){
+            					  e.preventDefault();
+            		              
+            					  location.href= "finalizeaza-programare.jsp?programare=" + localStorage.getItem('idProgramare');
+            				  };
+            					
 
 
 

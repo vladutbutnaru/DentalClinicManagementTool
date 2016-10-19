@@ -1,0 +1,30 @@
+function endAppointment(nrOperatii, idMedic){
+	
+	var allOptions =document.getElementsByClassName("filter-option pull-left");
+	console.log(allOptions[idOperatie].innerHTML);
+	if(operatii!=undefiened && operatii !=null){
+	var operatii = allOptions[idOperatie].innerHTML.split(",");
+	
+	}
+	$.get("EndAppointmentServlet",
+			{
+			    numePacient : numePacient,
+			    idMedic : idMedic,
+			    nrOperatii : nrOperatii,
+			    operatii : operatii,
+			    notificationSMS : notificationSMS,
+			    notificationEmail : notificationEmail,
+			    notificationMobile : notificationMobile,
+			    doctorID : doctorID,
+			    comentariuProgramare: comentariuProgramare
+
+			}
+			, function( data ) {
+			location.href="home.jsp";
+
+
+
+
+			});
+	
+}

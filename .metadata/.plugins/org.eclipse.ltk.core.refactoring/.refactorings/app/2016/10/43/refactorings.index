@@ -1,3 +1,7 @@
 1476700146245	Rename resource 'pages-calendar.html'
 1476704102762	Rename resource 'pages-calendar.jsp'
 1476710926646	Delete element
+1476787628952	Delete element
+1476870832397	Delete element
+1476871408349	Encapsulate field 'cantitate'
+1476874501962	Encapsulate field 'maxValue'

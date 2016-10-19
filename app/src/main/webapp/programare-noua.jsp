@@ -1,15 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
-<%@page import="ro.dcmt.data.beans.Cabinet"%>
-<%@page import="ro.dcmt.data.beans.User"%>
-<%@page import="ro.dcmt.data.beans.Programare"%>
-<%@ page import="ro.dcmt.data.beans.Pacient"%>
-<%@ page import="ro.dcmt.data.beans.Operatie"%>
-<%@page import="ro.dcmt.data.controllers.CabinetService"%>
-<%@page import="ro.dcmt.data.controllers.ProgramariService"%>
-<%@page import="ro.dcmt.data.controllers.UserService"%>
-<%@page import="ro.dcmt.data.controllers.PacientService"%>
-<%@page import="ro.dcmt.data.controllers.OperatieService"%>
+<%@page import="ro.dcmt.data.beans.*"%>
+
+<%@page import="ro.dcmt.data.controllers.*"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.Date"%>
 <head>
@@ -20,6 +13,7 @@
 	UserService us = new UserService();
 	PacientService ps = new PacientService();
 	CabinetService cs = new CabinetService();
+
 	OperatieService os = new OperatieService();
 	Cookie[] cookies = request.getCookies();
 	ArrayList<Programare> programariNoi;
@@ -50,6 +44,7 @@
 	programariNoi = ProgramariService.getNewAppointmentsForDoctor(currentUser.getId());
 	programariViitoare = ProgramariService.getFutureAppointments(currentUser.getId());
 	operatiiCabinet = os.getOperatiiForCabinet(currentUser.getIdCabinet());
+	ArrayList<Operatie> operatii;
 %>
 
 <!-- META SECTION -->
@@ -182,6 +177,7 @@
 								for (Programare p : programariNoi) {
 
 									pacientProgramare = (Pacient) ps.getById(p.getIdUser());
+									operatii = os.getOperatiiForAppointment(p.getIdOperatii());
 							%>
 							<a href="pacient.jsp?id=<%=pacientProgramare.getId()%>"
 								class="list-group-item">
@@ -190,7 +186,13 @@
 								class="pull-left" alt="<%=pacientProgramare.getFirstName()%>" />
 								<span class="contacts-title"><%=pacientProgramare.getFirstName() + " " + pacientProgramare.getLastName()%>
 							</span>
-								<p><%=p.getIdOperatii()%></p>
+							
+								<p>
+								<%for(Operatie o : operatii){ %>
+								<%=o.getTitlu() + ", "%>
+								<%} %>
+								<%=p.getData() %>
+								</p>
 							</a>
 
 							<%
@@ -474,6 +476,20 @@
 	<script type="text/javascript" src="js/plugins.js"></script>
 	<script type="text/javascript" src="js/actions.js"></script>
 	<!-- END TEMPLATE -->
+	<!--Start of Tawk.to Script-->
+	<script type="text/javascript">
+		var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
+		(function() {
+			var s1 = document.createElement("script"), s0 = document
+					.getElementsByTagName("script")[0];
+			s1.async = true;
+			s1.src = 'https://embed.tawk.to/58075974cfdf421cf96b5639/default';
+			s1.charset = 'UTF-8';
+			s1.setAttribute('crossorigin', '*');
+			s0.parentNode.insertBefore(s1, s0);
+		})();
+	</script>
+	<!--End of Tawk.to Script-->
 	<!-- END SCRIPTS -->
 </body>
 </html>

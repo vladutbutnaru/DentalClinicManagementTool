@@ -1,0 +1,35 @@
+function endAppointment(nrOperatii, idMedic, idProgramare) {
+
+	var allOptions = document.getElementsByClassName("filter-option pull-left");
+	console.log(allOptions[idOperatie].innerHTML);
+	var operatii = [];
+	for(let i = 0; i<nrOperatii; i++){
+	if (operatii != undefiened && operatii != null) {
+		var operatiiSplit = allOptions[i].innerHTML.split(",");
+		for(let j = 0; j<operatiiSplit.length;j++)
+			operatii.push(operatiiSplit[j]);
+	}
+	}
+var generateInvoice = 0;
+var sendInvoiceViaEmail = 0;
+	if(document.getElementById("notificationEmail").checked){
+	generateInvoice=1;
+	
+}
+	$.get("EndAppointmentServlet", {
+		idProgramare : idProgramare,
+		idMedic : idMedic,
+		nrOperatii : nrOperatii,
+		operatii : operatii,
+		notificationSMS : notificationSMS,
+		notificationEmail : notificationEmail,
+		notificationMobile : notificationMobile,
+		doctorID : doctorID,
+		comentariuProgramare : comentariuProgramare
+
+	}, function(data) {
+		location.href = "home.jsp";
+
+	});
+
+}

@@ -9,8 +9,6 @@
 <fullyQualifiedTypeName name="com.google.gson.JsonObject"/>
 <fullyQualifiedTypeName name="ro.dcmt.data.controllers.UserService"/>
 <fullyQualifiedTypeName name="java.io.UnsupportedEncodingException"/>
-<fullyQualifiedTypeName name="ro.dcmt.data.controllers.DBEntityController"/>
-<fullyQualifiedTypeName name="java.sql.Blob"/>
 <fullyQualifiedTypeName name="java.io.InputStream"/>
 <fullyQualifiedTypeName name="java.io.OutputStream"/>
 <fullyQualifiedTypeName name="java.sql.PreparedStatement"/>
@@ -22,8 +20,19 @@
 <fullyQualifiedTypeName name="ro.dcmt.data.controllers.CabinetService"/>
 <fullyQualifiedTypeName name="ro.dcmt.data.beans.Cabinet"/>
 <fullyQualifiedTypeName name="java.io.Serializable"/>
-<fullyQualifiedTypeName name="java.sql.Timestamp"/>
 <fullyQualifiedTypeName name="ro.dcmt.data.controllers.FeedbackService"/>
 <fullyQualifiedTypeName name="ro.dcmt.data.controllers.ProgramariService"/>
 <fullyQualifiedTypeName name="java.util.Map"/>
+<fullyQualifiedTypeName name="java.sql.Time"/>
+<fullyQualifiedTypeName name="java.util.Properties"/>
+<fullyQualifiedTypeName name="javax.mail.Session"/>
+<fullyQualifiedTypeName name="javax.mail.PasswordAuthentication"/>
+<fullyQualifiedTypeName name="ro.dcmt.utils.HTMLMailSender"/>
+<fullyQualifiedTypeName name="java.sql.Blob"/>
+<fullyQualifiedTypeName name="java.util.List"/>
+<fullyQualifiedTypeName name="ro.dcmt.data.controllers.OperatieService"/>
+<fullyQualifiedTypeName name="ro.dcmt.data.controllers.InventarService"/>
+<fullyQualifiedTypeName name="java.sql.Timestamp"/>
+<fullyQualifiedTypeName name="ro.dcmt.data.controllers.InvoiceService"/>
+<fullyQualifiedTypeName name="ro.dcmt.data.controllers.DBEntityController"/>
 </qualifiedTypeNameHistroy>
