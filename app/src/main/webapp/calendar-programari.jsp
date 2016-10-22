@@ -5,7 +5,7 @@
 <head>
 
 <%@page import="ro.dcmt.data.beans.*"%>
-
+<%@page import="ro.dcmt.utils.*" %>
 <%@page import="ro.dcmt.data.controllers.*"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.Date"%>
@@ -38,6 +38,19 @@
 	ArrayList<Operatie> operatii;
 	ArrayList<Programare> programariNoi = ProgramariService.getNewAppointmentsForDoctor(currentUser.getId());
 	ArrayList<Programare> programariViitoare = ProgramariService.getFutureAppointments(currentUser.getId());
+	long diffDaysSubscription =TimeUtils.differenceNowAndTimestamp(currentUser.getExpirationDate());
+	String subscriptionType = "Abonament ";
+	if(currentUser.getSubscriptionType() == Configuration.STANDARD_SUBSCRIPTION)
+		subscriptionType+= "Standard";
+	if(currentUser.getSubscriptionType() == Configuration.ELITE_SUBSCRIPTION)
+		subscriptionType+= "Elite";
+	if(currentUser.getSubscriptionType() == Configuration.BETA_TESTER)
+		subscriptionType+= "Beta";
+	if(currentUser.getSubscriptionType() == Configuration.FREE_TRIAL)
+		subscriptionType+= "Trial";
+	int expirationMonth = currentUser.getExpirationDate().getMonth()+1;
+	int expirationYear = currentUser.getExpirationDate().getYear() + 1900;
+	String expirationText = currentUser.getExpirationDate().getDate() + "/" + expirationMonth + "/" + expirationYear;
 %>
 
 
@@ -112,10 +125,16 @@
 				<li class="xn-openable"><a href="#"><span
 						class="fa fa-file-text-o"></span> <span class="xn-text">Cabinet</span></a>
 					<ul>
-						<li><a href="layout-nav-top.html">Agenda programari</a></li>
-						<li><a href="layout-boxed.html">Stoc produse</a></li>
-						<li><a href="layout-nav-toggled.html">Furnizori</a></li>
-						<li><a href="layout-nav-top.html">Plati utilitare</a></li>
+						<li><a href="invoices.jsp"><span class="fa fa-book"></span>Facturi</a></li>
+						<li><a href="stocuri.jsp"> <span
+								class="fa fa-tasks"></span>Stoc produse
+						</a></li>
+						<li><a href="layout-nav-toggled.html"> <span
+								class="fa fa-truck"></span>Furnizori
+						</a></li>
+						<li><a href="layout-nav-top.html"> <span
+								class="fa fa-money"></span>Plati utilitare
+						</a></li>
 					</ul></li>
 
 
@@ -184,12 +203,16 @@
 								class="pull-left" alt="<%=pacientProgramare.getFirstName()%>" />
 								<span class="contacts-title"><%=pacientProgramare.getFirstName() + " " + pacientProgramare.getLastName()%>
 							</span>
-							
+
 								<p>
-								<%for(Operatie o : operatii){ %>
-								<%=o.getTitlu() + ", "%>
-								<%} %>
-								<%=p.getData() %>
+									<%
+										for (Operatie o : operatii) {
+									%>
+									<%=o.getTitlu() + ", "%>
+									<%
+										}
+									%>
+									<%=p.getData()%>
 								</p>
 							</a>
 
@@ -315,7 +338,8 @@
 					<h3>Informatii programare</h3>
 					<form class="form-horizontal" role="form">
 						<div class="form-group">
-							<label class="col-md-3 col-xs-12 control-label">Nume Pacient</label>
+							<label class="col-md-3 col-xs-12 control-label">Nume
+								Pacient</label>
 							<div class="col-md-6 col-xs-12">
 								<div class="input-group">
 									<input type="text" readonly id="numePacient"
@@ -353,34 +377,34 @@
 
 							</div>
 						</div>
-						
+
 						<div class="form-group">
 							<label class="col-md-3 col-xs-12 control-label">Operatii</label>
 							<div class="col-md-6 col-xs-12">
 								<div class="input-group">
-									<input type="text" readonly id="operatiiProgramare" style="width:265px"
-										class="form-control" placeholder=""> <span
-										class="input-group-btn"> </span>
+									<input type="text" readonly id="operatiiProgramare"
+										style="width: 265px" class="form-control" placeholder="">
+									<span class="input-group-btn"> </span>
 								</div>
 
 							</div>
 						</div>
 						<div class="form-group">
-					<label class="col-md-3 col-xs-12 control-label">Comentariul
-						programarii</label>
-					<div class="col-md-6 col-xs-12">
-						<textarea class="form-control" rows="5" id="comentariuProgramare"
-							readonly></textarea>
+							<label class="col-md-3 col-xs-12 control-label">Comentariul
+								programarii</label>
+							<div class="col-md-6 col-xs-12">
+								<textarea class="form-control" rows="5"
+									id="comentariuProgramare" readonly></textarea>
 
-					</div>
-				</div>
-						
+							</div>
+						</div>
 				</div>
 
 				</form>
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-success" id="finishAppointmentButton">Finalizeaza programarea</button>
+				<button type="button" class="btn btn-success"
+					id="finishAppointmentButton">Finalizeaza programarea</button>
 				<button type="button" class="btn btn-danger" data-dismiss="modal">Inchide</button>
 
 			</div>
@@ -437,7 +461,7 @@
 	<script type="text/javascript" src="js/plugins.js"></script>
 	<script type="text/javascript" src="js/actions.js"></script>
 	<!-- END TEMPLATE -->
-<!--Start of Tawk.to Script-->
+	<!--Start of Tawk.to Script-->
 	<script type="text/javascript">
 		var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
 		(function() {

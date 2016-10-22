@@ -16,12 +16,12 @@
 	ProgramariService progs = new ProgramariService();
 	CabinetService cs = new CabinetService();
 	Cookie[] cookies = request.getCookies();
+	OperatieService os = new OperatieService();
 	ArrayList<Programare> programariNoi;
 	InvoiceService is = new InvoiceService();
-	OperatieService os = new OperatieService();
 	if (cookies != null) {
 		for (Cookie cookie : cookies) {
-		
+
 			if (cookie.getName().equals("user"))
 				email = cookie.getValue();
 		}
@@ -43,11 +43,7 @@
 
 	}
 	programariNoi = ProgramariService.getNewAppointmentsForDoctor(currentUser.getId());
-	int invoiceID = Integer.parseInt(request.getParameter("invoiceID"));
-	Invoice currentInvoice = (Invoice) is.getById(invoiceID);
-	cabinet = (Cabinet) cs.getById(currentUser.getIdCabinet());
-	Programare programare = (Programare) progs.getById(currentInvoice.getProgramareID());
-	Pacient pacient = (Pacient) ps.getById(programare.getIdUser());
+	ArrayList<Produs> produseMedic = InventarService.getInventarForDoctor(currentUser.getId());
 	ArrayList<Operatie> operatii;
 	long diffDaysSubscription =TimeUtils.differenceNowAndTimestamp(currentUser.getExpirationDate());
 	String subscriptionType = "Abonament ";
@@ -64,7 +60,7 @@
 	String expirationText = currentUser.getExpirationDate().getDate() + "/" + expirationMonth + "/" + expirationYear;
 %>
 <!-- META SECTION -->
-<title>DCMT - Factura</title>
+<title>DCMT - Lista facturi</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -77,84 +73,6 @@
 	href="css/theme-default.css" />
 <!-- EOF CSS INCLUDE -->
 
-<style>
-.invoice-box {
-	max-width: 800px;
-	margin: auto;
-	padding: 30px;
-	border: 1px solid #eee;
-	box-shadow: 0 0 10px rgba(0, 0, 0, .15);
-	font-size: 16px;
-	line-height: 24px;
-	font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
-	color: #555;
-}
-
-.invoice-box table {
-	width: 100%;
-	line-height: inherit;
-	text-align: left;
-}
-
-.invoice-box table td {
-	padding: 5px;
-	vertical-align: top;
-}
-
-.invoice-box table tr td:nth-child(2) {
-	text-align: right;
-}
-
-.invoice-box table tr.top table td {
-	padding-bottom: 20px;
-}
-
-.invoice-box table tr.top table td.title {
-	font-size: 45px;
-	line-height: 45px;
-	color: #333;
-}
-
-.invoice-box table tr.information table td {
-	padding-bottom: 40px;
-}
-
-.invoice-box table tr.heading td {
-	background: #eee;
-	border-bottom: 1px solid #ddd;
-	font-weight: bold;
-}
-
-.invoice-box table tr.details td {
-	padding-bottom: 20px;
-}
-
-.invoice-box table tr.item td {
-	border-bottom: 1px solid #eee;
-}
-
-.invoice-box table tr.item.last td {
-	border-bottom: none;
-}
-
-.invoice-box table tr.total td:nth-child(2) {
-	border-top: 2px solid #eee;
-	font-weight: bold;
-}
-
-@media only screen and (max-width: 600px) {
-	.invoice-box table tr.top table td {
-		width: 100%;
-		display: block;
-		text-align: center;
-	}
-	.invoice-box table tr.information table td {
-		width: 100%;
-		display: block;
-		text-align: center;
-	}
-}
-</style>
 </head>
 <body>
 	<!-- START PAGE CONTAINER -->
@@ -192,8 +110,8 @@
 						</div>
 					</div></li>
 				<li class="xn-title">Navigatie</li>
-				<li><a href="home.jsp"><span class="fa fa-desktop"></span> <span
-						class="xn-text">Privire generala</span></a></li>
+				<li><a href="home.jsp"><span class="fa fa-desktop"></span>
+						<span class="xn-text">Privire generala</span></a></li>
 				<li class="xn-openable"><a href="#"><span
 						class="fa fa-files-o"></span> <span class="xn-text">Pacienti</span></a>
 					<ul>
@@ -209,9 +127,9 @@
 				<li class="xn-openable active"><a href="#"><span
 						class="fa fa-file-text-o"></span> <span class="xn-text">Cabinet</span></a>
 					<ul>
-						<li class="active"><a href="invoices.jsp"><span
+						<li><a href="invoices.jsp"><span
 								class="fa fa-book"></span>Facturi</a></li>
-						<li><a href="stocuri.jsp"> <span
+						<li class="active"><a href="#"> <span
 								class="fa fa-tasks"></span>Stoc produse
 						</a></li>
 						<li><a href="layout-nav-toggled.html"> <span
@@ -314,12 +232,16 @@
 								class="pull-left" alt="<%=pacientProgramare.getFirstName()%>" />
 								<span class="contacts-title"><%=pacientProgramare.getFirstName() + " " + pacientProgramare.getLastName()%>
 							</span>
-							
+
 								<p>
-								<%for(Operatie o : operatii){ %>
-								<%=o.getTitlu() + ", "%>
-								<%} %>
-								<%=p.getData() %>
+									<%
+										for (Operatie o : operatii) {
+									%>
+									<%=o.getTitlu() + ", "%>
+									<%
+										}
+									%>
+									<%=p.getData()%>
 								</p>
 							</a>
 
@@ -340,8 +262,8 @@
 			<ul class="breadcrumb">
 				<li><a href="home.jsp">Acasa</a></li>
 				<li><a href="#">Cabinet</a></li>
-				<li><a href="invoices.jsp">Facturi</a></li>
-				<li class="active">Vezi factura</li>
+				<li class="active"><a href="invoices.jsp">Facturi</a></li>
+
 			</ul>
 			<!-- END BREADCRUMB -->
 
@@ -353,87 +275,79 @@
 
 			<!-- PAGE CONTENT WRAPPER -->
 			<div class="page-content-wrap">
-
+				
 				<div class="row">
 					<div class="col-md-12">
 
 						<div class="panel panel-default">
 							<div class="panel-heading">
 								<h3 class="panel-title">
-									Factura
-									<%=currentInvoice.getId()%></h3>
+									<strong>Lista </strong>Produse din stoc
+								</h3>
 							</div>
 							<div class="panel-body">
-								<div class="invoice-box">
-									<table cellpadding="0" cellspacing="0">
-										<tr class="top">
-											<td colspan="2">
-												<table>
-													<tr>
-														<td class="title"><img
-															src="<%=cabinet.getImage().getName()%>"
-															style="width: 100%; max-width: 200px; max-height: 150px;"></td>
 
-														<td>Factura #: <%=currentInvoice.getId()%><br>
-															Creata: <%=currentInvoice.getData()%><br>
+								<table class="table datatable">
+									<thead>
+										<tr>
+											<th>Nr</th>
+											<th>Nume produs</th>
+											<th>Unitate masura</th>
+											<th>Cantitate ramasa</th>
+											<th>Grafic</th>
+											<th>Modifica stoc</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<%
+												int nr = 0;
+												for (Produs p : produseMedic) {
+											%>
+											<td><%=++nr%></td>
+											<td><%=p.getNumeProdus() %></td>
+											<td><%=p.getUM()%></td>
+											<td><%=p.getCantitateProdus()%></td>
+											<td>
+																		<%
+														if (p.getCantitateProdus() > 0) {
+													%>
+													<div
+														class="progress progress-small progress-striped active">
 
-														</td>
-													</tr>
-												</table>
+														<div class="progress-bar progress-bar-success"
+															role="progressbar"
+															aria-valuenow="<%=p.getCantitateProdus()%>"
+															aria-valuemin="0"
+															aria-valuemax="<%=p.getMaxValue()%>"
+															style="width:  <%=(p.getCantitateProdus() / p.getMaxValue()) * 100%>%;"><%=p.getCantitateProdus()%></div>
+													</div> <%
+ 	} else {
+ %>
+													<div
+														class="progress progress-small progress-striped active">
+
+														<div class="progress-bar progress-bar-danger"
+															role="progressbar"
+															aria-valuenow="<%=p.getCantitateProdus()%>"
+															aria-valuemin="0"
+															aria-valuemax="<%=p.getMaxValue()%>"
+															style="width: 1%;"><%=p.getCantitateProdus()%></div>
+													</div> <%
+ 	}
+ %>
+											
 											</td>
+											<td><button type="button" class="btn btn-info"
+													onclick="location.href='modifica-stoc.jsp?produsId=<%=p.getID()%>'">Modifica</button></td>
 										</tr>
-
-										<tr class="information">
-											<td colspan="2">
-												<table>
-													<tr>
-														<td><%=cabinet.getNume()%><br> <%=cabinet.getOras()%><br>
-															<%=currentUser.getFirstName() + " " + currentUser.getLastName()%>
-
-														</td>
-
-														<td><%=pacient.getFirstName()%><br> <%=pacient.getLastName()%><br>
-															<%=pacient.getEmail()%></td>
-													</tr>
-												</table>
-											</td>
-										</tr>
-
-										<tr class="heading">
-											<td>Metoda de plata</td>
-
-											<td>Numerar</td>
-										</tr>
-
-										<tr class="details">
-											<td>Suma</td>
-
-											<td><%=currentInvoice.getPrice()%> RON</td>
-										</tr>
-
-										<tr class="heading">
-											<td>Serviciu</td>
-
-											<td>Pret</td>
-										</tr>
-
-										<tr class="item">
-											<td>Prestare servicii medicale</td>
-
-											<td><%=currentInvoice.getPrice()%> RON</td>
-										</tr>
+										<%
+											}
+										%>
+									</tbody>
+								</table>
 
 
-
-
-										<tr class="total">
-											<td></td>
-
-											<td>Total: <%=currentInvoice.getPrice()%> RON
-											</td>
-										</tr>
-									</table>
-								</div>
 							</div>
 						</div>
 
@@ -523,6 +437,8 @@
 	<script type="text/javascript" src="js/actions.js"></script>
 
 	<script type="text/javascript" src="js/demo_dashboard.js"></script>
+	<script type="text/javascript"
+		src="js/plugins/datatables/jquery.dataTables.min.js"></script>
 	<!-- END TEMPLATE -->
 	<!-- END SCRIPTS -->
 	<!--Start of Tawk.to Script-->

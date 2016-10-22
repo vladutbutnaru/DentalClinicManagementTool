@@ -1,6 +1,8 @@
 package ro.dcmt.mobile;
 
 import java.io.IOException;
+
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -41,7 +43,7 @@ public class GetCabinetsNearbyEndpoint extends HttpServlet {
 		FeedbackService fs = new FeedbackService();
 		String responseText = "";
 		Cabinet cabinet;
-		
+	
 		for(Object c : cs.getAllByColumn("Oras", city)){
 			 cabinet = (Cabinet) c;
 		

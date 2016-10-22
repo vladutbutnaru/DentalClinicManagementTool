@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <%@page import="ro.dcmt.data.beans.*"%>
-
+<%@page import="ro.dcmt.utils.*" %>
 <%@page import="ro.dcmt.data.controllers.*"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.Date"%>
@@ -49,6 +49,19 @@
 
 	ArrayList<InventarProgramare> inventarProgramare = InventarProgramareService
 			.getInventarProgramareForProgramare(programareID);
+	long diffDaysSubscription =TimeUtils.differenceNowAndTimestamp(currentUser.getExpirationDate());
+	String subscriptionType = "Abonament ";
+	if(currentUser.getSubscriptionType() == Configuration.STANDARD_SUBSCRIPTION)
+		subscriptionType+= "Standard";
+	if(currentUser.getSubscriptionType() == Configuration.ELITE_SUBSCRIPTION)
+		subscriptionType+= "Elite";
+	if(currentUser.getSubscriptionType() == Configuration.BETA_TESTER)
+		subscriptionType+= "Beta";
+	if(currentUser.getSubscriptionType() == Configuration.FREE_TRIAL)
+		subscriptionType+= "Trial";
+	int expirationMonth = currentUser.getExpirationDate().getMonth()+1;
+	int expirationYear = currentUser.getExpirationDate().getYear() + 1900;
+	String expirationText = currentUser.getExpirationDate().getDate() + "/" + expirationMonth + "/" + expirationYear;
 %>
 <!-- META SECTION -->
 <title>DCMT - Adauga stocuri</title>
@@ -118,9 +131,9 @@
 				<li class="xn-openable active"><a href="#"><span
 						class="fa fa-file-text-o"></span> <span class="xn-text">Cabinet</span></a>
 					<ul>
-						<li class="active"><a href="invoices.jsp"><span
+						<li ><a href="invoices.jsp"><span
 								class="fa fa-book"></span>Facturi</a></li>
-						<li><a href="layout-boxed.html"> <span
+						<li class="active"><a href="stocuri.jsp"> <span
 								class="fa fa-tasks"></span>Stoc produse
 						</a></li>
 						<li><a href="layout-nav-toggled.html"> <span
@@ -276,11 +289,12 @@
                                         </div>
                                     </div>
                                     <br>
+                                    <input type="hidden" id="idProgramare" value="<%=programareID %>"></input>
                                     <h3>Adauga cantitate folosita</h3>
                                     <div class="form-group">
                                         <label class="col-md-2 control-label"><%=produs.getUM() %></label>
                                         <div class="col-md-10">
-                                            <input type="text" class="form-control" placeholder="eg. 15"/>
+                                            <input type="text" class="form-control" placeholder="eg. 15" id="stoc"/>
                                         </div>
                                     </div>
 											
@@ -293,7 +307,7 @@
 								<%
 									}
 								%>
-
+				  <button class="btn btn-success" onclick="javascript:updateStock();"><i class="fa fa-plus"></i>Actualizeaza stocuri</button>
 							</div>
 						</div>
 
@@ -383,6 +397,7 @@
 	<script type="text/javascript" src="js/actions.js"></script>
 
 	<script type="text/javascript" src="js/demo_dashboard.js"></script>
+	<script type="text/javascript" src="js/adauga-stoc.js"></script>
 	<!-- END TEMPLATE -->
 	<!--Start of Tawk.to Script-->
 	<script type="text/javascript">

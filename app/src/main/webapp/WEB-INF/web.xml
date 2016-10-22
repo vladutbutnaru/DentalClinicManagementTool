@@ -78,6 +78,18 @@
 		<description></description>
 		<servlet-class>ro.dcmt.web.GetSalesDashboardChartServlet</servlet-class>
 	</servlet>
+	<servlet>
+		<servlet-name>AddStocks</servlet-name>
+		<display-name>AddStocks</display-name>
+		<description></description>
+		<servlet-class>ro.dcmt.web.AddStocks</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>ChangeStock</servlet-name>
+		<display-name>ChangeStock</display-name>
+		<description></description>
+		<servlet-class>ro.dcmt.web.ChangeStock</servlet-class>
+	</servlet>
 	<servlet-mapping>
 		<servlet-name>MobileAuthEndpoint</servlet-name>
 		<url-pattern>/MobileAuthEndpoint</url-pattern>
@@ -127,9 +139,17 @@
 		<servlet-name>GetSalesDashboardChartServlet</servlet-name>
 		<url-pattern>/GetSalesDashboardChartServlet</url-pattern>
 	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>AddStocks</servlet-name>
+		<url-pattern>/AddStocks</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>ChangeStock</servlet-name>
+		<url-pattern>/ChangeStock</url-pattern>
+	</servlet-mapping>
 
 	<welcome-file-list>
-		<welcome-file>login.jsp</welcome-file>
+		<welcome-file>front-end-redirect.html</welcome-file>
 
 	</welcome-file-list>
 	

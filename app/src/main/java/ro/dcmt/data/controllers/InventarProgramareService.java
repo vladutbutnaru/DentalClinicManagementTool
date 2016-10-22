@@ -19,8 +19,37 @@ public class InventarProgramareService implements DBEntityController {
 	private static PreparedStatement stmt = null;
 	private static ResultSet rs = null;
 	public Object getById(int id) {
-		// TODO Auto-generated method stub
-		return null;
+		ArrayList<InventarProgramare> inventar = new ArrayList<InventarProgramare>();
+		try {
+
+			stmt = conn.prepareStatement("SELECT * FROM inventar_programare WHERE ID = ?");
+			stmt.setInt(1, id);
+
+			rs = stmt.executeQuery();
+			logger.info("getById: " + 1, id);
+			while (rs.next()) {
+				InventarProgramare ip = new InventarProgramare();
+				ip.setID(rs.getInt(1));
+				ip.setProgramareID(rs.getInt(2));
+				ip.setProdusID(rs.getInt(3));
+				ip.setCantitate(rs.getDouble(4));
+				inventar.add(ip);
+
+			}
+
+		} catch (SQLException ex) {
+			// handle any errors
+			System.out.println("SQLException: " + ex.getMessage());
+			System.out.println("SQLState: " + ex.getSQLState());
+			System.out.println("VendorError: " + ex.getErrorCode());
+			logger.error(ex.getMessage());
+
+		}
+
+		
+		
+		
+		return inventar.get(0);
 	}
 
 	public ArrayList<Object> getAllByColumn(String column, String value) {
@@ -100,6 +129,30 @@ public class InventarProgramareService implements DBEntityController {
 		
 		
 		return inventar;
+	}
+	
+	public static void updateInventarProgramare(InventarProgramare p) {
+		try {
+
+			stmt = conn.prepareStatement(
+					"UPDATE inventar_programare SET  ProgramareID = ? , ProdusID = ? , Cantitate = ? WHERE ID = ?");
+			stmt.setInt(1, p.getProgramareID());
+			stmt.setInt(2, p.getProdusID());
+			stmt.setDouble(3, p.getCantitate());
+			stmt.setInt(4, p.getID());
+		
+			stmt.executeUpdate();
+			logger.info("updateInventarProgramare: " + p.getID());
+
+		} catch (SQLException ex) {
+			// handle any errors
+			System.out.println("SQLException: " + ex.getMessage());
+			System.out.println("SQLState: " + ex.getSQLState());
+			System.out.println("VendorError: " + ex.getErrorCode());
+			logger.error(ex.getMessage());
+
+		}
+
 	}
 
 }

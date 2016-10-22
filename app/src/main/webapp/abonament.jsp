@@ -43,11 +43,7 @@
 
 	}
 	programariNoi = ProgramariService.getNewAppointmentsForDoctor(currentUser.getId());
-	int invoiceID = Integer.parseInt(request.getParameter("invoiceID"));
-	Invoice currentInvoice = (Invoice) is.getById(invoiceID);
-	cabinet = (Cabinet) cs.getById(currentUser.getIdCabinet());
-	Programare programare = (Programare) progs.getById(currentInvoice.getProgramareID());
-	Pacient pacient = (Pacient) ps.getById(programare.getIdUser());
+	
 	ArrayList<Operatie> operatii;
 	long diffDaysSubscription =TimeUtils.differenceNowAndTimestamp(currentUser.getExpirationDate());
 	String subscriptionType = "Abonament ";
@@ -64,11 +60,11 @@
 	String expirationText = currentUser.getExpirationDate().getDate() + "/" + expirationMonth + "/" + expirationYear;
 %>
 <!-- META SECTION -->
-<title>DCMT - Factura</title>
+<title>DCMT - Abonamentul tau</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-
+<meta charset="UTF-8">
 <link rel="icon" href="favicon.ico" type="image/x-icon" />
 <!-- END META SECTION -->
 
@@ -77,84 +73,6 @@
 	href="css/theme-default.css" />
 <!-- EOF CSS INCLUDE -->
 
-<style>
-.invoice-box {
-	max-width: 800px;
-	margin: auto;
-	padding: 30px;
-	border: 1px solid #eee;
-	box-shadow: 0 0 10px rgba(0, 0, 0, .15);
-	font-size: 16px;
-	line-height: 24px;
-	font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
-	color: #555;
-}
-
-.invoice-box table {
-	width: 100%;
-	line-height: inherit;
-	text-align: left;
-}
-
-.invoice-box table td {
-	padding: 5px;
-	vertical-align: top;
-}
-
-.invoice-box table tr td:nth-child(2) {
-	text-align: right;
-}
-
-.invoice-box table tr.top table td {
-	padding-bottom: 20px;
-}
-
-.invoice-box table tr.top table td.title {
-	font-size: 45px;
-	line-height: 45px;
-	color: #333;
-}
-
-.invoice-box table tr.information table td {
-	padding-bottom: 40px;
-}
-
-.invoice-box table tr.heading td {
-	background: #eee;
-	border-bottom: 1px solid #ddd;
-	font-weight: bold;
-}
-
-.invoice-box table tr.details td {
-	padding-bottom: 20px;
-}
-
-.invoice-box table tr.item td {
-	border-bottom: 1px solid #eee;
-}
-
-.invoice-box table tr.item.last td {
-	border-bottom: none;
-}
-
-.invoice-box table tr.total td:nth-child(2) {
-	border-top: 2px solid #eee;
-	font-weight: bold;
-}
-
-@media only screen and (max-width: 600px) {
-	.invoice-box table tr.top table td {
-		width: 100%;
-		display: block;
-		text-align: center;
-	}
-	.invoice-box table tr.information table td {
-		width: 100%;
-		display: block;
-		text-align: center;
-	}
-}
-</style>
 </head>
 <body>
 	<!-- START PAGE CONTAINER -->
@@ -339,15 +257,13 @@
 			<!-- START BREADCRUMB -->
 			<ul class="breadcrumb">
 				<li><a href="home.jsp">Acasa</a></li>
-				<li><a href="#">Cabinet</a></li>
-				<li><a href="invoices.jsp">Facturi</a></li>
-				<li class="active">Vezi factura</li>
+				<li><a href="#">Abonament</a></li>
 			</ul>
 			<!-- END BREADCRUMB -->
 
 			<div class="page-title">
 				<h2>
-					<span class="fa fa-arrow-circle-o-left"></span> Factura
+					<span class="fa fa-arrow-circle-o-left"></span> Abonament
 				</h2>
 			</div>
 
@@ -360,80 +276,83 @@
 						<div class="panel panel-default">
 							<div class="panel-heading">
 								<h3 class="panel-title">
-									Factura
-									<%=currentInvoice.getId()%></h3>
+									Abonamentul tau</h3>
 							</div>
 							<div class="panel-body">
-								<div class="invoice-box">
-									<table cellpadding="0" cellspacing="0">
-										<tr class="top">
-											<td colspan="2">
-												<table>
-													<tr>
-														<td class="title"><img
-															src="<%=cabinet.getImage().getName()%>"
-															style="width: 100%; max-width: 200px; max-height: 150px;"></td>
+						<div class="progress">
+                                         <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="<%=diffDaysSubscription %>" style="width: <%=(diffDaysSubscription / 30) * 100%>%;">
+                                        <%=diffDaysSubscription + " zile ramase" %>
+                                        </div>
+                                    </div>
+						
+						<h2><b><%=subscriptionType %></b></h2>
+						<h2>Expira la <b><%=expirationText %></b></h2>
+						<div class="row">
+                        <!-- PRICING TABLE -->
+                        <div class="col-md-4">
 
-														<td>Factura #: <%=currentInvoice.getId()%><br>
-															Creata: <%=currentInvoice.getData()%><br>
+                            <div class="panel panel-success push-up-20">
+                                <div class="panel-body panel-body-pricing">
+                                    <h2>Standard<br><small>&#8364;99 / luna sau &#8364;1000 / an</small></h2>                                
+                                    <p><span class="fa fa-caret-right"></span> Management pacienti</p>
+                                    <p><span class="fa fa-caret-right"></span> Notificari email</p>
+                                    <p><span class="fa fa-caret-right"></span> Suport live in platforma</p>
+                                    <p><span class="fa fa-caret-right"></span> Actualizari gratuite</p>
+                                    <p><span class="fa fa-caret-right"></span> Aparitie in aplicatia mobile</p>
+                                    <p><span class="fa fa-caret-right"></span> Notificari Mobile</p>
+                                    <p><span class="fa fa-caret-right"></span> Management Stocuri</p>
+                                    <p><span class="fa fa-caret-right"></span> Statistici de performanta</p>
+                                    <p><span class="fa fa-caret-right"></span> Rapoarte inteligente</p>
+                                    <p class="text-muted">Dedicat medicilor care vor un sistem complet de management</p>
+                                </div>
+                                <div class="panel-footer">                                 
+                                    <button class="btn btn-success btn-block">Schimba</button>
+                                </div>
+                            </div>
 
-														</td>
-													</tr>
-												</table>
-											</td>
-										</tr>
+                        </div>
 
-										<tr class="information">
-											<td colspan="2">
-												<table>
-													<tr>
-														<td><%=cabinet.getNume()%><br> <%=cabinet.getOras()%><br>
-															<%=currentUser.getFirstName() + " " + currentUser.getLastName()%>
+                        <div class="col-md-4">
 
-														</td>
+                            <div class="panel panel-danger">
+                                <div class="panel-body panel-body-pricing">
+                                    <h2>Elite<br><small>&#8364;149 / luna sau &#8364;1500 / an</small></h2>                                
+                                    <p><span class="fa fa-caret-right"></span> Toate beneficiile pachetului Standard</p>
+                                    <p><span class="fa fa-caret-right"></span> Acces la actualizari dedicate</p>
+                                    <p><span class="fa fa-caret-right"></span> Agent tehnic dedicat</p>
+                                    <p><span class="fa fa-caret-right"></span> Sincronizare stocuri</p>
+                                    <p><span class="fa fa-caret-right"></span> Moderare recenzii din aplicatia Mobile</p>
+                                    <p><span class="fa fa-caret-right"></span> Distinctii in functie de performanta</p>          
+                                    <p><span class="fa fa-caret-right"></span> Acces la cele mai bune oferte ale furnizorilor de echipamente medicale</p>       
+                                                        
+                                    <p class="text-muted">Dedicat medicilor care vor sa inoveze</p>
+                                </div>
+                                <div class="panel-footer"> 
+                                    <button class="btn btn-danger btn-block">Prelungeste</button>
+                                </div>
+                            </div>
 
-														<td><%=pacient.getFirstName()%><br> <%=pacient.getLastName()%><br>
-															<%=pacient.getEmail()%></td>
-													</tr>
-												</table>
-											</td>
-										</tr>
+                        </div>                    
 
-										<tr class="heading">
-											<td>Metoda de plata</td>
+                        <div class="col-md-4">
 
-											<td>Numerar</td>
-										</tr>
+                            <div class="panel panel-warning push-up-20">
+                                <div class="panel-body panel-body-pricing">
+                                    <h2>Clinica<br><small>&#8364;599 / luna sau &#8364;6000 / an</small></h2>                                
+                                    <p><span class="fa fa-caret-right"></span> Pana la 8 licente Elite</p>
+                                    <p><span class="fa fa-caret-right"></span> Posibilitatea personalizarii platformei</p>
+                                    <p><span class="fa fa-caret-right"></span> Training on-site</p>                                    
+                                    <p class="text-muted">Dedicat clinicilor de elita din Romania</p>
+                                </div>
+                                <div class="panel-footer"> 
+                                    <button class="btn btn-warning btn-block">Upgrade</button>
+                                </div>
+                            </div>
 
-										<tr class="details">
-											<td>Suma</td>
-
-											<td><%=currentInvoice.getPrice()%> RON</td>
-										</tr>
-
-										<tr class="heading">
-											<td>Serviciu</td>
-
-											<td>Pret</td>
-										</tr>
-
-										<tr class="item">
-											<td>Prestare servicii medicale</td>
-
-											<td><%=currentInvoice.getPrice()%> RON</td>
-										</tr>
-
-
-
-
-										<tr class="total">
-											<td></td>
-
-											<td>Total: <%=currentInvoice.getPrice()%> RON
-											</td>
-										</tr>
-									</table>
-								</div>
+                        </div>                          
+                        <!-- END PRICING TABLE-->
+                    </div>
+						
 							</div>
 						</div>
 

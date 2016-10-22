@@ -16,6 +16,7 @@
 	ProgramariService progs = new ProgramariService();
 	CabinetService cs = new CabinetService();
 	Cookie[] cookies = request.getCookies();
+	InventarService inventarService = new InventarService();
 	ArrayList<Programare> programariNoi;
 	InvoiceService is = new InvoiceService();
 	OperatieService os = new OperatieService();
@@ -43,11 +44,9 @@
 
 	}
 	programariNoi = ProgramariService.getNewAppointmentsForDoctor(currentUser.getId());
-	int invoiceID = Integer.parseInt(request.getParameter("invoiceID"));
-	Invoice currentInvoice = (Invoice) is.getById(invoiceID);
-	cabinet = (Cabinet) cs.getById(currentUser.getIdCabinet());
-	Programare programare = (Programare) progs.getById(currentInvoice.getProgramareID());
-	Pacient pacient = (Pacient) ps.getById(programare.getIdUser());
+	int idProdus = Integer.parseInt(request.getParameter("produsId"));
+
+	Produs selectedProdus = (Produs) inventarService.getById(idProdus);
 	ArrayList<Operatie> operatii;
 	long diffDaysSubscription =TimeUtils.differenceNowAndTimestamp(currentUser.getExpirationDate());
 	String subscriptionType = "Abonament ";
@@ -77,84 +76,6 @@
 	href="css/theme-default.css" />
 <!-- EOF CSS INCLUDE -->
 
-<style>
-.invoice-box {
-	max-width: 800px;
-	margin: auto;
-	padding: 30px;
-	border: 1px solid #eee;
-	box-shadow: 0 0 10px rgba(0, 0, 0, .15);
-	font-size: 16px;
-	line-height: 24px;
-	font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
-	color: #555;
-}
-
-.invoice-box table {
-	width: 100%;
-	line-height: inherit;
-	text-align: left;
-}
-
-.invoice-box table td {
-	padding: 5px;
-	vertical-align: top;
-}
-
-.invoice-box table tr td:nth-child(2) {
-	text-align: right;
-}
-
-.invoice-box table tr.top table td {
-	padding-bottom: 20px;
-}
-
-.invoice-box table tr.top table td.title {
-	font-size: 45px;
-	line-height: 45px;
-	color: #333;
-}
-
-.invoice-box table tr.information table td {
-	padding-bottom: 40px;
-}
-
-.invoice-box table tr.heading td {
-	background: #eee;
-	border-bottom: 1px solid #ddd;
-	font-weight: bold;
-}
-
-.invoice-box table tr.details td {
-	padding-bottom: 20px;
-}
-
-.invoice-box table tr.item td {
-	border-bottom: 1px solid #eee;
-}
-
-.invoice-box table tr.item.last td {
-	border-bottom: none;
-}
-
-.invoice-box table tr.total td:nth-child(2) {
-	border-top: 2px solid #eee;
-	font-weight: bold;
-}
-
-@media only screen and (max-width: 600px) {
-	.invoice-box table tr.top table td {
-		width: 100%;
-		display: block;
-		text-align: center;
-	}
-	.invoice-box table tr.information table td {
-		width: 100%;
-		display: block;
-		text-align: center;
-	}
-}
-</style>
 </head>
 <body>
 	<!-- START PAGE CONTAINER -->
@@ -209,9 +130,9 @@
 				<li class="xn-openable active"><a href="#"><span
 						class="fa fa-file-text-o"></span> <span class="xn-text">Cabinet</span></a>
 					<ul>
-						<li class="active"><a href="invoices.jsp"><span
+						<li ><a href="invoices.jsp"><span
 								class="fa fa-book"></span>Facturi</a></li>
-						<li><a href="stocuri.jsp"> <span
+						<li class="active"><a href="stocuri.jsp"> <span
 								class="fa fa-tasks"></span>Stoc produse
 						</a></li>
 						<li><a href="layout-nav-toggled.html"> <span
@@ -340,14 +261,14 @@
 			<ul class="breadcrumb">
 				<li><a href="home.jsp">Acasa</a></li>
 				<li><a href="#">Cabinet</a></li>
-				<li><a href="invoices.jsp">Facturi</a></li>
-				<li class="active">Vezi factura</li>
+				<li><a href="invoices.jsp">Stocuri</a></li>
+				<li class="active">Modificare stoc</li>
 			</ul>
 			<!-- END BREADCRUMB -->
 
 			<div class="page-title">
 				<h2>
-					<span class="fa fa-arrow-circle-o-left"></span> Factura
+					<span class="fa fa-arrow-circle-o-left"></span> Modificare stoc <%=selectedProdus.getNumeProdus() %>
 				</h2>
 			</div>
 
@@ -356,86 +277,22 @@
 
 				<div class="row">
 					<div class="col-md-12">
-
-						<div class="panel panel-default">
-							<div class="panel-heading">
-								<h3 class="panel-title">
-									Factura
-									<%=currentInvoice.getId()%></h3>
-							</div>
-							<div class="panel-body">
-								<div class="invoice-box">
-									<table cellpadding="0" cellspacing="0">
-										<tr class="top">
-											<td colspan="2">
-												<table>
-													<tr>
-														<td class="title"><img
-															src="<%=cabinet.getImage().getName()%>"
-															style="width: 100%; max-width: 200px; max-height: 150px;"></td>
-
-														<td>Factura #: <%=currentInvoice.getId()%><br>
-															Creata: <%=currentInvoice.getData()%><br>
-
-														</td>
-													</tr>
-												</table>
-											</td>
-										</tr>
-
-										<tr class="information">
-											<td colspan="2">
-												<table>
-													<tr>
-														<td><%=cabinet.getNume()%><br> <%=cabinet.getOras()%><br>
-															<%=currentUser.getFirstName() + " " + currentUser.getLastName()%>
-
-														</td>
-
-														<td><%=pacient.getFirstName()%><br> <%=pacient.getLastName()%><br>
-															<%=pacient.getEmail()%></td>
-													</tr>
-												</table>
-											</td>
-										</tr>
-
-										<tr class="heading">
-											<td>Metoda de plata</td>
-
-											<td>Numerar</td>
-										</tr>
-
-										<tr class="details">
-											<td>Suma</td>
-
-											<td><%=currentInvoice.getPrice()%> RON</td>
-										</tr>
-
-										<tr class="heading">
-											<td>Serviciu</td>
-
-											<td>Pret</td>
-										</tr>
-
-										<tr class="item">
-											<td>Prestare servicii medicale</td>
-
-											<td><%=currentInvoice.getPrice()%> RON</td>
-										</tr>
-
-
-
-
-										<tr class="total">
-											<td></td>
-
-											<td>Total: <%=currentInvoice.getPrice()%> RON
-											</td>
-										</tr>
-									</table>
-								</div>
-							</div>
-						</div>
+	<input type="hidden" id="productId" value="<%=selectedProdus.getID() %>"/>
+						
+									<div class="form-group">
+										<label class="col-md-3 col-xs-12 control-label">Valoare noua
+										</label>
+										<div class="col-md-6 col-xs-12">
+											<div class="input-group">
+												<input type="text" id="cantitateStoc" class="form-control"
+													placeholder="valoare veche: <%=selectedProdus.getCantitateProdus()%>"> 
+												
+											</div>
+											
+										</div>
+									</div>
+									
+									 <button class="btn btn-success" onclick="javascript:changeStock();"><i class="fa fa-plus"></i>Modifica stoc</button>
 
 					</div>
 				</div>
@@ -521,7 +378,8 @@
 		src="js/plugins/bootstrap/bootstrap-timepicker.min.js"></script>
 	<script type="text/javascript" src="js/plugins.js"></script>
 	<script type="text/javascript" src="js/actions.js"></script>
-
+	<script type="text/javascript" src="js/modifica-stoc.js"></script>
+	
 	<script type="text/javascript" src="js/demo_dashboard.js"></script>
 	<!-- END TEMPLATE -->
 	<!-- END SCRIPTS -->

@@ -61,6 +61,8 @@ public class UserService implements DBEntityController {
 				u.setOraInceput(rs.getString(10));
 				u.setOraSfarsit(rs.getString(11));
 				u.setPhoneNumber(rs.getString(12));
+				u.setSubscriptionType(rs.getInt(14));
+				u.setExpirationDate(rs.getTimestamp(15));
 				Blob imageBlob = (rs.getBlob(13));
 				InputStream binaryStream = imageBlob.getBinaryStream(1, imageBlob.length());
 
@@ -118,6 +120,8 @@ public class UserService implements DBEntityController {
 				u.setOraInceput(rs.getString(10));
 				u.setOraSfarsit(rs.getString(11));
 				u.setPhoneNumber(rs.getString(12));
+				u.setSubscriptionType(rs.getInt(14));
+				u.setExpirationDate(rs.getTimestamp(15));
 				Blob imageBlob = (rs.getBlob(13));
 				InputStream binaryStream = imageBlob.getBinaryStream(1, imageBlob.length());
 				File f = new File(getPath() + "profile" + u.getId() + ".jpg");

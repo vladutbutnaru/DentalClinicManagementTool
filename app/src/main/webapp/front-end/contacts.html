@@ -2,7 +2,7 @@
 <html lang="en">
     <head>
         <!-- META SECTION -->
-        <title>Atlant - Front-End Template</title>
+        <title>DCMT - Contact</title>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -139,16 +139,16 @@
                             <div class="col-md-7 this-animate" data-animate="fadeInLeft">
                                 
                                 <div class="text-column">
-                                    <h4>Contact Us</h4>
+                                    <h4>Contacteaza-ne</h4>
                                     <div class="text-column-info">
-                                        Proin luctus nulla fringilla massa euismod commodo. Donec sit amet elementum libero. Curabitur ut lorem id tellus malesuada tincidunt et eget purus. 
+                                      Foloseste acest formular pentru a ne contacta pentru orice informatie ai nevoie.
                                     </div>
                                 </div>
                                 
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label>Name <span class="text-hightlight">*</span></label>
+                                            <label>Nume <span class="text-hightlight">*</span></label>
                                             <input type="text" class="form-control"/>
                                         </div>
                                     </div>
@@ -160,14 +160,14 @@
                                     </div>
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <label>Subject <span class="text-hightlight">*</span></label>
+                                            <label>Subiect <span class="text-hightlight">*</span></label>
                                             <input type="text" class="form-control"/>
                                         </div>
                                         <div class="form-group">
-                                            <label>Message <span class="text-hightlight">*</span></label>
+                                            <label>Mesaj <span class="text-hightlight">*</span></label>
                                             <textarea class="form-control" rows="8"></textarea>
                                         </div>
-                                        <button class="btn btn-primary btn-lg pull-right">Send Message</button>
+                                        <button class="btn btn-primary btn-lg pull-right">Trimite mesaj</button>
                                     </div>
                                 </div>
                                 
@@ -178,11 +178,12 @@
                                     <div class="text-column-icon">
                                         <span class="fa fa-home"></span>
                                     </div>                                    
-                                    <h4>Our Office</h4>
+                                    <h4>Biroul nostru</h4>
                                     <div class="text-column-info">
-                                        <p><strong><span class="fa fa-map-marker"></span> Address: </strong> 000 StreetName, Suite 111, City Name, ST 01234</p>
-                                        <p><strong><span class="fa fa-phone"></span> Phone: </strong> (012) 345-67-89</p>
-                                        <p><strong><span class="fa fa-envelope"></span> E-mail: </strong> <a href="#">johndoe@domain.com</a></p>
+                                        <p><strong><span class="fa fa-map-marker"></span> Adresa: </strong> Iasi, Romania</p>
+                                        <p><strong><span class="fa fa-phone"></span> Telefon (Comercial): </strong> 0743 164 209</p>
+                                        <p><strong><span class="fa fa-phone"></span> Telefon (Tehnic): </strong> 0754 827 620</p>
+                                        <p><strong><span class="fa fa-envelope"></span> E-mail: </strong> <a href="#">vlad2me@gmail.com</a></p>
                                     </div>
                                 </div>
                                 
@@ -190,10 +191,15 @@
                                     <div class="text-column-icon">
                                         <span class="fa fa-clock-o"></span>
                                     </div>
-                                    <h4>Bussines Hours</h4>
+                                    <h4>Ore activitate comerciala</h4>
                                     <div class="text-column-info">
-                                        <p><strong>Monday &mdash; Friday</strong>: 10:00am - 6:00pm</p>
-                                        <p><strong>Saturday &mdash; Sunday</strong>: 10:00am - 2:00pm</p>
+                                        <p><strong>Luni &mdash; Vineri</strong>: 9:00am - 6:00pm</p>
+                                        <p><strong>Sambata &mdash; Duminica</strong>: 10:00am - 2:00pm</p>
+                                    </div>
+                                     <h4>Ore activitate tehnica</h4>
+                                    <div class="text-column-info">
+                                        <p><strong>Luni &mdash; Duminica</strong>: 6:00am - 11:00pm</p>
+                                       
                                     </div>
                                 </div>
                                 
@@ -354,22 +360,42 @@
         <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>
         
         <script type="text/javascript">
-            
-            var mapCords = new google.maps.LatLng(37.751117, -122.423095);
+        function initMap() {
+            var mapCords = new google.maps.LatLng(47.151726, 27.587914);
             var mapOptions = {zoom: 14,center: mapCords, mapTypeId: google.maps.MapTypeId.ROADMAP}    
             var map = new google.maps.Map(document.getElementById("google-map"), mapOptions);
 
-            var cords = new google.maps.LatLng(37.751117, -122.423095);
+            var cords = new google.maps.LatLng(47.151726, 27.587914);
             var marker = new google.maps.Marker({position: cords, 
                                                  map: map, 
                                                  title: "Marker 1",
-                                                 icon: 'http://aqvatarius.com/development/atlant-frontend/img/map-marker.png'}
+                                                 icon: 'http://www.free-icons-download.net/images/map-marker-icons-49653.png'}
                                                );
+           
+
+        }
+
                                        
         </script>
-        
+          <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDDXtFc2ZVCBdiCGNuXRgfFmNQ5uKz0E8s&callback=initMap">
+    </script>
         <script type="text/javascript" src="js/actions.js"></script>                
         <!-- ./page scripts -->
+        	<!--Start of Tawk.to Script-->
+	<script type="text/javascript">
+		var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
+		(function() {
+			var s1 = document.createElement("script"), s0 = document
+					.getElementsByTagName("script")[0];
+			s1.async = true;
+			s1.src = 'https://embed.tawk.to/58075974cfdf421cf96b5639/default';
+			s1.charset = 'UTF-8';
+			s1.setAttribute('crossorigin', '*');
+			s0.parentNode.insertBefore(s1, s0);
+		})();
+	</script>
+	<!--End of Tawk.to Script-->
     </body>
 </html>
 

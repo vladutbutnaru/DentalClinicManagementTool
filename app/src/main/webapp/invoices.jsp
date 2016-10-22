@@ -2,10 +2,10 @@
 <html lang="en">
 <head>
 <%@page import="ro.dcmt.data.beans.*"%>
-
 <%@page import="ro.dcmt.data.controllers.*"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.Date"%>
+<%@page import="ro.dcmt.utils.*" %>
 
 <%
 	String email = null;
@@ -45,6 +45,19 @@
 	programariNoi = ProgramariService.getNewAppointmentsForDoctor(currentUser.getId());
 	ArrayList<Invoice> invoices = InvoiceService.getInvoicesForDoctor(currentUser.getId());
 	ArrayList<Operatie> operatii;
+	long diffDaysSubscription =TimeUtils.differenceNowAndTimestamp(currentUser.getExpirationDate());
+	String subscriptionType = "Abonament ";
+	if(currentUser.getSubscriptionType() == Configuration.STANDARD_SUBSCRIPTION)
+		subscriptionType+= "Standard";
+	if(currentUser.getSubscriptionType() == Configuration.ELITE_SUBSCRIPTION)
+		subscriptionType+= "Elite";
+	if(currentUser.getSubscriptionType() == Configuration.BETA_TESTER)
+		subscriptionType+= "Beta";
+	if(currentUser.getSubscriptionType() == Configuration.FREE_TRIAL)
+		subscriptionType+= "Trial";
+	int expirationMonth = currentUser.getExpirationDate().getMonth()+1;
+	int expirationYear = currentUser.getExpirationDate().getYear() + 1900;
+	String expirationText = currentUser.getExpirationDate().getDate() + "/" + expirationMonth + "/" + expirationYear;
 %>
 <!-- META SECTION -->
 <title>DCMT - Lista facturi</title>
@@ -116,7 +129,7 @@
 					<ul>
 						<li class="active"><a href="invoices.jsp"><span
 								class="fa fa-book"></span>Facturi</a></li>
-						<li><a href="layout-boxed.html"> <span
+						<li><a href="stocuri.jsp"> <span
 								class="fa fa-tasks"></span>Stoc produse
 						</a></li>
 						<li><a href="layout-nav-toggled.html"> <span
@@ -155,6 +168,34 @@
 					class="mb-control" data-box="#mb-signout"><span
 						class="fa fa-sign-out"></span></a></li>
 				<!-- END SIGN OUT -->
+				<!-- SUBSCRIPTION INFO -->
+				<li class="xn-icon-button pull-right">
+                        <a href="#"><span class="fa fa-tasks"></span></a>
+                        <div class="informer informer-success"></div>
+                        <div class="panel panel-primary animated zoomIn xn-drop-left xn-panel-dragging ui-draggable">
+                            <div class="panel-heading ui-draggable-handle">
+                                <h3 class="panel-title"><span class="fa fa-tasks"></span> Abonament</h3>                                
+                                <div class="pull-right">
+                                    <span class="label label-success">Cont activ</span>
+                                </div>
+                            </div>
+                            <div class="panel-body list-group scroll mCustomScrollbar _mCS_3 mCS-autoHide" style="height: 100px;"><div id="mCSB_3" class="mCustomScrollBox mCS-light mCSB_vertical mCSB_inside" tabindex="0"><div id="mCSB_3_container" class="mCSB_container" style="position:relative; top:0; left:0;" dir="ltr">                                
+                                <a class="list-group-item" href="#">
+                                    <strong><%=subscriptionType %></strong>
+                                    <div class="progress progress-small progress-striped active">
+                                        <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="<%=diffDaysSubscription %>" style="width: <%=(diffDaysSubscription / 30) * 100%>%;"><%=diffDaysSubscription + " zile" %></div>
+                                    </div>
+                                    <small class="text-muted">Expira la <%=expirationText %></small>
+                                </a>
+                                                   
+                            </div><div id="mCSB_3_scrollbar_vertical" class="mCSB_scrollTools mCSB_3_scrollbar mCS-light mCSB_scrollTools_vertical" style="display: block;"><div class="mCSB_draggerContainer"><div id="mCSB_3_dragger_vertical" class="mCSB_dragger" style="position: absolute; min-height: 30px; top: 0px; display: block; height: 132px; max-height: 190px;" oncontextmenu="return false;"><div class="mCSB_dragger_bar" style="line-height: 30px;"></div></div><div class="mCSB_draggerRail"></div></div></div></div></div>     
+                            <div class="panel-footer text-center">
+                                <a href="abonament.jsp">Prelungeste acum</a>
+                            </div>                            
+                        </div>                        
+                    </li>
+				
+				<!-- END SUBSCRIPTION INFO -->
 				<!-- MESSAGES -->
 				<li class="xn-icon-button pull-right bootstro"
 					data-bootstro-title="Programari neaprobate"
@@ -191,12 +232,16 @@
 								class="pull-left" alt="<%=pacientProgramare.getFirstName()%>" />
 								<span class="contacts-title"><%=pacientProgramare.getFirstName() + " " + pacientProgramare.getLastName()%>
 							</span>
-							
+
 								<p>
-								<%for(Operatie o : operatii){ %>
-								<%=o.getTitlu() + ", "%>
-								<%} %>
-								<%=p.getData() %>
+									<%
+										for (Operatie o : operatii) {
+									%>
+									<%=o.getTitlu() + ", "%>
+									<%
+										}
+									%>
+									<%=p.getData()%>
 								</p>
 							</a>
 
@@ -230,7 +275,21 @@
 
 			<!-- PAGE CONTENT WRAPPER -->
 			<div class="page-content-wrap">
+				<div class="row">
 
+
+					<div class="col-md-3">
+						<a href="#" class="tile tile-success tile-valign"> <%=InvoiceService.getTotalAmountOfMoneyForDoctor(currentUser.getId())%> RON
+							<div class="informer informer-default">Total Suma Facturata</div>
+							<div class="informer informer-default dir-br">
+								<span class="fa fa-money"></span>
+							</div>
+						</a>
+					</div>
+
+
+
+				</div>
 				<div class="row">
 					<div class="col-md-12">
 
@@ -265,7 +324,7 @@
 											<td><%=currentUser.getFirstName() + " " + currentUser.getLastName()%></td>
 											<td><button type="button" class="btn btn-info"
 													onclick="location.href='invoice.jsp?invoiceID=<%=i.getId()%>'">Factura</button></td>
-														<td><button type="button" class="btn btn-info"
+											<td><button type="button" class="btn btn-info"
 													onclick="location.href='adauga-stocuri.jsp?programareID=<%=i.getProgramareID()%>'">Stocuri</button></td>
 										</tr>
 										<%

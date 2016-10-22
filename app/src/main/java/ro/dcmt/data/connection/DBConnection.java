@@ -24,15 +24,15 @@ public class DBConnection {
 
 				conn = DriverManager.getConnection("jdbc:mysql://" + Configuration.DATABASE_URL + ":"
 						+ Configuration.DATABASE_PORT + "/" + Configuration.DATABASE_NAME + "?" + "user="
-						+ Configuration.DATABASE_USER + "&password="+Configuration.DATABASE_PASSWORD);
-
+						+ Configuration.DATABASE_USER + "&password="+Configuration.DATABASE_PASSWORD + "&autoReconnect=true");
+				
 				logger.info("Created new DataBase Connection at " + Configuration.DATABASE_URL);
 			}
 			if (conn.isClosed()) {
 
 				conn = DriverManager.getConnection("jdbc:mysql://" + Configuration.DATABASE_URL + ":"
 						+ Configuration.DATABASE_PORT + "/" + Configuration.DATABASE_NAME + "?" + "user="
-						+ Configuration.DATABASE_USER + "&password="+Configuration.DATABASE_PASSWORD);
+						+ Configuration.DATABASE_USER + "&password="+Configuration.DATABASE_PASSWORD + "&autoReconnect=true");
 			}
 
 		} catch (SQLException ex) {

@@ -1,5 +1,14 @@
 $(function() {
+	
 
+	
+	var   myVar = setTimeout(showPage,1000);
+	
+
+	function showPage() {
+	  document.getElementsByClassName("loader")[0].style.display = "none";
+
+	}
     var formElements = function(){                
         // Bootstrap datepicker
         var feDatepicker = function(){                        

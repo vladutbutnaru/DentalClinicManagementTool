@@ -3,6 +3,7 @@ package ro.dcmt.data.beans;
 import java.io.File;
 import java.io.Serializable;
 import java.sql.Date;
+import java.sql.Timestamp;
 
 public class User implements Serializable {
 
@@ -26,6 +27,9 @@ public class User implements Serializable {
 	private String oraInceput;
 	private String oraSfarsit;
 	private File imagine;
+	private int subscriptionType;
+	private Timestamp expirationDate;
+	
 	
 	
 	
@@ -151,6 +155,22 @@ public class User implements Serializable {
 
 	public void setId(int id) {
 		this.id = id;
+	}
+
+	public int getSubscriptionType() {
+		return subscriptionType;
+	}
+
+	public void setSubscriptionType(int subscriptionType) {
+		this.subscriptionType = subscriptionType;
+	}
+
+	public Timestamp getExpirationDate() {
+		return expirationDate;
+	}
+
+	public void setExpirationDate(Timestamp expirationDate) {
+		this.expirationDate = expirationDate;
 	}
 
 }

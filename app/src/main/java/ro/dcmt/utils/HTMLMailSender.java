@@ -33,6 +33,7 @@ public class HTMLMailSender {
 		try {
 
 			Message message = new MimeMessage(session);
+			
 			message.setFrom(new InternetAddress("vlad2me@gmail.com"));
 			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to));
 			message.setSubject("[" + clinicName + "] - Programare noua la Dr. " + doctorName);

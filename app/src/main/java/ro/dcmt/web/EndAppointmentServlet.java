@@ -52,6 +52,7 @@ public class EndAppointmentServlet extends HttpServlet {
 				InventarProgramare ip = new InventarProgramare();
 				ip.setProdusID(produs.getID());
 				ip.setProgramareID(programareID);
+			
 				InventarProgramareService.insertInventarProgramare(ip);
 				
 			}
@@ -64,6 +65,7 @@ public class EndAppointmentServlet extends HttpServlet {
 			i.setProgramareID(programareID);
 			i.setId(InvoiceService.insertInvoice(i.getProgramareID(), i.getPrice()));
 			String path = "invoice.jsp?invoiceID=" + i.getId();
+			System.out.println(path);
 			response.getWriter().append(path);
 			
 			
