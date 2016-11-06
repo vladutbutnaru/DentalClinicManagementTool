@@ -162,5 +162,33 @@ public class InventarService implements DBEntityController {
 		}
 
 	}
+	
+	public static void addProduct(Produs p){
+		
+		try {
+
+			stmt = conn.prepareStatement(
+					"INSERT INTO inventar(NumeProdus,UM,CantitateProdus,IDCabinet,IDDoctor,MaximumValue) VALUES ?,?,?,?,?,?");
+			stmt.setString(1, p.getNumeProdus());
+			stmt.setString(2, p.getUM());
+			stmt.setDouble(3, p.getCantitateProdus());
+			stmt.setInt(4, p.getIdCabinet());
+			stmt.setInt(5, p.getIdDoctor());
+			stmt.setDouble(6, p.getMaxValue());
+			stmt.setInt(7, p.getID());
+			stmt.executeUpdate();
+			logger.info("addProduct: " + p.getID());
+
+		} catch (SQLException ex) {
+			// handle any errors
+			System.out.println("SQLException: " + ex.getMessage());
+			System.out.println("SQLState: " + ex.getSQLState());
+			System.out.println("VendorError: " + ex.getErrorCode());
+			logger.error(ex.getMessage());
+
+		}
+		
+		
+	}
 
 }

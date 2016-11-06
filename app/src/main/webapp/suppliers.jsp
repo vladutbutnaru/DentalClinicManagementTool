@@ -2,10 +2,10 @@
 <html lang="en">
 <head>
 <%@page import="ro.dcmt.data.beans.*"%>
+<%@page import="ro.dcmt.utils.*" %>
 <%@page import="ro.dcmt.data.controllers.*"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.Date"%>
-<%@page import="ro.dcmt.utils.*" %>
 
 <%
 	String email = null;
@@ -16,12 +16,12 @@
 	ProgramariService progs = new ProgramariService();
 	CabinetService cs = new CabinetService();
 	Cookie[] cookies = request.getCookies();
-	OperatieService os = new OperatieService();
 	ArrayList<Programare> programariNoi;
 	InvoiceService is = new InvoiceService();
+	OperatieService os = new OperatieService();
 	if (cookies != null) {
 		for (Cookie cookie : cookies) {
-
+		
 			if (cookie.getName().equals("user"))
 				email = cookie.getValue();
 		}
@@ -43,7 +43,10 @@
 
 	}
 	programariNoi = ProgramariService.getNewAppointmentsForDoctor(currentUser.getId());
-	ArrayList<Invoice> invoices = InvoiceService.getInvoicesForDoctor(currentUser.getId());
+
+	cabinet = (Cabinet) cs.getById(currentUser.getIdCabinet());
+
+
 	ArrayList<Operatie> operatii;
 	long diffDaysSubscription =TimeUtils.differenceNowAndTimestamp(currentUser.getExpirationDate());
 	String subscriptionType = "Abonament ";
@@ -58,9 +61,13 @@
 	int expirationMonth = currentUser.getExpirationDate().getMonth()+1;
 	int expirationYear = currentUser.getExpirationDate().getYear() + 1900;
 	String expirationText = currentUser.getExpirationDate().getDate() + "/" + expirationMonth + "/" + expirationYear;
+	
+	ArrayList<ProdusFurnizor> produse = ProdusFurnizorService.getAllProduseFurnizori();
+	
+	
 %>
 <!-- META SECTION -->
-<title>DCMT - Lista facturi</title>
+<title>DCMT - Factura</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -72,6 +79,7 @@
 <link rel="stylesheet" type="text/css" id="theme"
 	href="css/theme-default.css" />
 <!-- EOF CSS INCLUDE -->
+
 
 </head>
 <body>
@@ -110,8 +118,8 @@
 						</div>
 					</div></li>
 				<li class="xn-title">Navigatie</li>
-				<li><a href="home.jsp"><span class="fa fa-desktop"></span>
-						<span class="xn-text">Privire generala</span></a></li>
+				<li><a href="home.jsp"><span class="fa fa-desktop"></span> <span
+						class="xn-text">Privire generala</span></a></li>
 				<li class="xn-openable"><a href="#"><span
 						class="fa fa-files-o"></span> <span class="xn-text">Pacienti</span></a>
 					<ul>
@@ -127,12 +135,12 @@
 				<li class="xn-openable active"><a href="#"><span
 						class="fa fa-file-text-o"></span> <span class="xn-text">Cabinet</span></a>
 					<ul>
-						<li class="active"><a href="invoices.jsp"><span
+						<li><a href="invoices.jsp"><span
 								class="fa fa-book"></span>Facturi</a></li>
 						<li><a href="stocuri.jsp"> <span
 								class="fa fa-tasks"></span>Stoc produse
 						</a></li>
-						<li><a href="suppliers.jsp"> <span
+						<li class="active"><a href="suppliers.jsp"> <span
 								class="fa fa-truck"></span>Furnizori
 						</a></li>
 						
@@ -181,7 +189,7 @@
                                 <a class="list-group-item" href="#">
                                     <strong><%=subscriptionType %></strong>
                                     <div class="progress progress-small progress-striped active">
-                                        <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="<%=diffDaysSubscription %>" style="width: <%=((double)diffDaysSubscription / 30.0)  * 100%>%;"><%=diffDaysSubscription + " zile" %></div>
+                                        <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="<%=diffDaysSubscription %>" style="width: <%=((double)diffDaysSubscription / 30.0) * 100%>%;"><%=diffDaysSubscription + " zile" %></div>
                                     </div>
                                     <small class="text-muted">Expira la <%=expirationText %></small>
                                 </a>
@@ -230,16 +238,12 @@
 								class="pull-left" alt="<%=pacientProgramare.getFirstName()%>" />
 								<span class="contacts-title"><%=pacientProgramare.getFirstName() + " " + pacientProgramare.getLastName()%>
 							</span>
-
+							
 								<p>
-									<%
-										for (Operatie o : operatii) {
-									%>
-									<%=o.getTitlu() + ", "%>
-									<%
-										}
-									%>
-									<%=p.getData()%>
+								<%for(Operatie o : operatii){ %>
+								<%=o.getTitlu() + ", "%>
+								<%} %>
+								<%=p.getData() %>
 								</p>
 							</a>
 
@@ -260,79 +264,57 @@
 			<ul class="breadcrumb">
 				<li><a href="home.jsp">Acasa</a></li>
 				<li><a href="#">Cabinet</a></li>
-				<li class="active"><a href="invoices.jsp">Facturi</a></li>
-
+				<li class="active"><a href="suppliers.jsp">Furnizori</a></li>
+			
 			</ul>
 			<!-- END BREADCRUMB -->
 
 			<div class="page-title">
 				<h2>
-					<span class="fa fa-arrow-circle-o-left"></span> Factura
+					<span class="fa fa-arrow-circle-o-left"></span> Furnizori
 				</h2>
 			</div>
 
 			<!-- PAGE CONTENT WRAPPER -->
 			<div class="page-content-wrap">
-				<div class="row">
 
-
-					<div class="col-md-3">
-						<a href="#" class="tile tile-success tile-valign"> <%=InvoiceService.getTotalAmountOfMoneyForDoctor(currentUser.getId())%> RON
-							<div class="informer informer-default">Total Suma Facturata</div>
-							<div class="informer informer-default dir-br">
-								<span class="fa fa-money"></span>
-							</div>
-						</a>
-					</div>
-
-
-
-				</div>
 				<div class="row">
 					<div class="col-md-12">
 
 						<div class="panel panel-default">
 							<div class="panel-heading">
 								<h3 class="panel-title">
-									<strong>Lista </strong>facturi
-								</h3>
+								Lista furnizori produse medicale</h3>
 							</div>
 							<div class="panel-body">
-
-								<table class="table datatable">
-									<thead>
-										<tr>
-											<th>Nr</th>
-											<th>Data</th>
-											<th>Suma</th>
-											<th>Medic</th>
-											<th>Vezi factura</th>
-											<th>Introdu stocuri</th>
-										</tr>
-									</thead>
-									<tbody>
-										<tr>
-											<%
-												int nr = 0;
-												for (Invoice i : invoices) {
-											%>
-											<td><%=++nr%></td>
-											<td><%=i.getData().toString()%></td>
-											<td><%=i.getPrice()%></td>
-											<td><%=currentUser.getFirstName() + " " + currentUser.getLastName()%></td>
-											<td><button type="button" class="btn btn-info"
-													onclick="location.href='invoice.jsp?invoiceID=<%=i.getId()%>'">Factura</button></td>
-											<td><button type="button" class="btn btn-info"
-													onclick="location.href='adauga-stocuri.jsp?programareID=<%=i.getProgramareID()%>'">Stocuri</button></td>
-										</tr>
-										<%
-											}
-										%>
-									</tbody>
-								</table>
-
-
-							</div>
+					
+					
+					
+                                    <table class="table datatable">
+                                        <thead>
+                                            <tr>
+                                                <th>Nume</th>
+                                                <th>Furnizor</th>
+                                                <th>Pret</th>
+                                              
+                                                <th>Deschide</th>
+                                  
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                       <% for(ProdusFurnizor pf : produse){ %>
+                                            <tr>
+                                                <td><%=pf.getName() %></td>
+                                                <td><%=pf.getWebsite() %></td>
+                                                <td><%=pf.getPrice() %></td>
+                                                <td><button type="button" class="btn btn-primary" onClick="location.href='<%=pf.getLink()%>'">Deschide</button></td>
+                                                
+                                            </tr>
+                                            <%} %>
+                                            
+                                        </tbody>
+                                    </table>
+					
 						</div>
 
 					</div>
@@ -402,7 +384,7 @@
 	<script type='text/javascript'
 		src='js/plugins/bootstrap/bootstrap-datepicker.js'></script>
 	<script type="text/javascript" src="js/plugins/owl/owl.carousel.min.js"></script>
-
+  <script type="text/javascript" src="js/plugins/datatables/jquery.dataTables.min.js"></script>  
 	<script type="text/javascript" src="js/plugins/moment.min.js"></script>
 	<script type="text/javascript"
 		src="js/plugins/daterangepicker/daterangepicker.js"></script>
@@ -421,8 +403,6 @@
 	<script type="text/javascript" src="js/actions.js"></script>
 
 	<script type="text/javascript" src="js/demo_dashboard.js"></script>
-	<script type="text/javascript"
-		src="js/plugins/datatables/jquery.dataTables.min.js"></script>
 	<!-- END TEMPLATE -->
 	<!-- END SCRIPTS -->
 	<!--Start of Tawk.to Script-->

@@ -90,6 +90,12 @@
 		<description></description>
 		<servlet-class>ro.dcmt.web.ChangeStock</servlet-class>
 	</servlet>
+	<servlet>
+		<servlet-name>AddProductInStockServlet</servlet-name>
+		<display-name>AddProductInStockServlet</display-name>
+		<description></description>
+		<servlet-class>ro.dcmt.web.AddProductInStockServlet</servlet-class>
+	</servlet>
 	<servlet-mapping>
 		<servlet-name>MobileAuthEndpoint</servlet-name>
 		<url-pattern>/MobileAuthEndpoint</url-pattern>
@@ -146,6 +152,10 @@
 	<servlet-mapping>
 		<servlet-name>ChangeStock</servlet-name>
 		<url-pattern>/ChangeStock</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>AddProductInStockServlet</servlet-name>
+		<url-pattern>/AddProductInStockServlet</url-pattern>
 	</servlet-mapping>
 
 	<welcome-file-list>

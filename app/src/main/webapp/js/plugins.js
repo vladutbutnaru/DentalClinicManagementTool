@@ -6,7 +6,7 @@ $(function() {
 	
 
 	function showPage() {
-	  document.getElementsByClassName("loader")[0].style.display = "none";
+	 
 
 	}
     var formElements = function(){                

@@ -100,38 +100,50 @@ $(function(){
         gridLineColor: '#E5E5E5'
     });
     /* END Bar dashboard chart */
+//    $.get("GetSalesDashboardChartServlet?doctorID="+document.getElementById("doctorID").value,
+//    		{
+//    		   
+//
+//    		}
+//    		, function( data ) {
+//    			
+//    		json= data;
+//
+//
+//
+//
+//    		});
     
     /* Line dashboard chart */
-    
-    function Graph() {        
+    var json_data = (function() {
+        var json="salut";
 
-        $.get("GetSalesDashboardChartServlet?doctorID="+document.getElementById("doctorID").value,
-        		{
-        		   
-
-        		}
-        		, function( data ) {
-        			console.log(data);
-        		return $.parseJSON(data);
-
-
-
-
-        		});
-        return null;
-    }
-    
-    
-    
+        
+        $.ajax({
+            type:'GET',
+            url: "GetSalesDashboardChartServlet?doctorID="+document.getElementById("doctorID").value,
+            async: false,
+            global: false,
+           success: function(data) {
+               json = data;
+           }, 
+           error:function(){
+               alert("Error loading chart");
+           }
+       });
+        return json;
+      
+    })();
+   
     
     Morris.Line({
       element: 'dashboard-line-1',
-      data: Graph(),
+      data:  $.parseJSON(json_data),
       xkey: 'y',
       ykeys: ['a','b'],
       labels: ['Programari','Operatii'],
       resize: true,
-      hideHover: true,
+      
       xLabels: 'zi',
       gridTextSize: '10px',
       lineColors: ['#3FBAE4','#33414E'],

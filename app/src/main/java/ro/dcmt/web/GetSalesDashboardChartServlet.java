@@ -34,7 +34,7 @@ public class GetSalesDashboardChartServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.setContentType("application/json");
+		response.setContentType("text/html");
 		response.setCharacterEncoding("UTF-8");
 		int doctorID = Integer.parseInt(request.getParameter("doctorID"));
 		ArrayList<Programare> programari = ProgramariService.getAllAppointmentsForDoctor(doctorID);
@@ -45,8 +45,13 @@ public class GetSalesDashboardChartServlet extends HttpServlet {
 		entry.setB(p.getIdOperatii().split(",").length);
 		entry.setY(p.getData().getYear()+1900 + "-" + p.getData().getMonth() + "-" + p.getData().getDate());
 		entries.add(entry);
-		System.out.println(entry.getB() + " " + entry.getY());
+		
 		}
+		System.out.println(new Gson().toJson(entries));
+		
+	
+		
+		
 		response.getWriter().write(new Gson().toJson(entries));
 		
 	}

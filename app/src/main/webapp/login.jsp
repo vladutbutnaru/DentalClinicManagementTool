@@ -67,11 +67,9 @@ if(userName != null) response.sendRedirect("home.jsp");
 				</form>
 			</div>
 			<div class="login-footer">
-				<div class="pull-left">&copy; 2016 Dental Clinic Management
-					Tool</div>
+				<div class="pull-left">&copy; 2016 Dental Studio</div>
 				<div class="pull-right">
-					<a href="#">Despre</a> | <a href="#">Confidentialitate</a> | <a
-						href="#">Contact</a>
+					<a href="front-end/index.html">Despre</a> | <a	href="front-end/contacts.html">Contact</a>
 				</div>
 			</div>
 		</div>

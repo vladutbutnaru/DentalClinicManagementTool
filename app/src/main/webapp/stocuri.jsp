@@ -132,12 +132,10 @@
 						<li class="active"><a href="#"> <span
 								class="fa fa-tasks"></span>Stoc produse
 						</a></li>
-						<li><a href="layout-nav-toggled.html"> <span
+						<li><a href="suppliers.jsp"> <span
 								class="fa fa-truck"></span>Furnizori
 						</a></li>
-						<li><a href="layout-nav-top.html"> <span
-								class="fa fa-money"></span>Plati utilitare
-						</a></li>
+						
 					</ul></li>
 
 
@@ -183,7 +181,7 @@
                                 <a class="list-group-item" href="#">
                                     <strong><%=subscriptionType %></strong>
                                     <div class="progress progress-small progress-striped active">
-                                        <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="<%=diffDaysSubscription %>" style="width: <%=(diffDaysSubscription / 30) * 100%>%;"><%=diffDaysSubscription + " zile" %></div>
+                                        <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="<%=diffDaysSubscription %>" style="width: <%=((double)diffDaysSubscription / 30.0) * 100%>%;"><%=diffDaysSubscription + " zile" %></div>
                                     </div>
                                     <small class="text-muted">Expira la <%=expirationText %></small>
                                 </a>
@@ -282,7 +280,7 @@
 						<div class="panel panel-default">
 							<div class="panel-heading">
 								<h3 class="panel-title">
-									<strong>Lista </strong>Produse din stoc
+								<strong>Lista </strong>Produse din stoc<button type="button" style="margin-left: 10px;" class="btn btn-success" data-toggle="modal" data-target="#modalAdaugaProdus">Adauga produs nou</button>
 								</h3>
 							</div>
 							<div class="panel-body">
@@ -359,8 +357,60 @@
 		</div>
 		<!-- END PAGE CONTENT -->
 	</div>
+	
+	<input type="hidden" id="idDoctor" value="<%=currentUser.getId() %>"/>
+	<input type="hidden" id="idCabinet" value="<%=currentUser.getIdCabinet() %>" />
 	<!-- END PAGE CONTAINER -->
+	<!--  MODAL ADD PATIENT -->
+	<div class="modal animated zoomInUp" id="modalAdaugaProdus" tabindex="-1" role="dialog"
+		aria-labelledby="defModalHead" aria-hidden="true"
+		style="display: none;">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-body">
+					<h3>Adauga produs in stoc</h3>
+					<form class="form-horizontal" role="form">
+						<div class="form-group">
+							<label class="col-md-2 control-label">Nume Produs</label>
+							<div class="col-md-10">
+								<input type="text" class="form-control" placeholder="Bisturiu" id="numeProdusModal">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-2 control-label">UM</label>
+							<div class="col-md-10">
+								<input type="text" class="form-control" placeholder="Buc" id="umModal">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-2 control-label">Cantitate actuala produs</label>
+							<div class="col-md-10">
+								<input type="text" class="form-control" placeholder="13" id="cantitateModal">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-2 control-label">Cantitate maxima</label>
+							<div class="col-md-10">
+								<input type="text" class="form-control"
+									placeholder="100" id="cantitateMaxima">
+							</div>
+						</div>
+						
 
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Inchide</button>
+					<button type="button" class="btn btn-default"
+						onClick="javascript:addProductt();">Salveaza produs</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+	<!-- END MODAL ADD PATIENT -->
 	<!--  END MODALS -->
 	<!-- MESSAGE BOX-->
 	<div class="message-box animated fadeIn" data-sound="alert"
@@ -435,7 +485,7 @@
 		src="js/plugins/bootstrap/bootstrap-timepicker.min.js"></script>
 	<script type="text/javascript" src="js/plugins.js"></script>
 	<script type="text/javascript" src="js/actions.js"></script>
-
+	<script type="text/javascript" src="js/produse.js"></script>
 	<script type="text/javascript" src="js/demo_dashboard.js"></script>
 	<script type="text/javascript"
 		src="js/plugins/datatables/jquery.dataTables.min.js"></script>

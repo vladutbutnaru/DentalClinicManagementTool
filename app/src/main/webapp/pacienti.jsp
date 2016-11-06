@@ -124,12 +124,10 @@
 						<li><a href="stocuri.jsp"> <span
 								class="fa fa-tasks"></span>Stoc produse
 						</a></li>
-						<li><a href="layout-nav-toggled.html"> <span
+						<li><a href="suppliers.jsp"> <span
 								class="fa fa-truck"></span>Furnizori
 						</a></li>
-						<li><a href="layout-nav-top.html"> <span
-								class="fa fa-money"></span>Plati utilitare
-						</a></li>
+					
 					</ul></li>
 				
 
@@ -175,7 +173,7 @@
                                 <a class="list-group-item" href="#">
                                     <strong><%=subscriptionType %></strong>
                                     <div class="progress progress-small progress-striped active">
-                                        <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="<%=diffDaysSubscription %>" style="width: <%=(diffDaysSubscription / 30) * 100%>%;"><%=diffDaysSubscription + " zile" %></div>
+                                        <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="<%=diffDaysSubscription %>" style="width: <%=((double)diffDaysSubscription / 30.0) * 100%>%;"><%=diffDaysSubscription + " zile" %></div>
                                     </div>
                                     <small class="text-muted">Expira la <%=expirationText %></small>
                                 </a>
