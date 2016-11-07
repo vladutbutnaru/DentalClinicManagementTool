@@ -17,6 +17,7 @@ import ro.dcmt.data.controllers.PacientService;
 import ro.dcmt.data.controllers.ProgramariService;
 import ro.dcmt.data.controllers.UserService;
 import ro.dcmt.utils.HTMLMailSender;
+import ro.dcmt.utils.SMSSender;
 
 /**
  * Servlet implementation class AddAppointmentServlet
@@ -90,6 +91,15 @@ public class AddAppointmentServlet extends HttpServlet {
 		if (programare.isNotificationEmail()) {
 			HTMLMailSender.sendAppointmentNotificationEmail(p.getEmail(), cabinetDoctor.getNume(),
 					doctorProgramare.getFirstName() + " " + doctorProgramare.getLastName(), numePacient, t);
+
+		}
+		if (programare.isNotificationSMS()) {
+			try {
+				SMSSender.sendSMS("0754827620", "Vlad Butnaru", "Dr. Amuraritei Sorin", "09-11-2016 13:30", "CarioDent");
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 
 		}
 	}

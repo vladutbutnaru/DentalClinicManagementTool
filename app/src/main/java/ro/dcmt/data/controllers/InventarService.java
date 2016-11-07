@@ -168,14 +168,14 @@ public class InventarService implements DBEntityController {
 		try {
 
 			stmt = conn.prepareStatement(
-					"INSERT INTO inventar(NumeProdus,UM,CantitateProdus,IDCabinet,IDDoctor,MaximumValue) VALUES ?,?,?,?,?,?");
+					"INSERT INTO inventar(NumeProdus,UM,CantitateProdus,IDCabinet,IDDoctor,MaximumValue) VALUES (?,?,?,?,?,?)");
 			stmt.setString(1, p.getNumeProdus());
 			stmt.setString(2, p.getUM());
 			stmt.setDouble(3, p.getCantitateProdus());
 			stmt.setInt(4, p.getIdCabinet());
 			stmt.setInt(5, p.getIdDoctor());
 			stmt.setDouble(6, p.getMaxValue());
-			stmt.setInt(7, p.getID());
+			
 			stmt.executeUpdate();
 			logger.info("addProduct: " + p.getID());
 

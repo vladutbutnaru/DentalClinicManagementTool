@@ -35,8 +35,9 @@
 
 	}
 	ArrayList<Programare> programariNoi = ProgramariService.getNewAppointmentsForDoctor(currentUser.getId());
-
+	int numOfAppointments = ProgramariService.getAppointmentsForPatient(Integer.parseInt(request.getParameter("id"))).size();
 	Pacient selectedPacient = (Pacient) ps.getById(Integer.parseInt(request.getParameter("id")));
+	int numOfOperations = os.getTotalNumberOfOperationsForPacient(Integer.parseInt(request.getParameter("id")));
 	ArrayList<Programare> programariPacient = ProgramariService
 			.getAppointmentsForPatient(selectedPacient.getId());
 	ArrayList<User> doctors = progs.getDoctorsForPatient(selectedPacient.getId());
@@ -280,38 +281,18 @@
 							<div class="panel-body list-group border-bottom">
 								<a href="#" class="list-group-item active"><span
 									class="fa fa-bar-chart-o"></span> Istoric programari <span
-									class="badge badge-default">18</span></a>
+									class="badge badge-default"><%=numOfAppointments %></span></a>
 
 							</div>
 							<div class="panel-body">
 
-								<h4 class="text-title">Medici la care a apelat</h4>
+								<h4 class="text-title">Statistici pacient</h4>
 								<div class="row">
-									<%
-										int i = 1;
-
-										for (User doctor : doctors) {
-									%>
-
-									<div class="col-md-4 col-xs-4">
-										<a href="#" class="friend"> <img
-											src="<%=doctor.getImagine().getName()%>" /> <span><%=doctor.getFirstName() + " " + doctor.getLastName()%></span>
-										</a>
-									</div>
-
-									<%
-										i++;
-											if (i % 3 == 0) {
-									%>
+								<b>Programari anterioare:</b> <%=numOfAppointments %> <br/>
+								<b>Total operatii anterioare:</b> <%=numOfOperations %> <br/>
+								<b>Total medici la care a apelat:</b> <%=doctors.size() %> <br/>
 								</div>
-								<div class="row">
-									<%
-										}
-
-										}
-									%>
-
-								</div>
+							
 
 							</div>
 						</div>
@@ -397,8 +378,11 @@
 
 							<%
 								for (Programare p : programariPacient) {
-									User doctorProgramare = (User) us.getById(p.getIdDoctor());
-									Cabinet cabinetProgramare = (Cabinet) cs.getById(doctorProgramare.getIdCabinet());
+								ArrayList<Operatie> operatiiProgramare = os.getOperatiiForAppointment(p.getIdOperatii());
+								String operatiiText = "";
+								for(Operatie o : operatiiProgramare)
+									operatiiText+=o.getTitlu() + " ";
+									
 							%>
 							<!-- START TIMELINE ITEM -->
 							<div class="timeline-item timeline-item-right">
@@ -408,14 +392,14 @@
 								</div>
 								<div class="timeline-item-content">
 									<div class="timeline-heading padding-bottom-0">
-										<img src="<%=doctorProgramare.getImagine().getName()%>" /> <a
-											href="#"><%=doctorProgramare.getFirstName() + " " + doctorProgramare.getLastName()%></a>
-										a executat operatia de <a href="#">Extractie dentara</a>
+										<img src="<%=currentUser.getImagine().getName()%>" /> <a
+											href="#"><%=currentUser.getFirstName() + " " + currentUser.getLastName()%></a>
+										a suferit operatiile de <a href="#"><%=operatiiText %></a>
 									</div>
 									<div class="timeline-body">
 										<img src="assets/images/gallery/nature-6.jpg" width="200"
 											class="img-text" align="left" />
-										<h4><%=cabinetProgramare.getNume() + " " + cabinetProgramare.getOras()%>
+										<h4>Comentariu programare
 										</h4>
 										<p><%=p.getComentariu()%></p>
 

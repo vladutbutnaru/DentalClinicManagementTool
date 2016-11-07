@@ -16,15 +16,15 @@ import ro.dcmt.data.beans.Programare;
 import ro.dcmt.data.controllers.ProgramariService;
 
 /**
- * Servlet implementation class GetSalesDashboardChartServlet
+ * Servlet implementation class GetPatientsDashboardChartServlet
  */
-public class GetSalesDashboardChartServlet extends HttpServlet {
+public class GetPatientsDashboardChartServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public GetSalesDashboardChartServlet() {
+    public GetPatientsDashboardChartServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -34,26 +34,7 @@ public class GetSalesDashboardChartServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.setContentType("text/html");
-		response.setCharacterEncoding("UTF-8");
-		int doctorID = Integer.parseInt(request.getParameter("doctorID"));
-		ArrayList<Programare> programari = ProgramariService.getAllAppointmentsForDoctor(doctorID);
-		List<DashboardChartEntry> entries = new ArrayList<DashboardChartEntry>();
-		for(Programare p : programari){
-		DashboardChartEntry entry = new DashboardChartEntry();
-		entry.setA(1);
-		entry.setB(p.getIdOperatii().split(",").length);
-		entry.setY(p.getData().getYear()+1900 + "-" + p.getData().getMonth() + "-" + p.getData().getDate());
-		entries.add(entry);
-		
-		}
-		
-		
-	
-		
-		
-		response.getWriter().write(new Gson().toJson(entries));
-		
+		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
 	/**
@@ -61,7 +42,26 @@ public class GetSalesDashboardChartServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		doGet(request, response);
+				response.setContentType("text/html");
+				response.setCharacterEncoding("UTF-8");
+				int doctorID = Integer.parseInt(request.getParameter("doctorID"));
+				ArrayList<Programare> programari = ProgramariService.getAllAppointmentsForDoctor(doctorID);
+				
+				List<DashboardChartEntry> entries = new ArrayList<DashboardChartEntry>();
+				for(Programare p : programari){
+				DashboardChartEntry entry = new DashboardChartEntry();
+				entry.setA(1);
+				entry.setB(0);
+				entry.setY(p.getData().getMonth() + " " + p.getData().getDate());
+				entries.add(entry);
+				
+				}
+			
+				
+			
+				
+				
+				response.getWriter().write(new Gson().toJson(entries));
 	}
 
 }

@@ -96,6 +96,12 @@
 		<description></description>
 		<servlet-class>ro.dcmt.web.AddProductInStockServlet</servlet-class>
 	</servlet>
+	<servlet>
+		<servlet-name>GetPatientsDashboardChartServlet</servlet-name>
+		<display-name>GetPatientsDashboardChartServlet</display-name>
+		<description></description>
+		<servlet-class>ro.dcmt.web.GetPatientsDashboardChartServlet</servlet-class>
+	</servlet>
 	<servlet-mapping>
 		<servlet-name>MobileAuthEndpoint</servlet-name>
 		<url-pattern>/MobileAuthEndpoint</url-pattern>
@@ -156,6 +162,10 @@
 	<servlet-mapping>
 		<servlet-name>AddProductInStockServlet</servlet-name>
 		<url-pattern>/AddProductInStockServlet</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>GetPatientsDashboardChartServlet</servlet-name>
+		<url-pattern>/GetPatientsDashboardChartServlet</url-pattern>
 	</servlet-mapping>
 
 	<welcome-file-list>

@@ -143,7 +143,7 @@
 						class="fa fa-file-text-o"></span> <span class="xn-text">Cabinet</span></a>
 					<ul>
 						<li><a href="invoices.jsp"><span class="fa fa-book"></span>Facturi</a></li>
-						<li><a href="sticuri.jsp"> <span
+						<li><a href="stocuri.jsp"> <span
 								class="fa fa-tasks"></span>Stoc produse
 						</a></li>
 						<li><a href="suppliers.jsp"> <span
@@ -287,7 +287,7 @@
 							data-bootstro-placement="bottom"
 							data-bootstro-content="In acest widget puteti vizualiza numarul total de programari, programarile viitoare si numarul de pacienti noi."
 							data-bootstro-step="1">
-							<div class="owl-carousel" id="owl-example">
+							<div class="owl-carousel animated swing" id="owl-example">
 								<div>
 									<div class="widget-title">Total programari</div>
 									<div class="widget-subtitle"><%=new Date().toString()%></div>
@@ -314,7 +314,7 @@
 					<div class="col-md-3">
 
 						<!-- START WIDGET MESSAGES -->
-						<div class="widget widget-default widget-item-icon bootstro"
+						<div class="widget widget-default widget-item-icon bootstro animated swing"
 							data-bootstro-title="Widgetul 'Notificari'"
 							data-bootstro-placement="bottom"
 							data-bootstro-content="In acest widget puteti vizualiza numarul de notificari noi pe care le-ati primit."
@@ -335,7 +335,7 @@
 					<div class="col-md-3">
 
 						<!-- START WIDGET REGISTRED -->
-						<div class="widget widget-default widget-item-icon bootstro"
+						<div class="widget widget-default widget-item-icon bootstro animated swing"
 							data-bootstro-title="Widgetul 'Programari din aplicatie'"
 							data-bootstro-placement="bottom"
 							data-bootstro-content="In acest widget puteti vizualiza numarul total de programari create din aplicatie mobila <b>Dentistul Meu</b>."
@@ -356,7 +356,7 @@
 					<div class="col-md-3">
 
 						<!-- START WIDGET CLOCK -->
-						<div class="widget widget-danger widget-padding-sm bootstro"
+						<div class="widget widget-danger widget-padding-sm bootstro animated swing"
 							data-bootstro-title="Widgetul 'Plantificator'"
 							data-bootstro-placement="bottom"
 							data-bootstro-content="In acest widget, folosind butoanele de mai sus, puteti stabili programari viitoare."
@@ -387,7 +387,7 @@
 					<div class="col-md-8">
 
 						<!-- START SALES BLOCK -->
-						<div class="panel panel-default">
+						<div class="panel panel-default animated fadeInUp">
 							<div class="panel-heading">
 								<div class="panel-title-box">
 									<h3>Vanzari</h3>
@@ -470,7 +470,7 @@
 					<div class="col-md-4">
 
 						<!-- START PROJECTS BLOCK -->
-						<div class="panel panel-default">
+						<div class="panel panel-default animated fadeInUp">
 							<div class="panel-heading">
 								<div class="panel-title-box">
 									<h3>Stocuri</h3>
@@ -593,7 +593,7 @@
 					<div class="col-md-4">
 
 						<!-- START SALES & EVENTS BLOCK -->
-						<div class="panel panel-default">
+						<div class="panel panel-default animated fadeInUp">
 							<div class="panel-heading">
 								<div class="panel-title-box">
 									<h3>Vanzari</h3>
@@ -624,10 +624,10 @@
 					<div class="col-md-4">
 
 						<!-- START USERS ACTIVITY BLOCK -->
-						<div class="panel panel-default">
+						<div class="panel panel-default animated fadeInUp">
 							<div class="panel-heading">
 								<div class="panel-title-box">
-									<h3>Clienti</h3>
+									<h3>Pacienti</h3>
 									<span>Noi vs fideli</span>
 								</div>
 								<ul class="panel-controls" style="margin-top: 2px;">
@@ -655,7 +655,7 @@
 					<div class="col-md-4">
 
 						<!-- START VISITORS BLOCK -->
-						<div class="panel panel-default">
+						<div class="panel panel-default animated fadeInUp">
 							<div class="panel-heading">
 								<div class="panel-title-box">
 									<h3>Operatii</h3>

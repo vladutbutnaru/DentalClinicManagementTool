@@ -63,7 +63,7 @@ public class PacientService implements DBEntityController {
 
 				Blob imageBlob = (rs.getBlob(9));
 			
-					
+				if(imageBlob!=null){
 				InputStream binaryStream = imageBlob.getBinaryStream(1, imageBlob.length());
 
 				File f = new File(getPath() + "pacient" + p.getId() + ".jpg");
@@ -75,7 +75,9 @@ public class PacientService implements DBEntityController {
 					out.write(buff, 0, len);
 				}
 				p.setImagine(f);
+				
 				out.close();
+				}
 				return p;
 
 			}

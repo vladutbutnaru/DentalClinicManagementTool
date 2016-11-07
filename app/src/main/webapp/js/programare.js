@@ -59,14 +59,14 @@ $.get("AddAppointmentServlet",
 
 }
 , function( data ) {
-location.href="home.jsp";
+
 
 
 
 
 });
 
-  
+location.href="home.jsp";
 }
 
 function addPatient(){

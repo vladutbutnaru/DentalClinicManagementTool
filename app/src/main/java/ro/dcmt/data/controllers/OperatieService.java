@@ -17,6 +17,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import ro.dcmt.data.beans.Operatie;
+import ro.dcmt.data.beans.Programare;
 import ro.dcmt.data.connection.DBConnection;
 
 public class OperatieService {
@@ -95,5 +96,19 @@ public class OperatieService {
 		}
 		return operatii;
 	}
-
+public int getTotalNumberOfOperationsForPacient(int pacientID){
+	int num=0;
+	for(Programare p : ProgramariService.getAppointmentsForPatient(pacientID)){
+		num+=getOperatiiForAppointment(p.getIdOperatii()).size();
+		
+		
+		
+	}
+	
+	
+	return num;
+	
+	
+	
+}
 }

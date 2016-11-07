@@ -22,3 +22,26 @@ function updateStock(){
 	
 	
 }
+function addProduct(){
+	var numeProdus = document.getElementById("numeProdusModal").value;
+	var um = document.getElementById("umModal").value;
+	var cantitate = document.getElementById("cantitateModal").value;
+	var idCabinet = document.getElementById("idCabinet").value;
+	var idDoctor = document.getElementById("idDoctor").value;
+	var maximumValue = document.getElementById("cantitateMaxima").value;
+	$.post("AddProductInStockServlet", {
+		numeProdus : numeProdus,
+		um : um,
+		cantitate : cantitate,
+		idCabinet : idCabinet,
+		idDoctor : idDoctor,
+		maximumValue : maximumValue
+
+	}, function(data) {
+		location.href = "stocuri.jsp";
+
+	});
+	
+	
+	
+}

@@ -39,8 +39,8 @@ $(function(){
             renderer: 'area',
             width: $("#dashboard-chart").width(),
             height: 250,
-            series: [{color: "#33414E",data: seriesData[0],name: 'New'}, 
-                     {color: "#3FBAE4",data: seriesData[1],name: 'Returned'}]
+            series: [{color: "#33414E",data: seriesData[0],name: 'Pacienti'}, 
+                     {color: "#3FBAE4",data: seriesData[1],name: 'Operatii'}]
     } );
 
     rdc.render();
@@ -77,7 +77,25 @@ $(function(){
         resize: true
     });
     /* END Donut dashboard chart */
-    
+    var json_data1 = (function() {
+        var json="salut";
+
+        
+        $.ajax({
+            type:'GET',
+            url: "GetPatientsDashboardChartServlet?doctorID="+document.getElementById("doctorID").value,
+            async: false,
+            global: false,
+           success: function(data) {
+               json = data;
+           }, 
+           error:function(){
+               alert("Error loading chart");
+           }
+       });
+        return json;
+      
+    })();
     /* Bar dashboard chart */
     Morris.Bar({
         element: 'dashboard-bar-1',
@@ -92,7 +110,7 @@ $(function(){
         ],
         xkey: 'y',
         ykeys: ['a', 'b'],
-        labels: ['New Users', 'Returned'],
+        labels: ['Pacienti noi', 'Pacienti fideli'],
         barColors: ['#33414E', '#3FBAE4'],
         gridTextSize: '10px',
         hideHover: true,

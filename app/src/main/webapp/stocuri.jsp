@@ -361,7 +361,7 @@
 	<input type="hidden" id="idDoctor" value="<%=currentUser.getId() %>"/>
 	<input type="hidden" id="idCabinet" value="<%=currentUser.getIdCabinet() %>" />
 	<!-- END PAGE CONTAINER -->
-	<!--  MODAL ADD PATIENT -->
+	<!--  MODAL ADD Product -->
 	<div class="modal animated zoomInUp" id="modalAdaugaProdus" tabindex="-1" role="dialog"
 		aria-labelledby="defModalHead" aria-hidden="true"
 		style="display: none;">
@@ -402,7 +402,7 @@
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">Inchide</button>
 					<button type="button" class="btn btn-default"
-						onClick="javascript:addProductt();">Salveaza produs</button>
+						onClick="javascript:addProduct();">Salveaza produs</button>
 				</div>
 			</div>
 		</div>
@@ -478,6 +478,7 @@
 	<!-- END THIS PAGE PLUGINS-->
 	<script type="text/javascript"
 		src="js/plugins/tagsinput/jquery.tagsinput.min.js"></script>
+		<script src="js/adauga-stoc.js"></script>
 	<!-- START TEMPLATE -->
 	<script type="text/javascript"
 		src="js/plugins/bootstrap/bootstrap-select.js"></script>
