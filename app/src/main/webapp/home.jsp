@@ -74,7 +74,7 @@
 
 
 <!-- META SECTION -->
-<title>DCMT - <%=currentUser.getFirstName() + " " + currentUser.getLastName()%>
+<title>Dental Studio - <%=currentUser.getFirstName() + " " + currentUser.getLastName()%>
 	interfata de administrare
 </title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -97,7 +97,7 @@
 		<div class="page-sidebar">
 			<!-- START X-NAVIGATION -->
 			<ul class="x-navigation">
-				<li class="xn-logo"><a href="index.html">DCMT</a> <a href="#"
+				<li class="xn-logo"><a href="home.jsp">DCMT</a> <a href="#"
 					class="x-navigation-control"></a></li>
 				<li class="xn-profile"><a href="#" class="profile-mini"> <img
 						src="<%=currentUser.getImagine().getName()%>"
@@ -120,7 +120,7 @@
 							<a href="javascript:void(0);"
 								onclick="bootstro.start('.bootstro');"
 								class="profile-control-left"><span class="fa fa-info"></span></a>
-							<a href="bootstro.start('.bootstro');"
+							<a href="front-end/contacts.html"
 								class="profile-control-right"><span class="fa fa-envelope"></span></a>
 						</div>
 					</div></li>
@@ -213,7 +213,7 @@
 					data-bootstro-title="Programari neaprobate"
 					data-bootstro-placement="bottom"
 					data-bootstro-content="Aici veti gasi programarile nou create si neaprobate."
-					data-bootstro-step="5"><a href="#"><span
+					data-bootstro-step="12"><a href="#"><span
 						class="fa fa-calendar-check-o"></span></a>
 					<div class="informer informer-danger"><%=programariNoi.size()%></div>
 					<div
@@ -387,11 +387,15 @@
 					<div class="col-md-8">
 
 						<!-- START SALES BLOCK -->
-						<div class="panel panel-default animated fadeInUp">
+						<div class="panel panel-default animated fadeInUp bootstro "
+							data-bootstro-title="Widgetul 'Status Pacienti'"
+							data-bootstro-placement="bottom"
+							data-bootstro-content="In acest widget gasiti informatii despre pacientii cabinetului dumneavoastra."
+							data-bootstro-step="5">
 							<div class="panel-heading">
 								<div class="panel-title-box">
-									<h3>Vanzari</h3>
-									<span>Vanzari in perioada selectata de dumneavoastra</span>
+									<h3>Status Pacienti</h3>
+									<span>Statusul pacientilor din aria alocata</span>
 								</div>
 								<ul class="panel-controls panel-controls-title">
 									<li>
@@ -470,7 +474,11 @@
 					<div class="col-md-4">
 
 						<!-- START PROJECTS BLOCK -->
-						<div class="panel panel-default animated fadeInUp">
+						<div class="panel panel-default animated fadeInUp bootstro" 
+							data-bootstro-title="Widgetul 'Stocuri'"
+							data-bootstro-placement="bottom"
+							data-bootstro-content="In acest widget gasiti informatii despre stocurile reale ale cabinetului dumneavoastra."
+							data-bootstro-step="6" ">
 							<div class="panel-heading">
 								<div class="panel-title-box">
 									<h3>Stocuri</h3>
@@ -593,7 +601,11 @@
 					<div class="col-md-4">
 
 						<!-- START SALES & EVENTS BLOCK -->
-						<div class="panel panel-default animated fadeInUp">
+						<div class="panel panel-default animated fadeInUp bootstro" 
+							data-bootstro-title="Widgetul 'Vanzari'"
+							data-bootstro-placement="bottom"
+							data-bootstro-content="In acest widget gasiti informatii despre media operatiilor si programarilor din ultima luna."
+							data-bootstro-step="7">
 							<div class="panel-heading">
 								<div class="panel-title-box">
 									<h3>Vanzari</h3>
@@ -624,7 +636,11 @@
 					<div class="col-md-4">
 
 						<!-- START USERS ACTIVITY BLOCK -->
-						<div class="panel panel-default animated fadeInUp">
+						<div class="panel panel-default animated fadeInUp bootstro" 
+							data-bootstro-title="Widgetul 'Pacienti'"
+							data-bootstro-placement="bottom"
+							data-bootstro-content="In acest widget gasiti informatii despre istoricul pacientilor noi versus pacienti fideli."
+							data-bootstro-step="8">
 							<div class="panel-heading">
 								<div class="panel-title-box">
 									<h3>Pacienti</h3>
@@ -655,7 +671,11 @@
 					<div class="col-md-4">
 
 						<!-- START VISITORS BLOCK -->
-						<div class="panel panel-default animated fadeInUp">
+						<div class="panel panel-default animated fadeInUp bootstro" 
+							data-bootstro-title="Widgetul 'Operatii'"
+							data-bootstro-placement="bottom"
+							data-bootstro-content="In acest widget gasiti informatii despre media operatiilor din ultima luna. "
+							data-bootstro-step="9">
 							<div class="panel-heading">
 								<div class="panel-title-box">
 									<h3>Operatii</h3>
@@ -686,7 +706,11 @@
 				</div>
 
 				<!-- START DASHBOARD CHART -->
-				<div class="block-full-width">
+				<div class="block-full-width bootstro" 
+							data-bootstro-title="Widgetul 'Chart'"
+							data-bootstro-placement="top"
+							data-bootstro-content="In acest widget gasiti informatii despre numarul pacientilor si a operatiilor pe zile."
+							data-bootstro-step="10" >
 					<div id="dashboard-chart"
 						style="height: 250px; width: 100%; float: left;"></div>
 					<div class="chart-legend">

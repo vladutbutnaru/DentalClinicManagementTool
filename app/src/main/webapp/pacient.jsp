@@ -57,7 +57,7 @@
 	String expirationText = currentUser.getExpirationDate().getDate() + "/" + expirationMonth + "/" + expirationYear;
 %>
 <!-- META SECTION -->
-<title>DCMT - Informatii pacient</title>
+<title>Dental Studio - Informatii pacient</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -77,7 +77,7 @@
 		<div class="page-sidebar">
 			<!-- START X-NAVIGATION -->
 			<ul class="x-navigation">
-				<li class="xn-logo"><a href="index.html">DCMT</a> <a href="#"
+				<li class="xn-logo"><a href="home.jsp">DCMT</a> <a href="#"
 					class="x-navigation-control"></a></li>
 				<li class="xn-profile"><a href="#" class="profile-mini"> <img
 						src="<%=currentUser.getImagine().getName()%>"
