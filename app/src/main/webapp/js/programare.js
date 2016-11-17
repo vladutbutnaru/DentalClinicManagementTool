@@ -35,6 +35,8 @@ for(let i = 0; i<values.length;i++){
 	
 }
 
+
+
 var notificationSMS = 0;
 var notificationEmail = 0;
 var notificationMobile = 0;
@@ -68,6 +70,27 @@ $.get("AddAppointmentServlet",
 
 location.href="home.jsp";
 }
+
+
+function clearfield() {
+	var numePacient = document.getElementById("numePacient");
+	var dataProgramare = document.getElementById("dataProgramare");
+	var clear = document.getElementById("btn btn-default");
+	var timpProgramare = document.getElementById("timpProgramare");
+	var operatiiProgramare = document.getElementById("operatiiProgramare");
+	var comentariuProgramare = document.getElementById("comentariuProgramare");
+	numePacient.value = "";
+	dataProgramare.value = "";
+	timpProgramare.value = "";
+	operatiiProgramare.value = "";
+	comentariuProgramare.value = "";
+clear.addEventListener("onClick", clearfield, false);
+}    
+
+
+
+
+
 
 function addPatient(){
 	var prenume = document.getElementById("prenumePacientModal").value;

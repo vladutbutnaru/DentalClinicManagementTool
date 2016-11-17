@@ -202,7 +202,7 @@
 					data-bootstro-title="Programari neaprobate"
 					data-bootstro-placement="bottom"
 					data-bootstro-content="Aici veti gasi programarile nou create si neaprobate."
-					data-bootstro-step="5"><a href="#"><span
+					data-bootstro-step="7"><a href="#"><span
 						class="fa fa-calendar-check-o"></span></a>
 					<div class="informer informer-danger"><%=programariNoi.size()%></div>
 					<div
@@ -287,8 +287,14 @@
 										<label class="col-md-3 col-xs-12 control-label">Nume Complet
 											Pacient ("Prenume Nume")</label>
 										<div class="col-md-6 col-xs-12">
-											<div class="input-group">
-												<input type="text" id="numePacient" class="form-control"
+											
+											<div class="input-group bootstro" 
+											data-bootstro-title="Widgetul 'Administrare pacient'"
+											data-bootstro-placement="bottom"
+											data-bootstro-content="In acest widget puteti cauta sau adauga un pacient. "
+											data-bootstro-step="1">
+											
+												<input type="text" id="numePacient" class="form-control"								
 													placeholder="eg. Ion Popescu"> <span
 													class="input-group-btn">
 													<button class="btn btn-default" type="button"
@@ -304,14 +310,22 @@
 										</div>
 									</div>
 
-									<div class="form-group">
-										<label class="col-md-3 col-xs-12 control-label">Data
-											programarii</label>
+									<div class="form-group bootstro" 
+										
+											data-bootstro-title="Widgetul 'Calendar Programare'"
+											data-bootstro-placement="bottom"
+											data-bootstro-content="In acest widget puteti programa un pacient."
+											data-bootstro-step="2">
+											
+											
+										<label class="col-md-3 col-xs-12 control-label">
+										Data programarii</label>
 										<div class="col-md-6 col-xs-12">
-											<div class="input-group">
+											<div class="input-group ">
 												<span class="input-group-addon"><span
 													class="fa fa-calendar"></span></span> <input type="text"
-													class="form-control datepicker" id="dataProgramare"
+													class="form-control datepicker bootstro 
+													" id="dataProgramare"
 													value="2016-11-01">
 											</div>
 											<span class="help-block">Click pe casuta pentru a
@@ -323,7 +337,13 @@
 										<label class="col-md-3 col-xs-12 control-label">Ora
 											programarii</label>
 										<div class="col-md-6 col-xs-12">
-											<div class="input-group bootstrap-timepicker">
+											<div class="input-group bootstrap-timepicker bootstro" 
+											
+											data-bootstro-title="Widgetul 'Ora programare'"
+											data-bootstro-placement="bottom"
+											data-bootstro-content="In acest widget puteti alege ora programarii pacientului."
+											data-bootstro-step="3">
+											
 												<input type="text" id="timpProgramare"
 													class="form-control timepicker24"> <span
 													class="input-group-addon"><span
@@ -335,7 +355,16 @@
 									</div>
 									<input type="hidden" value="<%=currentUser.getId()%>"
 										id="doctorID" />
-									<div class="form-group">
+									<div class="form-group bootstro"
+									
+											data-bootstro-title="Widgetul 'Interventii'"
+											data-bootstro-placement="bottom"
+											data-bootstro-content="In acest widget puteti alege interventiile pe care le va realiza medicul pacientului programat."
+											data-bootstro-step="4"
+									
+									
+									>
+									
 										<label class="col-md-3 col-xs-12 control-label">Operatii</label>
 										<div class="col-md-6 col-xs-12">
 
@@ -354,7 +383,13 @@
 									</div>
 								</div>
 
-								<div class="form-group">
+								<div class="form-group bootstro"
+								
+											data-bootstro-title="Widgetul 'Comentarii'"
+											data-bootstro-placement="bottom"
+											data-bootstro-content="In acest widget puteti adauga informatii suplimentare despre programare."
+											data-bootstro-step="5">
+											
 									<label class="col-md-3 col-xs-12 control-label">Comentariul
 										programarii</label>
 									<div class="col-md-6 col-xs-12">
@@ -365,7 +400,14 @@
 									</div>
 								</div>
 
-								<div class="form-group">
+								<div class="form-group bootstro"
+								
+									 		data-bootstro-title="Widgetul 'Notificari Pacient'"
+											data-bootstro-placement="top"
+											data-bootstro-content="In acest widget informatiile se vor incarca direct din baza de date pentru pacientul selectat (daca exista)."
+											data-bootstro-step="6">
+								
+				
 									<label class="col-md-3 col-xs-12 control-label">Notificari
 										pacient</label>
 									<div class="col-md-6 col-xs-12">
@@ -388,7 +430,7 @@
 							</div>
 						</form>
 						<div class="panel-footer">
-							<button class="btn btn-default">Sterge campurile</button>
+							<button class="btn btn-default" onClick="javascript:clearfield()">Sterge campurile</button>
 							<button class="btn btn-primary pull-right"
 								onClick="javascript:createAppointment()">Salveaza
 								programarea</button>
@@ -515,6 +557,10 @@
 		src="js/plugins/bootstrap/bootstrap-select.js"></script>
 	<script type="text/javascript"
 		src="js/plugins/tagsinput/jquery.tagsinput.min.js"></script>
+		
+		<script type="text/javascript"
+		src="js/plugins/tour/bootstrap-tour.min.js"></script>
+	<script type="text/javascript" src="js/plugins/tour/bootstro.min.js"></script>
 	<!-- END THIS PAGE PLUGINS -->
 
 	<!-- START TEMPLATE -->
